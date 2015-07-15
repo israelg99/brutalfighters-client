@@ -1,0 +1,110 @@
+
+fighters_faces.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blaze
+  rotate: false
+  xy: 1, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+blaze_down
+  rotate: false
+  xy: 1, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+blaze_hover
+  rotate: false
+  xy: 123, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+chip
+  rotate: false
+  xy: 123, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+chip_down
+  rotate: false
+  xy: 245, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+chip_hover
+  rotate: false
+  xy: 245, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+dusk
+  rotate: false
+  xy: 367, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+dusk_down
+  rotate: false
+  xy: 367, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+dusk_hover
+  rotate: false
+  xy: 489, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+lust
+  rotate: false
+  xy: 489, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+lust_down
+  rotate: false
+  xy: 611, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+lust_hover
+  rotate: false
+  xy: 611, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+surge
+  rotate: false
+  xy: 733, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+surge_down
+  rotate: false
+  xy: 733, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+surge_hover
+  rotate: false
+  xy: 855, 123
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1

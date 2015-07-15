@@ -1,0 +1,19 @@
+
+blue_checkbox.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blue_v
+  rotate: false
+  xy: 1, 1
+  size: 40, 45
+  orig: 40, 45
+  offset: 0, 0
+  index: -1
+checkbox
+  rotate: false
+  xy: 43, 1
+  size: 40, 45
+  orig: 40, 45
+  offset: 0, 0
+  index: -1

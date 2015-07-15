@@ -1,0 +1,26 @@
+
+mainMenuButton.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+blueButton
+  rotate: false
+  xy: 1, 1
+  size: 300, 100
+  orig: 300, 100
+  offset: 0, 0
+  index: -1
+blueButton_down
+  rotate: false
+  xy: 303, 1
+  size: 300, 100
+  orig: 300, 100
+  offset: 0, 0
+  index: -1
+blueButton_hover
+  rotate: false
+  xy: 605, 1
+  size: 300, 100
+  orig: 300, 100
+  offset: 0, 0
+  index: -1

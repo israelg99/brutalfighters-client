@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="60" height="30" tilewidth="128" tileheight="128">
+ <tileset firstgid="1" name="map_tiles" tilewidth="128" tileheight="128">
+  <image source="map_tiles.png" width="256" height="768"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="grass" value="grass"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="grass" value="grass"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="dirt" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="dirt" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="grass" value="grass"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="grass" value="grass"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="dirt" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="dirt" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="dirt" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value="blocked"/>
+    <property name="dirt" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="teleport" value="1,23"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="teleport" value="58,23"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="60" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt04sKgCAMhWHtfnv/522BAwnXRYKw/g8Oy2johJwDAAAAAAAAAOB5lcSH+lU6n3/7IAVoJV2i3unVu87pzdl3bzbex2fSOknGRLXOE1er96yvC99d2df6L5eDmVKz6XMJa2ue7S56ySCpJc0P1iv9eQT8
+  </data>
+ </layer>
+</map>
