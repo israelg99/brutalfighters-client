@@ -16,12 +16,12 @@ public class MenuUtils {
 	public static float GLIDE_DURATION;
 	public static float FADE_DURATION;
 	
-	public static String companyLOGO;
-	public static String gameLOGO;
-	public static String MenuBG;
+	public static String companyLogo_path;
+	public static String gameLogo_path;
+	public static String menuBG_path;
 	
 	public static Image gameLogo;
-	public static Image bg;
+	public static Image menuBG;
 	
 	public static Skin skin;
 	public static BitmapFont buttonText;
@@ -35,17 +35,17 @@ public class MenuUtils {
 		GLIDE_DURATION = 0.35f;
 		FADE_DURATION = 0.05f;
 		
-		companyLOGO = "logos/logo.png"; //$NON-NLS-1$
-		gameLOGO = "logos/logo.png"; //$NON-NLS-1$
-		MenuBG = "menu/bg/bg3.jpg"; //$NON-NLS-1$
+		companyLogo_path = "logos/logo.png"; //$NON-NLS-1$
+		gameLogo_path = "logos/logo.png"; //$NON-NLS-1$
+		menuBG_path = "menu/bg/bg3.jpg"; //$NON-NLS-1$
 		
 		// Logo
-		gameLogo = new Image(new Texture(Gdx.files.internal(MenuUtils.gameLOGO)));
+		gameLogo = new Image(new Texture(Gdx.files.internal(MenuUtils.gameLogo_path)));
 		
 		// Menu Background
-		bg = new Image(new Texture(Gdx.files.internal(MenuUtils.MenuBG)));
-		bg.setWidth(Gdx.graphics.getWidth());
-		bg.setHeight(Gdx.graphics.getHeight());
+		menuBG = new Image(new Texture(Gdx.files.internal(MenuUtils.menuBG_path)));
+		menuBG.setWidth(Gdx.graphics.getWidth());
+		menuBG.setHeight(Gdx.graphics.getHeight());
 		
 		// Skin
 		skin = new Skin();
@@ -68,8 +68,8 @@ public class MenuUtils {
 		Color color = gameLogo.getColor();
 		gameLogo.setColor(color.r, color.g, color.b, 1);
 		
-		color = bg.getColor();
-		bg.setColor(color.r, color.g, color.b, 1);
+		color = menuBG.getColor();
+		menuBG.setColor(color.r, color.g, color.b, 1);
 	}
 	
 	public static void disposeExit() {

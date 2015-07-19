@@ -46,7 +46,6 @@ public class FighterSelectScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		table.invalidateHierarchy();
-		
 	}
 
 	@Override
@@ -93,7 +92,7 @@ public class FighterSelectScreen implements Screen {
 		table.add(chip).pad(20).row();
 		table.add(dusk).pad(20).colspan(2).center();
 		
-		stage.addActor(MenuUtils.bg);
+		stage.addActor(MenuUtils.menuBG);
 		stage.addActor(table);
 		
 		table.setFillParent(true);
@@ -122,8 +121,7 @@ public class FighterSelectScreen implements Screen {
 		Tween.from(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(Gdx.graphics.getHeight() / 8).start(tweenManager);
 
 		tweenManager.update(Gdx.graphics.getDeltaTime());
-		
-		
+
 		System.out.println("Initializing the Game Client for Fighter Selection!"); //$NON-NLS-1$
 		GameClient.Load();
 		GameClient.setConnectListener();

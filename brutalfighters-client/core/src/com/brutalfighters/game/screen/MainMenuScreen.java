@@ -134,7 +134,7 @@ public class MainMenuScreen implements Screen {
 		table.add(buttonSettings).padBottom(20).row();
 		table.add(buttonExit).padBottom(0);
 
-		stage.addActor(MenuUtils.bg);
+		stage.addActor(MenuUtils.menuBG);
 		stage.addActor(table);
 
 		// creating animations

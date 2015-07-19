@@ -53,7 +53,7 @@ public class CompanySplashScreen implements Screen {
 		tweenManager = new TweenManager();
 		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 
-		splash = new Sprite(new Texture(MenuUtils.companyLOGO));
+		splash = new Sprite(new Texture(MenuUtils.companyLogo_path));
 		splash.setPosition(Gdx.graphics.getWidth() / 2 - splash.getWidth() / 2, Gdx.graphics.getHeight() / 2 - splash.getHeight() / 2);
 
 		Tween.set(splash, SpriteAccessor.ALPHA).target(0).start(tweenManager);

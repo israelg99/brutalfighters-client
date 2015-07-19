@@ -167,7 +167,7 @@ public class SettingsScreen implements Screen {
 		table.add(motionBlur).padBottom(26).row();
 		table.add(buttonBack).colspan(2).center();
 
-		stage.addActor(MenuUtils.bg);
+		stage.addActor(MenuUtils.menuBG);
 		stage.addActor(table);
 
 		// creating animations
