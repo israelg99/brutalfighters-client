@@ -29,8 +29,8 @@ public class EscapeMenu {
 	
 	public static void load() {
 		BG = TextureHandle.getSprite("menu/ui/menugamebg1.png"); //$NON-NLS-1$
-		font_text_button = GameFont.RobotoWhite.getFont();
-		font_text_button_hover = GameFont.RobotoRed.getFont();
+		font_text_button = GameFont.EscapeButton.getFont();
+		font_text_button_hover = GameFont.EscapeButtonHover.getFont();
 	}
 	
 	public static void draw(SpriteBatch batch) {

@@ -30,7 +30,7 @@ public class MatchmakingScreen implements Screen {
 
 	private SpriteBatch batch;
 	
-	private final String FONT_NAME = new String("TheBoldFont"); //$NON-NLS-1$
+	private final String FONT_NAME = new String("MainMenu"); //$NON-NLS-1$
 	private final String INDICATOR_TEXT = new String("Searching for players.."); //$NON-NLS-1$
 	
 	private String[] waiting_lines;
@@ -151,7 +151,6 @@ public class MatchmakingScreen implements Screen {
 	public void dispose() {
 		stage.dispose();
 		batch.dispose();
-		font.dispose();
 		
 	}
 

@@ -54,15 +54,15 @@ public class HUD {
 		WARMUP = temp;
 	}
 	
-	public static void drawWarmup() {
+	private static void drawWarmup() {
 		GameFont.Warmup.getFont().draw(Render.batch, Integer.toString(WARMUP), Render.getResX()/2-32, Render.getResY()/2+64);
 	}
 	
-	public static void drawRespawn() {
+	private static void drawRespawn() {
 		GameFont.Respawn.getFont().draw(Render.batch, Integer.toString(Resources.player.getPlayer().DCD/1000 + 1), Render.getResX()/2-32, Render.getResY()/2+64);
 	}
 	
-	public static void drawTutorial() {
+	private static void drawTutorial() {
 		GameFont.Tutorial.getFont().draw(Render.batch, "Arrow keys for movement", 200, Render.getResY()/3+300); //$NON-NLS-1$
 		GameFont.Tutorial.getFont().draw(Render.batch, "Shift for running", 200, Render.getResY()/3 + 200); //$NON-NLS-1$
 		GameFont.Tutorial.getFont().draw(Render.batch, "Spacebar for auto basic attacks", 200, Render.getResY()/3+100); //$NON-NLS-1$
@@ -71,7 +71,7 @@ public class HUD {
 	}
 	
 	// Not flexible but good enough!
-	public static void drawScore() {
+	private static void drawScore() {
 		Render.batch.draw(score, Render.getResX()/2-score.getWidth()/2, Render.getResY()-score.getHeight(), score.getWidth(), score.getHeight());
 		GameFont.BlueTeamBig.getFont().draw(Render.batch, Integer.toString(Resources.score.kills[Flags.BLUE_TEAM]), Render.getResX()/2-116-64, Render.getResY()-score.getHeight()/2+20);
 		GameFont.RedTeamBig.getFont().draw(Render.batch, Integer.toString(Resources.score.kills[Flags.RED_TEAM]), Render.getResX()/2+116-32, Render.getResY()-score.getHeight()/2+20);
@@ -88,7 +88,11 @@ public class HUD {
 		}
 	}
 	
-	public static void drawEM() {
+	private static void drawKillsCounter() {
+		Resources.killsCounter.render();
+	}
+	
+	private static void drawEM() {
 		EscapeMenu.draw(Render.batch);
 	}
 
@@ -97,12 +101,15 @@ public class HUD {
 		
 		if(isMatchFinished()) {
 			drawFinishedMatch();
-		} else if(Resources.player.getPlayer().isDead) {
-			drawRespawn();
-			drawTutorial();
-		} else if(isWarmup()) {
-			drawWarmup();
-			drawTutorial();
+		} else {
+			drawKillsCounter();
+			if(Resources.player.getPlayer().isDead) {
+				drawRespawn();
+				drawTutorial();
+			} else if(isWarmup()) {
+				drawWarmup();
+				drawTutorial();
+			}
 		}
 		
 		if(isEscapeMenuShown) {

@@ -162,6 +162,10 @@ public class ClientPlayer implements InputProcessor {
 	public void onPortal(boolean onPortal) {
 		this.onPortal = onPortal;
 	}
+	
+	public void applyWalkingDust(float xoffest) {
+		Particles.add("walking_dust", getX()+xoffest, getY() + Resources.player.getBot(), false); //$NON-NLS-1$
+	}
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -189,20 +193,16 @@ public class ClientPlayer implements InputProcessor {
 		if(inControl() && !p.isDead && !HUD.isWarmup()) {
 			switch(keycode) {
 				case InputControls.LEFT :
-					/*if(!p.isRight) {
-						p.isLeft = true;
-						p.velx = p.isRunning ? -Physics.getRunSpeed() : -Physics.getSpeed();
-						p.flip = "left";
-					}*/
+					if(!p.isRight && p.onGround) {
+						applyWalkingDust(Resources.player.getRight());
+					}
 					GameClient.sendPacketUDP(new Packet3InputLeft());
 				return false;
 				
 				case InputControls.RIGHT :
-					/*if(!p.isLeft) {
-						p.isRight = true;
-						p.velx = p.isRunning ? Physics.getRunSpeed() : Physics.getSpeed();
-						p.flip = "right";
-					}*/
+					if(!p.isLeft && p.onGround) {
+						applyWalkingDust(Resources.player.getLeft());
+					}
 					GameClient.sendPacketUDP(new Packet3InputRight());
 				return false;
 				

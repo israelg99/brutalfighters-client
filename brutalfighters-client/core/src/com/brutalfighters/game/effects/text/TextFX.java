@@ -69,4 +69,8 @@ public enum TextFX {
 	public static TextEffect getDefault(String name, Player player) {
 		return valueOf(name).getDefault(player);
 	}
+	
+	public static void init() {
+		values();
+	}
 }

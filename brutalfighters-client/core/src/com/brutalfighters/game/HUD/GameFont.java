@@ -6,19 +6,15 @@ import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public enum GameFont {
 	
-	TheBoldFont(TextureHandle.getFont("fonts/theboldfont.ttf", 36, Color.WHITE, true, false)) { //$NON-NLS-1$
+	MainMenu(TextureHandle.getFont("fonts/theboldfont.ttf", 36, Color.WHITE, true, false)) { //$NON-NLS-1$
 
 	},
 	
-	TheRed(TextureHandle.getFont("fonts/theboldfont.ttf", 36, Color.RED, true, false)) { //$NON-NLS-1$
+	EscapeButton(TextureHandle.getFont("fonts/Roboto.ttf", 32, Color.WHITE, true, false)) { //$NON-NLS-1$
 		
 	},
 	
-	RobotoWhite(TextureHandle.getFont("fonts/Roboto.ttf", 32, Color.WHITE, true, false)) { //$NON-NLS-1$
-		
-	},
-	
-	RobotoRed(TextureHandle.getFont("fonts/Roboto.ttf", 32, Color.RED, true, false)) { //$NON-NLS-1$
+	EscapeButtonHover(TextureHandle.getFont("fonts/Roboto.ttf", 32, Color.RED, true, false)) { //$NON-NLS-1$
 		
 	},
 	
@@ -59,6 +55,14 @@ public enum GameFont {
 	},
 	
 	Tutorial(TextureHandle.getFont("fonts/CaviarDreams.ttf", 54, Color.BLACK, true, false)) { //$NON-NLS-1$
+		
+	},
+	
+	EnemyKilled(TextureHandle.getFont("fonts/theboldfont.ttf", 100, Color.BLACK, true, false)) { //$NON-NLS-1$
+		
+	},
+	
+	KillsCounter(TextureHandle.getFont("fonts/theboldfont.ttf", 100, Color.WHITE, true, false)) { //$NON-NLS-1$
 		
 	};
 	

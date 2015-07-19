@@ -51,7 +51,7 @@ public class MenuUtils {
 		skin = new Skin();
 		
 		// Font
-		buttonText = GameFont.TheBoldFont.getFont();
+		buttonText = GameFont.MainMenu.getFont();
 		
 		// Creating Buttons
 		buttonAtlas = new TextureAtlas(Gdx.files.internal("menu/buttons/mainMenuButton.atlas")); //$NON-NLS-1$

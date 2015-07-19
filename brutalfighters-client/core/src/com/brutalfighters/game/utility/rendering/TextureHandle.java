@@ -92,14 +92,13 @@ public class TextureHandle {
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = size;
 		parameter.flip = flip;
-		
+		parameter.color = color;
+
 		BitmapFont font = gen.generateFont(parameter);
 		
 		if(linear) {
 			font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		}
-		
-		font.setColor(color);
 		
 		return font;
 	}

@@ -155,15 +155,6 @@ public class Render {
 	public static void renderHUD() {
 		HUD.drawHUD();
 	}
-	public static void renderScore() {
-		HUD.drawScore();
-	}
-	public static void renderWarmup() {
-		HUD.drawWarmup();
-	}
-	public static void renderEM() {
-		HUD.drawEM();
-	}
 	
 	public static void render() {
 		if(Prefs.getPPEffects()) {

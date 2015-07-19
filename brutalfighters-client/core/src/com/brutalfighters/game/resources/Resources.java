@@ -3,9 +3,11 @@ package com.brutalfighters.game.resources;
 import com.brutalfighters.game.HUD.EscapeMenu;
 import com.brutalfighters.game.HUD.GameFont;
 import com.brutalfighters.game.HUD.HUD;
+import com.brutalfighters.game.HUD.KillsCounter;
 import com.brutalfighters.game.basic.Render;
 import com.brutalfighters.game.effects.particles.Particles;
 import com.brutalfighters.game.effects.text.TextEffects;
+import com.brutalfighters.game.effects.text.TextFX;
 import com.brutalfighters.game.flags.FlagHandler;
 import com.brutalfighters.game.flags.Flags;
 import com.brutalfighters.game.graphics.Shaders;
@@ -41,6 +43,8 @@ public class Resources {
 	public static TextEffects textEffects;
 	
 	public static Score score;
+	
+	public static KillsCounter killsCounter;
 	
 	public static boolean globalResourcesLoaded;
 	
@@ -130,6 +134,16 @@ public class Resources {
 		System.err.println("Initialize the Projectile Enum!"); //$NON-NLS-1$
 		ProjectilesEnum.init();
 		System.out.println("Finished Initializing the Projectile Enum!"); //$NON-NLS-1$
+		
+		// Loading the Projectile Enum
+		System.err.println("Initialize the Text FX Enum!"); //$NON-NLS-1$
+		TextFX.init();
+		System.out.println("Finished Initializing the Text FX Enum!"); //$NON-NLS-1$
+		
+		// Loading the Projectile Enum
+		System.err.println("Initialize the Kills Counter!"); //$NON-NLS-1$
+		killsCounter = new KillsCounter(3000);
+		System.out.println("Finished Initializing the Kills Counter!"); //$NON-NLS-1$
 		
 		if(!globalResourcesLoaded) {
 			LoadGlobalResources();

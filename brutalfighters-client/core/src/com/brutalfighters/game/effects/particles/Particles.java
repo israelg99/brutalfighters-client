@@ -51,6 +51,8 @@ public class Particles {
 
 		particles.put("burn", loadParticle("burn.p")); //$NON-NLS-1$ //$NON-NLS-2$
 		particles.put("red_bats", loadParticle("red_bats.p")); //$NON-NLS-1$ //$NON-NLS-2$
+
+		particles.put("walking_dust", loadParticle("walking_dust.p")); //$NON-NLS-1$ //$NON-NLS-2$
 		
 	}
 

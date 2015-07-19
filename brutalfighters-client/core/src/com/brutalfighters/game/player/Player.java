@@ -304,6 +304,9 @@ public class Player {
 		
 		if(newP.isDead && !p.isDead) {
 			oldP.getChamp().playDeath(newP.posx);
+			if(newP.team != Resources.player.getPlayer().team) {
+				Resources.killsCounter.enemyKilled();
+			}
 		}
 		
 		if(!p.isJump && p.onGround && newP.isJump && !newP.onGround) {
