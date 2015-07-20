@@ -142,7 +142,7 @@ public class Resources {
 		
 		// Loading the Projectile Enum
 		System.err.println("Initialize the Kills Counter!"); //$NON-NLS-1$
-		killsCounter = new KillsCounter(3000);
+		killsCounter = new KillsCounter(4000);
 		System.out.println("Finished Initializing the Kills Counter!"); //$NON-NLS-1$
 		
 		if(!globalResourcesLoaded) {

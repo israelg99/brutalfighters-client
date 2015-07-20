@@ -58,10 +58,6 @@ public enum GameFont {
 		
 	},
 	
-	EnemyKilled(TextureHandle.getFont("fonts/theboldfont.ttf", 100, Color.BLACK, true, false)) { //$NON-NLS-1$
-		
-	},
-	
 	KillsCounter(TextureHandle.getFont("fonts/theboldfont.ttf", 100, Color.WHITE, true, false)) { //$NON-NLS-1$
 		
 	};

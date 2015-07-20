@@ -20,8 +20,7 @@ public class KillsCounter {
 	
 	private Timer timer;
 	
-	private BitmapFont messageFont;
-	private BitmapFont counterFont;
+	private BitmapFont font;
 	private GlyphLayout glyphLayout;
 	
 	private Color brutalColor;
@@ -32,8 +31,7 @@ public class KillsCounter {
 		
 		resetCounter();
 		
-		messageFont = GameFont.EnemyKilled.getFont();
-		counterFont = GameFont.KillsCounter.getFont();
+		font = GameFont.KillsCounter.getFont();
 		
 		message = new String("ENEMY KILLED"); //$NON-NLS-1$
 		prefix = new String("X"); //$NON-NLS-1$
@@ -62,29 +60,26 @@ public class KillsCounter {
 	public void render() {
 		if(!isEmpty()) {
 			if(getEnemiesKilled() > 2) {
-				sentFontsColor(brutalColor, brutalColor);
+				draw(brutalColor, brutalColor);
 			} else if(getEnemiesKilled() > 1) {
-				sentFontsColor(Color.BLACK, brutalColor);
+				draw(Color.BLACK, brutalColor);
 			} else {
-				sentFontsColor(Color.BLACK, Color.WHITE);
+				draw(Color.BLACK, Color.WHITE);
 			}
-			draw();
 		}
 	}
 	
-	private void sentFontsColor(Color color1, Color color2) {
-		messageFont.setColor(color1);
-		counterFont.setColor(color2);
-	}
-	private void draw() {
-		glyphLayout.setText(messageFont, message);
+	private void draw(Color messageColor, Color counterColor) {
+		glyphLayout.setText(font, message);
 		float message_width = glyphLayout.width;
-		glyphLayout.setText(counterFont, prefix+getEnemiesKilled());
+		glyphLayout.setText(font, prefix+getEnemiesKilled());
 		float counter_width = glyphLayout.width;
 		
-		messageFont.draw(Render.batch, message, (Gdx.graphics.getWidth()-(message_width+counter_width))/2, (Gdx.graphics.getHeight()/4));
+		font.setColor(messageColor);
+		font.draw(Render.batch, message, (Gdx.graphics.getWidth()-(message_width+counter_width))/2, (Gdx.graphics.getHeight()/4));
 		
-		counterFont.draw(Render.batch, prefix+getEnemiesKilled(), (Gdx.graphics.getWidth()-(message_width+counter_width))/2+message_width+25, (Gdx.graphics.getHeight()/4));
+		font.setColor(counterColor);
+		font.draw(Render.batch, prefix+getEnemiesKilled(), (Gdx.graphics.getWidth()-(message_width+counter_width))/2+message_width+25, (Gdx.graphics.getHeight()/4));
 	}
 	
 	public void enemyKilled() {
