@@ -89,10 +89,15 @@ public class Render {
 	public static void renderInfo() {
 		PlayerData p = Resources.player.getPlayer();
 		if (Gdx.input.isKeyPressed(InputControls.showInfo)) {
-			font_details.draw(batch, "Version : Not Alpha Yet  FPS - " + Gdx.graphics.getFramesPerSecond(), 50, Gdx.graphics.getHeight() - 30); //$NON-NLS-1$
+			font_details.draw(batch, "Version : Alpha || FPS - " + Gdx.graphics.getFramesPerSecond(), 50, Gdx.graphics.getHeight() - 30); //$NON-NLS-1$
 		    font_details.draw(batch, "Camera Pos X : " + Resources.client.getCamera().position.x + " Pos Y : " + Resources.client.getCamera().position.y, 50, Gdx.graphics.getHeight() - 80); //$NON-NLS-1$ //$NON-NLS-2$
 			font_details.draw(batch, "Player Pos X : " + p.posx + " Pos Y : " + p.posy, 50, Gdx.graphics.getHeight() - 130); //$NON-NLS-1$ //$NON-NLS-2$
 			font_details.draw(batch, "Player Vel X : " + p.velx + " Vel Y : " + p.vely, 50, Gdx.graphics.getHeight() - 180); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+	public static void renderTutorial() {
+		if (Gdx.input.isKeyPressed(InputControls.TUTORIAL)) {
+			HUD.drawTutorial();
 		}
 	}
 	
@@ -243,6 +248,9 @@ public class Render {
 		
 		// Render Escape Menu
 		renderHUD();
+		
+		// Render Tutorial
+		renderTutorial();
 		
 		// Rendering Info (Debug)
 		renderInfo();

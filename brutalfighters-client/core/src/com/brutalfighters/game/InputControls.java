@@ -24,6 +24,8 @@ public class InputControls {
 	// Misc
 	public static final int ESCAPE_MENU = Keys.ESCAPE;
 	
+	public static final int TUTORIAL = Keys.O;
+	
 	public static final int showInfo = Keys.P;
 	public static final int TEST = Keys.T;
 	

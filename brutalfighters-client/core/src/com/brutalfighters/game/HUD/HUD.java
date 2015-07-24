@@ -74,7 +74,7 @@ public class HUD {
 		GameFont.Respawn.getFont().draw(Render.batch, Integer.toString(Resources.player.getPlayer().DCD/1000 + 1), Render.getResX()/2-32, Render.getResY()/2+64);
 	}
 	
-	private static void drawTutorial() {
+	public static void drawTutorial() {
 		GameFont.Tutorial.getFont().draw(Render.batch, "Arrow keys for movement", 200, Render.getResY()/3+300); //$NON-NLS-1$
 		GameFont.Tutorial.getFont().draw(Render.batch, "Shift for running", 200, Render.getResY()/3 + 200); //$NON-NLS-1$
 		GameFont.Tutorial.getFont().draw(Render.batch, "Spacebar for auto basic attacks", 200, Render.getResY()/3+100); //$NON-NLS-1$
