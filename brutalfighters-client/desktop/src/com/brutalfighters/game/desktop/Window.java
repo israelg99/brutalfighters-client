@@ -15,8 +15,8 @@ public class Window {
 		cfg.title = name;
 		cfg.useGL30 = false; // Screen goes black -_- but that's only an early alpha support
 		cfg.vSyncEnabled = true;
-		//cfg.width = (int) 1280;
-		//cfg.height = (int) 720;
+//		cfg.width = (int) 3840;
+//		cfg.height = (int) 2160;
 		cfg.width = (int) screenSize.getWidth();
 		cfg.height = (int) screenSize.getHeight();
 		cfg.resizable = false;

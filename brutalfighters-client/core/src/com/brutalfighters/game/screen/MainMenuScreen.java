@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.brutalfighters.game.menu.MenuUtils;
+import com.brutalfighters.game.multiplayer.GameClient;
 import com.brutalfighters.game.sound.BGM;
 import com.brutalfighters.game.sound.menu.MainMenuSFX;
 import com.brutalfighters.game.tween.ActorAccessor;
@@ -64,68 +65,10 @@ public class MainMenuScreen implements Screen {
 				
 		// Creating Buttons
 		TextButton buttonPlay = new TextButton("PLAY", MenuUtils.blueButton); //$NON-NLS-1$
-		buttonPlay.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				MainMenuSFX.playClick();
-				
-				Timeline.createParallel().beginParallel()
-				.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
-				.push(Tween.to(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(table.getY() - 50)
-						.setCallback(new TweenCallback() {
-
-							@Override
-							public void onEvent(int type, BaseTween<?> source) {
-								((Game) Gdx.app.getApplicationListener()).setScreen(new FighterSelectScreen());
-							}
-						}))
-				.end().start(tweenManager);
-			}
-		});
 
 		TextButton buttonSettings = new TextButton("SETTINGS", MenuUtils.blueButton); //$NON-NLS-1$
-		buttonSettings.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				MainMenuSFX.playClick();
-				
-				Timeline.createParallel().beginParallel()
-						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
-						.push(Tween.to(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(table.getY() - 50)
-								.setCallback(new TweenCallback() {
-
-									@Override
-									public void onEvent(int type, BaseTween<?> source) {
-										((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen());
-									}
-								}))
-						.end().start(tweenManager);
-			}
-		});
 
 		TextButton buttonExit = new TextButton("EXIT", MenuUtils.blueButton); //$NON-NLS-1$
-		buttonExit.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				MainMenuSFX.playClick();
-				
-				Timeline.createParallel().beginParallel()
-						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
-						.push(Tween.to(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(table.getY() - 50)
-								.setCallback(new TweenCallback() {
-
-									@Override
-									public void onEvent(int type, BaseTween<?> source) {
-										MenuUtils.disposeExit();
-										Gdx.app.exit();
-									}
-								}))
-						.end().start(tweenManager);
-			}
-		});
 
 		// putting stuff together
 		table.setPosition(0, 20);
@@ -157,6 +100,69 @@ public class MainMenuScreen implements Screen {
 		Tween.from(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(Gdx.graphics.getHeight() / 8).start(tweenManager);
 
 		tweenManager.update(Gdx.graphics.getDeltaTime());
+		
+		buttonPlay.addListener(new ClickListener() {
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if(GameClient.isLoaded()) {
+					MainMenuSFX.playClick();
+					
+					Timeline.createParallel().beginParallel()
+					.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
+					.push(Tween.to(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(table.getY() - 50)
+							.setCallback(new TweenCallback() {
+	
+								@Override
+								public void onEvent(int type, BaseTween<?> source) {
+									((Game) Gdx.app.getApplicationListener()).setScreen(new GameModeScreen());
+								}
+							}))
+					.end().start(tweenManager);
+				}
+			}
+		});
+		
+		buttonSettings.addListener(new ClickListener() {
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				MainMenuSFX.playClick();
+				
+				Timeline.createParallel().beginParallel()
+						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
+						.push(Tween.to(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(table.getY() - 50)
+								.setCallback(new TweenCallback() {
+
+									@Override
+									public void onEvent(int type, BaseTween<?> source) {
+										((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen());
+									}
+								}))
+						.end().start(tweenManager);
+			}
+		});
+		
+		buttonExit.addListener(new ClickListener() {
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				MainMenuSFX.playClick();
+				
+				Timeline.createParallel().beginParallel()
+						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
+						.push(Tween.to(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(table.getY() - 50)
+								.setCallback(new TweenCallback() {
+
+									@Override
+									public void onEvent(int type, BaseTween<?> source) {
+										MenuUtils.disposeExit();
+										Gdx.app.exit();
+									}
+								}))
+						.end().start(tweenManager);
+			}
+		});
 		
 	}
 

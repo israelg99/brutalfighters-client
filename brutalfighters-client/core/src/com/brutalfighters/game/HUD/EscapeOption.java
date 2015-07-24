@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.brutalfighters.game.basic.GameLoopManager;
 import com.brutalfighters.game.menu.MenuUtils;
 import com.brutalfighters.game.multiplayer.GameClient;
-import com.brutalfighters.game.multiplayer.packets.Packet5EscapeMatch;
 import com.brutalfighters.game.screen.MainMenuScreen;
 import com.brutalfighters.game.screen.SettingsScreen;
 import com.brutalfighters.game.sound.BGM;
@@ -53,6 +52,7 @@ public enum EscapeOption {
 
 		@Override
 		public void trigger() {
+			escapeMatch();
 			GameLoopManager.Quit();
 			disposeExit();
 			Gdx.app.exit();
@@ -64,8 +64,8 @@ public enum EscapeOption {
 	public abstract void trigger();
 	
 	public static void escapeMatch() {
-		GameClient.sendPacketTCP(new Packet5EscapeMatch());
-		GameClient.removeListeners();
+		GameClient.sentEscapedTCP();
+		GameClient.setConnectListener();
 	}
 	
 	private static void disposeExit() {

@@ -44,12 +44,12 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		GameLoopManager.Resume(); // IDK EVEN WHY PUT IT ALSO IN CONSTRUCTOR && HERE.
+		GameLoopManager.Load(); // IDK EVEN WHY PUT IT ALSO IN CONSTRUCTOR && HERE.
 	}
 
 	@Override
 	public void hide() {
-		System.err.println("Quiting the game! BITCH!"); //$NON-NLS-1$
+		System.err.println("Quiting the game :("); //$NON-NLS-1$
 		GameLoopManager.Quit();
 		dispose();
 		

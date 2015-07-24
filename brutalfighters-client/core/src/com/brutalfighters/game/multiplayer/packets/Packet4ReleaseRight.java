@@ -1,5 +1,5 @@
 package com.brutalfighters.game.multiplayer.packets;
 
-public class Packet4ReleaseRight extends ClosedMatchPacket {
+public class Packet4ReleaseRight extends GameMatchPacket {
 
 }

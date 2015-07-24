@@ -2,10 +2,10 @@ package com.brutalfighters.game.multiplayer;
 
 import com.brutalfighters.game.buffs.BuffData;
 import com.brutalfighters.game.flags.Flag;
-import com.brutalfighters.game.multiplayer.packets.ClosedMatchPacket;
-import com.brutalfighters.game.multiplayer.packets.OpenMatchPacket;
+import com.brutalfighters.game.multiplayer.packets.GameMatchPacket;
+import com.brutalfighters.game.multiplayer.packets.ConnectGameMatch;
 import com.brutalfighters.game.multiplayer.packets.Packet;
-import com.brutalfighters.game.multiplayer.packets.Packet0Connect;
+import com.brutalfighters.game.multiplayer.packets.Packet0ConnectMatch;
 import com.brutalfighters.game.multiplayer.packets.Packet1Connected;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchFinished;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchOver;
@@ -42,19 +42,23 @@ public class GameClient {
 	private static boolean isConnected;
 	private static NetworkListener networkListener;
 	private static ConnectListener connectListener;
+	private static boolean isLoaded = false;
 	
 	public static void Load() {
-		client = new MPClient();
-		registerPackets();
-		loadListeners();
+		if(!isLoaded()) {
+			client = new MPClient();
+			registerPackets();
+			loadListeners();
+			isLoaded(true);
+		}
 	}
 	
 	private static void registerPackets() {
 		client.getKryo().register(Packet.class);
-		client.getKryo().register(ClosedMatchPacket.class);
-		client.getKryo().register(OpenMatchPacket.class);
+		client.getKryo().register(GameMatchPacket.class);
+		client.getKryo().register(ConnectGameMatch.class);
 		
-		client.getKryo().register(Packet0Connect.class);
+		client.getKryo().register(Packet0ConnectMatch.class);
 		client.getKryo().register(PlayerData.class);
 		client.getKryo().register(PlayerData[].class);
 		client.getKryo().register(BuffData.class);
@@ -96,6 +100,13 @@ public class GameClient {
 		client.getKryo().register(Packet5EscapeMatch.class);
 	}
 	
+	public static boolean isLoaded() {
+		return isLoaded;
+	}
+	private static void isLoaded(boolean load) {
+		isLoaded = load;
+	}
+	
 	private static void loadListeners() {
 		networkListener = new NetworkListener();
 		connectListener = new ConnectListener();
@@ -112,10 +123,11 @@ public class GameClient {
 		client.getClient().removeListener(listener);
 	}
 	
-	public static void setConnection(String fighter) {
-		Packet0Connect cnct = new Packet0Connect();
+	public static void setConnection(GameMode gamemode, String fighter) {
+		Packet0ConnectMatch cnct = new Packet0ConnectMatch();
 		cnct.username = "Username"; //$NON-NLS-1$
 		cnct.fighter = fighter;
+		cnct.gamemode = gamemode.name();
 		sendPacketTCP(cnct);
 	}
 	
@@ -131,6 +143,9 @@ public class GameClient {
 	}
 	public static void sendPacketUDP(Packet p) {
 		client.sendPacketUDP(p);
+	}
+	public static void sentEscapedTCP() {
+		client.sendPacketTCP(new Packet5EscapeMatch());
 	}
 	
 	public static NetworkListener getNetworkListener() {

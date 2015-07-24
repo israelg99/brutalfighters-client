@@ -19,7 +19,7 @@ public class NetworkListener extends Listener {
 	 		   if(object instanceof Packet2Players) {
 	 			   Update.updateGameData((Packet2Players)object);
 	 		   } else if(object instanceof Packet2Warmup) {
-	 			   Update.updateWarmup((Packet2Warmup)object);
+	 			  // Update.updateWarmup((Packet2Warmup)object);
 	 			   
 	 		   } else if(object instanceof Packet2MatchFinished) {
 	 			   GameLoopManager.matchFinished((Packet2MatchFinished)object);

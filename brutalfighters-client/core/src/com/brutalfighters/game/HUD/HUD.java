@@ -1,5 +1,8 @@
 package com.brutalfighters.game.HUD;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,7 +13,6 @@ import com.brutalfighters.game.multiplayer.packets.Packet2MatchFinished;
 import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.resources.Resources;
 import com.brutalfighters.game.sound.SoundUtil;
-import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public class HUD {
@@ -20,12 +22,14 @@ public class HUD {
 	private static final int barPad = 50;
 	
 	private static Sprite score;
-	private static int WARMUP;
+	private static float WARMUP;
 	
 	private static Sound tick;
 	
 	private static Sprite victory, defeat;
 	private static int teamWon = -1;
+	
+	private static Timer warmupTimer;
 	
 	public static void Load() {
 		isEscapeMenuShown = false;
@@ -40,22 +44,30 @@ public class HUD {
 		victory.setSize(1000, 352);
 		defeat.setSize(1000, 352);
 		
-		WARMUP = ServerInfo.getWarmup()/1000; // Just so it won't be null
-		setWarmup(ServerInfo.getWarmup());
-		
 		teamWon = -1;
+		
+		warmupTimer = new Timer();
 	}	
 	
-	public static void setWarmup(int wu) {
-		int temp = wu/1000;
-		if(WARMUP - temp >= 1) {
-			SoundUtil.playSound(tick);
+	public static void setWarmup(float wu) {
+		warmupTimer.cancel();
+		warmupTimer = new Timer();
+		WARMUP = wu;
+		if(isWarmup()) {
+			warmupTimer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					if(isWarmup()) {
+						SoundUtil.playSound(tick);
+						WARMUP-=1000;
+					}
+				}
+			}, 1000, 1000);
 		}
-		WARMUP = temp;
 	}
 	
 	private static void drawWarmup() {
-		GameFont.Warmup.getFont().draw(Render.batch, Integer.toString(WARMUP), Render.getResX()/2-32, Render.getResY()/2+64);
+		GameFont.Warmup.getFont().draw(Render.batch, Integer.toString((int)WARMUP/1000), Render.getResX()/2-32, Render.getResY()/2+64);
 	}
 	
 	private static void drawRespawn() {
@@ -124,10 +136,6 @@ public class HUD {
 	public static void showEscapeMenu(boolean show) {
 		isEscapeMenuShown = show;
 	}
-	
-	public static void dispose() {
-		EscapeMenu.dispose();
-	}
 
 	public static int barWidth() {
 		return barWidth;
@@ -164,7 +172,12 @@ public class HUD {
 	}
 
 	public static boolean isWarmup() {
-		return WARMUP > 0;
+		if(WARMUP <= 0) {
+			warmupTimer.cancel();
+			warmupTimer.purge();
+			return false;
+		}
+		return true;
 	}
 	
 	public static boolean toBlur() {
@@ -180,6 +193,12 @@ public class HUD {
 	}
 	public static void setTeamWon(Packet2MatchFinished packet) {
 		HUD.teamWon = packet.teamWon;
+	}
+	
+	public static void dispose() {
+		EscapeMenu.dispose();
+		warmupTimer.cancel();
+		warmupTimer.purge();
 	}
 	
 }

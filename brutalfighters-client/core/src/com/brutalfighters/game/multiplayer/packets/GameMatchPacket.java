@@ -1,5 +1,5 @@
 package com.brutalfighters.game.multiplayer.packets;
 
-public class ClosedMatchPacket extends Packet {
+public class GameMatchPacket extends Packet {
 
 }

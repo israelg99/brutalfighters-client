@@ -3,22 +3,28 @@ package com.brutalfighters.game.screen;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.brutalfighters.game.HUD.GameFont;
 import com.brutalfighters.game.menu.MenuUtils;
 import com.brutalfighters.game.sound.BGM;
+import com.brutalfighters.game.sound.menu.MainMenuSFX;
 import com.brutalfighters.game.tween.ActorAccessor;
 import com.brutalfighters.game.utility.GameMath;
 
@@ -27,8 +33,6 @@ public class MatchmakingScreen implements Screen {
 	private Stage stage;
 	private Table table;
 	private TweenManager tweenManager;
-
-	private SpriteBatch batch;
 	
 	private final String FONT_NAME = new String("MainMenu"); //$NON-NLS-1$
 	private final String INDICATOR_TEXT = new String("Searching for players.."); //$NON-NLS-1$
@@ -52,15 +56,15 @@ public class MatchmakingScreen implements Screen {
 
 		tweenManager.update(delta);
 		
-		batch.begin();
+		stage.getBatch().begin();
 		
 		glyphLayout = new GlyphLayout(font, INDICATOR_TEXT);
-		font.draw(batch, INDICATOR_TEXT, (Gdx.graphics.getWidth()-glyphLayout.width)/2, (Gdx.graphics.getHeight()-glyphLayout.height)/2-MenuUtils.gameLogo.getHeight()/2);
+		font.draw(stage.getBatch(), INDICATOR_TEXT, (Gdx.graphics.getWidth()-glyphLayout.width)/2, (Gdx.graphics.getHeight()-glyphLayout.height)/2-MenuUtils.gameLogo.getHeight()/2);
 		
 		glyphLayout = new GlyphLayout(font, waiting_lines[currentLineIndex]);
-		font.draw(batch, waiting_lines[currentLineIndex], (Gdx.graphics.getWidth()-glyphLayout.width)/2, (Gdx.graphics.getHeight()-glyphLayout.height)/2-MenuUtils.gameLogo.getHeight()/2-glyphLayout.height*2);
+		font.draw(stage.getBatch(), waiting_lines[currentLineIndex], (Gdx.graphics.getWidth()-glyphLayout.width)/2, (Gdx.graphics.getHeight()-glyphLayout.height)/2-MenuUtils.gameLogo.getHeight()/2-glyphLayout.height*2);
 		
-		batch.end();
+		stage.getBatch().end();
 		
 		BGM.update();
 		
@@ -82,12 +86,15 @@ public class MatchmakingScreen implements Screen {
 		stage = new Stage();
 
 		Gdx.input.setInputProcessor(stage);
-
+		
+		// Not in MenuUtils because different listeners will apply to the button.
+		ImageButton logo = new ImageButton(MenuUtils.gameLogo.getDrawable());
+		
 		table = new Table(MenuUtils.skin);
 		table.setFillParent(true);
 
 		// putting stuff together
-		table.add(MenuUtils.gameLogo).spaceBottom(0).padBottom(MenuUtils.logoPadBot).row();
+		table.add(logo).spaceBottom(0).padBottom(MenuUtils.logoPadBot).row();
 
 		stage.addActor(MenuUtils.menuBG);
 		stage.addActor(table);
@@ -107,8 +114,6 @@ public class MatchmakingScreen implements Screen {
 
 		tweenManager.update(Gdx.graphics.getDeltaTime());
 		
-		batch = new SpriteBatch();
-		
 		font = GameFont.valueOf(FONT_NAME).getFont();
 		waiting_lines = Gdx.files.internal("menu/text/waiting_lines.txt").readString().split("\\r?\\n"); //$NON-NLS-1$ //$NON-NLS-2$
 		
@@ -119,11 +124,29 @@ public class MatchmakingScreen implements Screen {
 			@Override
 			public void run() {
 				currentLineIndex = GameMath.nextInt(0, waiting_lines.length-1);
-				System.out.println(currentLineIndex);
 			}
 		}, WAITING, WAITING);
 		
-		System.out.println("No need to initialize the Game Client as it was already in the Fighter Selection menu!"); //$NON-NLS-1$
+		
+		logo.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				MainMenuSFX.playClick();
+				
+				Timeline.createParallel().beginParallel()
+				.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
+				.push(Tween.to(table, ActorAccessor.Y, MenuUtils.GLIDE_DURATION).target(table.getY() - 50)
+						.setCallback(new TweenCallback() {
+
+							@Override
+							public void onEvent(int type, BaseTween<?> source) {
+								MenuUtils.quitLobby();
+								((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
+							}
+						}))
+				.end().start(tweenManager);
+			}
+		});
 		
 	}
 
@@ -132,7 +155,6 @@ public class MatchmakingScreen implements Screen {
 		timer.cancel();
 		timer.purge();
 		dispose();
-		
 	}
 
 	@Override
@@ -150,8 +172,6 @@ public class MatchmakingScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		batch.dispose();
-		
 	}
 
 }

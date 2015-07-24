@@ -82,7 +82,7 @@ public class SettingsScreen implements Screen {
 		// Blue Check Box Style
 		TextureAtlas cbsAtlas = new TextureAtlas(Gdx.files.internal("menu/ui/blue_checkbox.atlas")); //$NON-NLS-1$
 		MenuUtils.skin.addRegions(cbsAtlas);
-		CheckBoxStyle cbs = new CheckBoxStyle(MenuUtils.skin.getDrawable("checkbox"), MenuUtils.skin.getDrawable("blue_v"), MenuUtils.buttonText, Color.WHITE); //$NON-NLS-1$ //$NON-NLS-2$
+		CheckBoxStyle cbs = new CheckBoxStyle(MenuUtils.skin.getDrawable("checkbox"), MenuUtils.skin.getDrawable("blue_v"), MenuUtils.menuFont, Color.WHITE); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		
 		// PP Effects
@@ -97,7 +97,7 @@ public class SettingsScreen implements Screen {
 			}
 		});
 		
-		Label pp_cb = new Label("Post  Processing  Effects :", new LabelStyle(MenuUtils.buttonText, Color.WHITE)); //$NON-NLS-1$
+		Label pp_cb = new Label("Post  Processing  Effects :", new LabelStyle(MenuUtils.menuFont, Color.WHITE)); //$NON-NLS-1$
 		
 		
 		// Volume
@@ -114,7 +114,7 @@ public class SettingsScreen implements Screen {
 			
 		});
 		
-		Label volText = new Label("Volume :", new LabelStyle(MenuUtils.buttonText, Color.WHITE)); //$NON-NLS-1$
+		Label volText = new Label("Volume :", new LabelStyle(MenuUtils.menuFont, Color.WHITE)); //$NON-NLS-1$
 		
 		// Motion Blur
 		
@@ -130,7 +130,7 @@ public class SettingsScreen implements Screen {
 			
 		});
 		
-		Label motionBlurText = new Label("Motion  Blur :", new LabelStyle(MenuUtils.buttonText, Color.WHITE)); //$NON-NLS-1$
+		Label motionBlurText = new Label("Motion  Blur :", new LabelStyle(MenuUtils.menuFont, Color.WHITE)); //$NON-NLS-1$
 		
 		// Back
 		
