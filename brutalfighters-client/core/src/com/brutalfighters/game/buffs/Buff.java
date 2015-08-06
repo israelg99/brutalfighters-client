@@ -2,7 +2,8 @@ package com.brutalfighters.game.buffs;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.brutalfighters.game.basic.Render;
-import com.brutalfighters.game.effects.particles.Particles;
+import com.brutalfighters.game.effects.particles.ParticleEffects;
+import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.utility.GameMath;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
@@ -17,7 +18,7 @@ public enum Buff {
 		@Override
 		public void draw(PlayerData p, BuffData buff) {
 			if(GameMath.nextBoolean(90)) {
-				Particles.add("red_bats", p.posx, p.posy, false); //$NON-NLS-1$
+				ParticleEffects.add(ParticlesCollection.RedBats, p.posx, p.posy, false);
 			}
 		}
 		
@@ -29,7 +30,7 @@ public enum Buff {
 		
 		@Override
 		public void draw(PlayerData p, BuffData buff) {
-			Render.batch.draw(ice, RenderUtility.CenterX(p.posx, p.width+p.width/2), RenderUtility.CenterY(p.posy, p.height+p.height/2), p.width+p.width/2, p.height+p.height/2);
+			Render.getSpriteBatch().draw(ice, RenderUtility.CenterX(p.posx, p.width+p.width/2), RenderUtility.CenterY(p.posy, p.height+p.height/2), p.width+p.width/2, p.height+p.height/2);
 		}
 		
 	},
@@ -39,7 +40,7 @@ public enum Buff {
 		@Override
 		public void draw(PlayerData p, BuffData buff) {
 			if(GameMath.nextBoolean(90)) {
-				Particles.add("burn", p.posx, p.posy, false); //$NON-NLS-1$
+				ParticleEffects.add(ParticlesCollection.Burn, p.posx, p.posy, false);
 			}
 		}
 		
@@ -47,5 +48,9 @@ public enum Buff {
 	
 	public void draw(PlayerData p, BuffData buff) {
 		
+	}
+	
+	public static void init() {
+		values();
 	}
 }

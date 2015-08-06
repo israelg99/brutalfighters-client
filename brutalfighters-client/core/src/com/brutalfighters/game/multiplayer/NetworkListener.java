@@ -7,7 +7,6 @@ import com.brutalfighters.game.multiplayer.packets.Packet;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchFinished;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchOver;
 import com.brutalfighters.game.multiplayer.packets.Packet2Players;
-import com.brutalfighters.game.multiplayer.packets.Packet2Warmup;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
@@ -18,9 +17,6 @@ public class NetworkListener extends Listener {
  		   if(!GameLoopManager.isQuitting()) {
 	 		   if(object instanceof Packet2Players) {
 	 			   Update.updateGameData((Packet2Players)object);
-	 		   } else if(object instanceof Packet2Warmup) {
-	 			  // Update.updateWarmup((Packet2Warmup)object);
-	 			   
 	 		   } else if(object instanceof Packet2MatchFinished) {
 	 			   GameLoopManager.matchFinished((Packet2MatchFinished)object);
 	 			   
@@ -30,7 +26,7 @@ public class NetworkListener extends Listener {
 	 			   Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
-							Update.matchOver();
+							GameLoopManager.matchOver();
 						}
 	 			   });
 	 		   }

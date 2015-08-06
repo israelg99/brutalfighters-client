@@ -23,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.brutalfighters.game.HUD.GameFont;
 import com.brutalfighters.game.menu.MenuUtils;
-import com.brutalfighters.game.sound.BGM;
+import com.brutalfighters.game.sound.BGMManager;
 import com.brutalfighters.game.sound.menu.MainMenuSFX;
 import com.brutalfighters.game.tween.ActorAccessor;
 import com.brutalfighters.game.utility.GameMath;
@@ -66,7 +66,7 @@ public class MatchmakingScreen implements Screen {
 		
 		stage.getBatch().end();
 		
-		BGM.update();
+		BGMManager.update();
 		
 	}
 

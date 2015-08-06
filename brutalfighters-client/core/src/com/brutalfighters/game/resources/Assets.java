@@ -5,7 +5,9 @@ import com.brutalfighters.game.HUD.GameFont;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.HUD.KillsCounter;
 import com.brutalfighters.game.basic.Render;
-import com.brutalfighters.game.effects.particles.Particles;
+import com.brutalfighters.game.buffs.Buff;
+import com.brutalfighters.game.effects.particles.ParticleEffects;
+import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.effects.text.TextEffects;
 import com.brutalfighters.game.effects.text.TextFX;
 import com.brutalfighters.game.flags.FlagHandler;
@@ -24,11 +26,12 @@ import com.brutalfighters.game.player.ClientPlayer;
 import com.brutalfighters.game.player.Player;
 import com.brutalfighters.game.player.Players;
 import com.brutalfighters.game.sound.BGM;
-import com.brutalfighters.game.sound.SFX;
+import com.brutalfighters.game.sound.BGMManager;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.sound.menu.MainMenuSFX;
 import com.brutalfighters.game.utility.Score;
 
-public class Resources {
+public class Assets {
 	
 	public static GameMap map;
 	public static Background bg;
@@ -62,19 +65,29 @@ public class Resources {
 		System.out.println("Finished initializing the Projectiles!"); //$NON-NLS-1$
 		
 		// Initialize the Text Effects
-		System.err.println("Initializing the Text Effects!"); //$NON-NLS-1$
-		textEffects = new TextEffects();
-		System.out.println("Finished initializing the Particles!"); //$NON-NLS-1$
+		System.err.println("Loading the Text Effects!"); //$NON-NLS-1$
+		TextEffects.load();
+		System.out.println("Finished loading the ParticlesCollection!"); //$NON-NLS-1$
 		
-		// Loading the Particles
-		System.err.println("Loading the Particles!"); //$NON-NLS-1$
-		Particles.Load();
-		System.out.println("Finished loading the Particles!"); //$NON-NLS-1$
+		// Initializing the ParticlesCollection
+		System.err.println("Loading the Particle Effects!"); //$NON-NLS-1$
+		ParticleEffects.load();
+		System.out.println("Finished loading the Particle Effects!"); //$NON-NLS-1$
 		
-		// Loading the SFX Sound
-		System.err.println("Loading the SFX Sound!"); //$NON-NLS-1$
-		SFX.Load();
-		System.out.println("Finished loading the SFX Sound!"); //$NON-NLS-1$
+		// Initializing the ParticlesCollection
+		System.err.println("Initializing the ParticlesCollection!"); //$NON-NLS-1$
+		ParticlesCollection.init();
+		System.out.println("Finished initializing the ParticlesCollection!"); //$NON-NLS-1$
+	
+		// Initializing the Buffs
+		System.err.println("Initializing the Buffs!"); //$NON-NLS-1$
+		Buff.init();
+		System.out.println("Finished initializing the Buffs!"); //$NON-NLS-1$
+		
+		// Loading the GameSFXManager Sound
+		System.err.println("Initializing the GameSFX Sound!"); //$NON-NLS-1$
+		GameSFX.init();
+		System.out.println("Finished initializing the GameSFX Sound!"); //$NON-NLS-1$
 		
 		// Load The Teleports
 		System.err.println("Loading the Teleports!"); //$NON-NLS-1$
@@ -88,7 +101,7 @@ public class Resources {
 		
 		// Load the Render Class
 		System.err.println("Loading the Render Class!"); //$NON-NLS-1$
-		Render.Load();
+		Render.load();
 		System.out.println("Finished loading the Render Class!"); //$NON-NLS-1$
 		
 		// Load The (Client)Player
@@ -155,19 +168,23 @@ public class Resources {
 		}
 	}
 	
-	public static void LoadGlobalResources() { // Resources needed for not only the game, but for other parts like the MainMenu.
+	public static void LoadGlobalResources() { // Assets needed for not only the game, but for other parts like the MainMenu.
 		
 		System.err.println("Loading the Main Menu Utils!"); //$NON-NLS-1$
 		MenuUtils.Load();
 		System.out.println("Finished loading the Main Menu Utils!"); //$NON-NLS-1$
 		
-		System.err.println("Loading the Main Menu SFX!"); //$NON-NLS-1$
+		System.err.println("Loading the Main Menu Main Menu SFX!"); //$NON-NLS-1$
 		MainMenuSFX.Load();
-		System.out.println("Finished loading the Main Menu SFX!"); //$NON-NLS-1$
+		System.out.println("Finished loading the Main Menu Main Menu SFX!"); //$NON-NLS-1$
 		
-		System.err.println("Loading the BGM!"); //$NON-NLS-1$
-		BGM.Load();
-		System.out.println("Finished loading the BGM!"); //$NON-NLS-1$
+		System.err.println("Initializing the BGM!"); //$NON-NLS-1$
+		BGM.init();
+		System.out.println("Finished initializing the BGM!"); //$NON-NLS-1$
+		
+		System.err.println("Loading the BGMManager!"); //$NON-NLS-1$
+		BGMManager.Load();
+		System.out.println("Finished loading the BGMManager!"); //$NON-NLS-1$
 		
 		System.err.println("Initializing the Fonts!"); //$NON-NLS-1$
 		GameFont.init();
@@ -189,5 +206,9 @@ public class Resources {
 		}).start();
 		
 		globalResourcesLoaded = true;
+	}
+
+	public static void dispose() {
+		map.dispose();
 	}
 }

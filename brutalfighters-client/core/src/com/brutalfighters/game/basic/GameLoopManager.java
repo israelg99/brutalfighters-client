@@ -1,21 +1,23 @@
 package com.brutalfighters.game.basic;
 
+import com.brutalfighters.game.HUD.EscapeOption;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchFinished;
-import com.brutalfighters.game.sound.SFX;
+import com.brutalfighters.game.sound.GameSFX;
+import com.brutalfighters.game.sound.GameSFXManager;
 import com.brutalfighters.game.utility.GameMath;
 
 public class GameLoopManager {
 	
 	private static boolean isQuitting;
 	private static boolean isUpdating;
-	
-	public static void Load() {
-		Resume();
+
+	public static void load() {
+		resume();
 		setUpdating(true);
 	}
 	
-	public static void tick(float delta) {
+	public static void tick() {
 		
 		if(!isQuitting()) {
 			
@@ -24,7 +26,7 @@ public class GameLoopManager {
 			
 			// Update
 			if(isUpdating()) {
-				Update.update(delta);
+				Update.update();
 			}
 			
 			// Render
@@ -34,10 +36,10 @@ public class GameLoopManager {
 		
 	}
 	
-	public static void Quit() {
+	public static void quit() {
 		isQuitting = true;
 	}
-	public static void Resume() {
+	public static void resume() {
 		isQuitting = false;
 	}
 	public static boolean isQuitting() {
@@ -55,10 +57,10 @@ public class GameLoopManager {
 		setUpdating(false);
 		HUD.setTeamWon(packet);
 		
-		if(GameMath.nextInt(1, 2) > 1) {
-			SFX.play("crowd", 0.6f); //$NON-NLS-1$
-		} else {
-			SFX.play("crowd1", 0.6f); //$NON-NLS-1$
-		}
+		GameSFXManager.playRandomCrowd();
+	}
+	
+	public static void matchOver() {
+		EscapeOption.MainMenu.trigger();
 	}
 }

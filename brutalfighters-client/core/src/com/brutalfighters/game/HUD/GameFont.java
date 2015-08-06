@@ -26,7 +26,7 @@ public enum GameFont {
 		
 	},
 	
-	Info(TextureHandle.getFont("fonts/CaviarDreams.ttf", 32, Color.RED, true, false)) { //$NON-NLS-1$
+	DebugInfo(TextureHandle.getFont("fonts/CaviarDreams.ttf", 32, Color.RED, true, false)) { //$NON-NLS-1$
 		
 	},
 	

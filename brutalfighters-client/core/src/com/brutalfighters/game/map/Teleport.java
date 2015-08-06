@@ -2,11 +2,12 @@ package com.brutalfighters.game.map;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.basic.Render;
-import com.brutalfighters.game.basic.Update;
-import com.brutalfighters.game.effects.particles.Particles;
+import com.brutalfighters.game.effects.particles.ParticleEffects;
+import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.math.Vec2;
-import com.brutalfighters.game.resources.Resources;
+import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
@@ -33,7 +34,7 @@ public class Teleport {
 		this.pos = pos;
 		this.targetPos = targetPos;
 		
-		Particles.add("tp_sparks", pos.getX(), pos.getY()+35, true); //$NON-NLS-1$
+		ParticleEffects.add(ParticlesCollection.TP_Spark, pos.getX(), pos.getY()+35, true);
 	}
 	
 	public Teleport(int x, int y, int tx, int ty) { // x,y = pos,   tx,ty = targetPos
@@ -41,7 +42,7 @@ public class Teleport {
 	}
 	
 	public Teleport(int x, int y, String tpos) {
-		this(new Vec2(Resources.map.toPixelX(x), Resources.map.toPixelY(y)), new Vec2(Resources.map.toPixelX(Integer.parseInt(tpos.split(",")[0])), Resources.map.toPixelY(Integer.parseInt(tpos.split(",")[1])))); //$NON-NLS-1$ //$NON-NLS-2$
+		this(new Vec2(Assets.map.toPixelX(x), Assets.map.toPixelY(y)), new Vec2(Assets.map.toPixelX(Integer.parseInt(tpos.split(",")[0])), Assets.map.toPixelY(Integer.parseInt(tpos.split(",")[1])))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
 	public Vec2 getPos() {
@@ -52,11 +53,11 @@ public class Teleport {
 	}
 	
 	public static TexturePacker getDraw(Vec2 pos) {
-		return new TexturePacker(AnimationHandler.getAnimation("right", teleport_frames, 0.1f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(pos.getX(), WIDTH), RenderUtility.CenterY(pos.getY(), HEIGHT)); //$NON-NLS-1$
+		return new TexturePacker(AnimationHandler.getAnimation("right", teleport_frames, 0.1f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(pos.getX(), WIDTH), RenderUtility.CenterY(pos.getY(), HEIGHT)); //$NON-NLS-1$
 	}
 	
 	public void drawTeleport() {
 		TexturePacker sprite = getDraw(pos);
-		Render.batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY() + GROUND_ADD, sprite.getWidth(), sprite.getHeight());
+		Render.getSpriteBatch().draw(sprite.getTexture(), sprite.getX(), sprite.getY() + GROUND_ADD, sprite.getWidth(), sprite.getHeight());
 	}
 }

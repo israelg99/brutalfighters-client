@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.brutalfighters.game.menu.MenuUtils;
 import com.brutalfighters.game.multiplayer.GameClient;
 import com.brutalfighters.game.multiplayer.GameMode;
-import com.brutalfighters.game.sound.BGM;
+import com.brutalfighters.game.sound.BGMManager;
 import com.brutalfighters.game.sound.menu.MainMenuSFX;
 import com.brutalfighters.game.tween.ActorAccessor;
 
@@ -45,7 +45,7 @@ public class FighterSelectScreen implements Screen {
 
 		tweenManager.update(delta);
 		
-		BGM.update();
+		BGMManager.update();
 		
 	}
 

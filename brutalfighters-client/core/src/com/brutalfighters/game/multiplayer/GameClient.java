@@ -2,15 +2,14 @@ package com.brutalfighters.game.multiplayer;
 
 import com.brutalfighters.game.buffs.BuffData;
 import com.brutalfighters.game.flags.Flag;
-import com.brutalfighters.game.multiplayer.packets.GameMatchPacket;
 import com.brutalfighters.game.multiplayer.packets.ConnectGameMatch;
+import com.brutalfighters.game.multiplayer.packets.GameMatchPacket;
 import com.brutalfighters.game.multiplayer.packets.Packet;
 import com.brutalfighters.game.multiplayer.packets.Packet0ConnectMatch;
 import com.brutalfighters.game.multiplayer.packets.Packet1Connected;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchFinished;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchOver;
 import com.brutalfighters.game.multiplayer.packets.Packet2Players;
-import com.brutalfighters.game.multiplayer.packets.Packet2Warmup;
 import com.brutalfighters.game.multiplayer.packets.Packet3InputAAttack;
 import com.brutalfighters.game.multiplayer.packets.Packet3InputJump;
 import com.brutalfighters.game.multiplayer.packets.Packet3InputLeft;
@@ -71,7 +70,6 @@ public class GameClient {
 		client.getKryo().register(Score.class);
 		client.getKryo().register(Packet1Connected.class);
 		client.getKryo().register(Packet2Players.class);
-		client.getKryo().register(Packet2Warmup.class);
 		client.getKryo().register(Packet2MatchOver.class);
 		client.getKryo().register(Packet2MatchFinished.class);
 		

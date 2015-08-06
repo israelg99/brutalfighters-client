@@ -4,10 +4,10 @@ import java.awt.Rectangle;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.basic.Render;
-import com.brutalfighters.game.basic.Update;
 import com.brutalfighters.game.player.PlayerData;
-import com.brutalfighters.game.resources.Resources;
+import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.utility.CollisionDetection;
 import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
@@ -31,12 +31,12 @@ public class FlagHandler {
 	}
 	
 	public static TexturePacker getDraw(int index, Flag flag) {
-		return new TexturePacker(AnimationHandler.getAnimation(flag.flip, flagSprite[index], DELAY, Animation.PlayMode.LOOP).getKeyFrame(Update.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(flag.posx, WIDTH), RenderUtility.CenterY(flag.posy, HEIGHT));
+		return new TexturePacker(AnimationHandler.getAnimation(flag.flip, flagSprite[index], DELAY, Animation.PlayMode.LOOP).getKeyFrame(GameTime.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(flag.posx, WIDTH), RenderUtility.CenterY(flag.posy, HEIGHT));
 	}
 	
 	public static void drawFlag(int index, Flag flag) {
 		TexturePacker sprite = getDraw(index, flag);
-		Render.batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+		Render.getSpriteBatch().draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
 	}
 	
 	public static void updateFlags(Flag[] flags) {
@@ -47,19 +47,19 @@ public class FlagHandler {
 	public static void updateFlag(int t, Flag flag) {
 		if(flag.isTaken) {
 			// Check and update flag : players
-			for(int i = 0; i < Resources.players.getPlayers().length; i++) {
-				if(updateFlag(flag, Resources.players.getPlayerData(i), t)) {
+			for(int i = 0; i < Assets.players.getPlayers().length; i++) {
+				if(updateFlag(flag, Assets.players.getPlayerData(i), t)) {
 					return;
 				}
 			}
 			
 			// Check and update flag : client
-			updateFlag(flag, Resources.player.getPlayer(), t);
+			updateFlag(flag, Assets.player.getPlayer(), t);
 			
 		} else {
 			flag.posx += ServerInfo.syncServer(flag.velx);
 			
-			if(!Resources.map.intersects(flag.posx, flag.posy-ServerInfo.FLAG_HEIGHT/2+flag.vely, getBounds(flag))) {
+			if(!Assets.map.intersects(flag.posx, flag.posy-ServerInfo.FLAG_HEIGHT/2+flag.vely, getBounds(flag))) {
 				flag.posy += ServerInfo.syncServer(flag.vely);
 			}
 		}

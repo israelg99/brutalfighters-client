@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.brutalfighters.game.menu.MenuUtils;
-import com.brutalfighters.game.sound.BGM;
+import com.brutalfighters.game.sound.BGMManager;
 import com.brutalfighters.game.tween.SpriteAccessor;
 
 public class CompanySplashScreen implements Screen {
@@ -62,7 +62,7 @@ public class CompanySplashScreen implements Screen {
 			@Override
 			public void onEvent(int type, BaseTween<?> source) {
 				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
-				BGM.setMainMenu();
+				BGMManager.setMainMenu();
 			}
 		}).start(tweenManager);
 

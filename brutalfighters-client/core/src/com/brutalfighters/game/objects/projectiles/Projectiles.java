@@ -59,7 +59,7 @@ public class Projectiles {
 			
 			p.update();
 			
-			Render.batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+			Render.getSpriteBatch().draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
 		}
 	}
 	public void renderExpProjectiles() {
@@ -70,7 +70,7 @@ public class Projectiles {
 			
 			if(!p.getAnimation().isAnimationFinished(p.getTimer())) {
 				TexturePacker sprite = p.getSprite();
-				Render.batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+				Render.getSpriteBatch().draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
 			} else {
 				removeExp(i);
 			}

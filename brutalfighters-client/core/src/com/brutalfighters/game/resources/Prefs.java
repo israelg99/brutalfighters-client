@@ -2,7 +2,7 @@ package com.brutalfighters.game.resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.brutalfighters.game.sound.BGM;
+import com.brutalfighters.game.sound.BGMManager;
 
 public class Prefs {
 	
@@ -33,7 +33,7 @@ public class Prefs {
 	
 	public static void setVolume(float vol) {
 		getSettings().putFloat("volume", vol); //$NON-NLS-1$
-		BGM.updateVolume();
+		BGMManager.updateVolume();
 	}
 	public static float getVolume() {
 		return getSettings().getFloat("volume"); //$NON-NLS-1$

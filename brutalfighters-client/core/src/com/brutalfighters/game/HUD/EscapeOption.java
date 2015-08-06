@@ -7,7 +7,7 @@ import com.brutalfighters.game.menu.MenuUtils;
 import com.brutalfighters.game.multiplayer.GameClient;
 import com.brutalfighters.game.screen.MainMenuScreen;
 import com.brutalfighters.game.screen.SettingsScreen;
-import com.brutalfighters.game.sound.BGM;
+import com.brutalfighters.game.sound.BGMManager;
 
 public enum EscapeOption {
 
@@ -28,7 +28,7 @@ public enum EscapeOption {
 			Gdx.input.setCursorCatched(false);
 			EscapeMenu.disableEM();
 			escapeMatch();
-			BGM.setMainMenu();
+			BGMManager.setMainMenu();
 			((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen());
 			
 		}
@@ -42,7 +42,7 @@ public enum EscapeOption {
 			Gdx.input.setCursorCatched(false);
 			EscapeMenu.disableEM();
 			escapeMatch();
-			BGM.setMainMenu();
+			BGMManager.setMainMenu();
 			((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
 		}
 		
@@ -53,7 +53,7 @@ public enum EscapeOption {
 		@Override
 		public void trigger() {
 			escapeMatch();
-			GameLoopManager.Quit();
+			GameLoopManager.quit();
 			disposeExit();
 			Gdx.app.exit();
 			

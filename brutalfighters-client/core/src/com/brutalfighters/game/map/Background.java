@@ -8,11 +8,12 @@ import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public class Background {
 	
+	private final static int DEFAULT_divideSpeed = 100000; // 100,000
+	
 	private Sprite bg;
 	private float scrollSpeed;
 	private float imgNum;
 	private final int divideSpeed;
-	private final static int DEFAULT_divideSpeed = 100000; // 100,000
 	
 	public Background(String name, float im, int divideSpeed) {
 		bg = getProPallax(name);
@@ -25,7 +26,7 @@ public class Background {
 	}
 	
 	public void render() {
-		Render.batch.draw(bg, 0, 0, Render.getResX(), Render.getResY());
+		Render.getSpriteBatch().draw(bg, 0, 0, Render.getResX(), Render.getResY());
 	}
 	
 	public static Sprite getProPallax(String name) {

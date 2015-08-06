@@ -3,7 +3,7 @@ package com.brutalfighters.game.objects.projectiles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.brutalfighters.game.basic.Update;
+import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
 
@@ -31,7 +31,7 @@ public class Projectile {
 		return getProjectile().getAnimation(this);
 	}
 	public TextureRegion getFrame() {
-		return getAnimation().getKeyFrame(Update.getTime(), true);
+		return getAnimation().getKeyFrame(GameTime.getTime(), true);
 	}
 	public  TexturePacker getSprite() {
 		return new TexturePacker(getFrame(), this);

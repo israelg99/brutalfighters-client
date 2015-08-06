@@ -1,6 +1,6 @@
 package com.brutalfighters.game.utility;
 
-import com.brutalfighters.game.basic.Update;
+import com.brutalfighters.game.basic.GameTime;
 
 public class ServerInfo {
 	private static final int FPS = 50;
@@ -15,9 +15,9 @@ public class ServerInfo {
 	}
 	
 	public static float syncServer(float num) {
-		return num / (getFPS() / Update.getDeltaMS());
+		return num / (getFPS() / GameTime.getDeltaMS());
 	}
 	public static float getRatio() {
-		return (getFPS() / Update.getDeltaMS());
+		return (getFPS() / GameTime.getDeltaMS());
 	}
 }

@@ -76,10 +76,10 @@ public class KillsCounter {
 		float counter_width = glyphLayout.width;
 		
 		font.setColor(messageColor);
-		font.draw(Render.batch, message, (Gdx.graphics.getWidth()-(message_width+counter_width))/2, (Gdx.graphics.getHeight()/4));
+		font.draw(Render.getSpriteBatch(), message, (Gdx.graphics.getWidth()-(message_width+counter_width))/2, (Gdx.graphics.getHeight()/4));
 		
 		font.setColor(counterColor);
-		font.draw(Render.batch, prefix+getEnemiesKilled(), (Gdx.graphics.getWidth()-(message_width+counter_width))/2+message_width+25, (Gdx.graphics.getHeight()/4));
+		font.draw(Render.getSpriteBatch(), prefix+getEnemiesKilled(), (Gdx.graphics.getWidth()-(message_width+counter_width))/2+message_width+25, (Gdx.graphics.getHeight()/4));
 	}
 	
 	public void enemyKilled() {

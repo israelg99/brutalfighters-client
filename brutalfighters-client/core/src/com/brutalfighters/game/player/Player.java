@@ -6,14 +6,16 @@ import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.brutalfighters.game.HUD.HUD;
+import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.basic.Render;
-import com.brutalfighters.game.basic.Update;
 import com.brutalfighters.game.buffs.Buff;
 import com.brutalfighters.game.buffs.BuffData;
-import com.brutalfighters.game.effects.particles.Particles;
+import com.brutalfighters.game.effects.particles.ParticleEffects;
+import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.map.GameMap;
-import com.brutalfighters.game.resources.Resources;
-import com.brutalfighters.game.sound.SFX;
+import com.brutalfighters.game.resources.Assets;
+import com.brutalfighters.game.sound.GameSFX;
+import com.brutalfighters.game.sound.GameSFXManager;
 import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
 import com.brutalfighters.game.utility.rendering.TexturesPacker;
@@ -153,11 +155,11 @@ public class Player {
 	}
 	
 	public void alignGround() {
-		this.p.posy = (int)(this.p.posy / Resources.map.getTileHeight()) * Resources.map.getTileHeight() + this.p.height/2 - 1;
+		this.p.posy = (int)(this.p.posy / Assets.map.getTileHeight()) * Assets.map.getTileHeight() + this.p.height/2 - 1;
 	}
 
 	public void addDeathTime() {
-		this.deathTimer+=Update.getStateTime();
+		this.deathTimer+=GameTime.getStateTime();
 	}
 	public void resetDeathTime() {
 		this.deathTimer=0.0f;
@@ -240,16 +242,16 @@ public class Player {
 		
 		for(int i = 0; i < sprites.length(); i++) {
 			TexturePacker sprite = sprites.get(i);
-			Render.batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+			Render.getSpriteBatch().draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
 		}
 		
-		Render.batch.flush();
+		Render.getSpriteBatch().flush();
 		
-		Render.batch.end();
+		Render.getSpriteBatch().end();
 		HUD.drawHPBar(p);
 		HUD.drawMANABar(p);
 				
-		Render.batch.begin();
+		Render.getSpriteBatch().begin();
 		
 		applyBuffs();
 		
@@ -280,7 +282,7 @@ public class Player {
 	private void applyBleeding() {
 		if(getPlayer().hp < getPlayer().maxhp/4) {
 			if(getBleedingCD() <= 0) {
-				Particles.add("bleeding", getX(), getY(), false); //$NON-NLS-1$
+				ParticleEffects.add(ParticlesCollection.Bleeding, getX(), getY(), false); 
 				resetBleedingCD();
 			} else {
 				subBleedingCD();
@@ -304,13 +306,13 @@ public class Player {
 		
 		if(newP.isDead && !p.isDead) {
 			oldP.getChamp().playDeath(newP.posx);
-			if(newP.team != Resources.player.getPlayer().team) {
-				Resources.killsCounter.enemyKilled();
+			if(newP.team != Assets.player.getPlayer().team) {
+				Assets.killsCounter.enemyKilled();
 			}
 		}
 		
 		if(!p.isJump && p.onGround && newP.isJump && !newP.onGround) {
-			Particles.add("jump_dash", oldP.getX(), oldP.getY() + oldP.getBot(), true); //$NON-NLS-1$
+			ParticleEffects.add(ParticlesCollection.JumpDash, oldP.getX(), oldP.getY() + oldP.getBot(), true); 
 		}
 	}
 	
@@ -356,18 +358,21 @@ public class Player {
 	}
 	
 	public void playStepType() {
-		if(!HUD.isMatchFinished()) {
+		//if(!HUD.isMatchFinished()) {
 			if(GameMap.hasProperty("grass", getCellOn())) { //$NON-NLS-1$
-				this.steps = this.steps < SFX.ftGrassLength ? this.steps + 1 : 1;
-				SFX.playStereo("ftGrass" + this.steps, getX()); //$NON-NLS-1$
-				Particles.add("grassyWalk", getX(), getY() + getBot(), true); //$NON-NLS-1$
+				applyFootStepType(GameSFXManager.getGrassStepLength(), "GrassStep", ParticlesCollection.GrassyWalk); //$NON-NLS-1$
 			} else if(GameMap.hasProperty("dirt", getCellOn())) { //$NON-NLS-1$
-				this.steps = this.steps < SFX.ftDirtLength ? this.steps + 1 : 1;
-				SFX.playStereo("ftDirt" + this.steps, getX()); //$NON-NLS-1$
-				Particles.add("grassyWalk", getX(), getY() + getBot(), true); //$NON-NLS-1$
+				applyFootStepType(GameSFXManager.getDirtStepLength(), "DirtStep", ParticlesCollection.GrassyWalk); //$NON-NLS-1$
 			}
-		}
+		//}
 	}
+	
+	private void applyFootStepType(int stepLength, String SFX, ParticlesCollection particles) {
+		this.steps = this.steps < stepLength ? this.steps + 1 : 1;
+		GameSFXManager.playStereo(GameSFX.valueOf(SFX + this.steps), getX());
+		ParticleEffects.add(particles, getX(), getY() + getBot(), true); 
+	}
+	
 	private void applyTimers() {
 		resetDeathTime();	
 		resetSTimers();
@@ -396,23 +401,23 @@ public class Player {
 	
 	public boolean collidesBot() {
 		// BOT!
-		return Resources.map.intersectsSurroundX(this.p.posx, this.p.posy+getBot()+this.p.vely, getVelocityBounds(false, true)) || this.p.posy + this.p.vely + getBot() < Resources.map.getBotBoundary();
+		return Assets.map.intersectsSurroundX(this.p.posx, this.p.posy+getBot()+this.p.vely, getVelocityBounds(false, true)) || this.p.posy + this.p.vely + getBot() < Assets.map.getBotBoundary();
 	}
 	public boolean collidesLeft() {
 		// LEFT!
-		return Resources.map.intersectsSurroundY(this.p.posx+getLeft()+this.p.velx, this.p.posy, getVelocityBounds(true, false)) ||this.p.posx + this.p.velx + getLeft() < Resources.map.getLeftBoundary();
+		return Assets.map.intersectsSurroundY(this.p.posx+getLeft()+this.p.velx, this.p.posy, getVelocityBounds(true, false)) ||this.p.posx + this.p.velx + getLeft() < Assets.map.getLeftBoundary();
 	}
 	public boolean collidesRight() {
 		// RIGHT!
-		return Resources.map.intersectsSurroundY(this.p.posx+getRight()+this.p.velx, this.p.posy, getVelocityBounds(true, false)) || this.p.posx + this.p.velx + getRight() > Resources.map.getRightBoundary();
+		return Assets.map.intersectsSurroundY(this.p.posx+getRight()+this.p.velx, this.p.posy, getVelocityBounds(true, false)) || this.p.posx + this.p.velx + getRight() > Assets.map.getRightBoundary();
 	}
 	public boolean collidesTop() {
 		// TOP!
-		return Resources.map.intersectsSurroundX(this.p.posx, this.p.posy+getTop(), getVelocityBounds(false, true)) || this.p.posy + this.p.vely + getTop() > Resources.map.getTopBoundary();
+		return Assets.map.intersectsSurroundX(this.p.posx, this.p.posy+getTop(), getVelocityBounds(false, true)) || this.p.posy + this.p.vely + getTop() > Assets.map.getTopBoundary();
 	}
 	
 	public Cell getCellOn() {
-		return Resources.map.getCell(this.p.posx, this.p.posy + getBot());
+		return Assets.map.getCell(this.p.posx, this.p.posy + getBot());
 	}
 	
 	public boolean isFacingCollision() {

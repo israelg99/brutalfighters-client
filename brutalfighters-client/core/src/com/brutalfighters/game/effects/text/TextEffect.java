@@ -2,12 +2,13 @@ package com.brutalfighters.game.effects.text;
 
 
 public class TextEffect {
-	public String name, text;
+	public TextFX effect;
+	public String text;
 	public float x, y;
 	public int time;
 	
-	public TextEffect(String name, String text, float x, float y, int time) {
-		this.name = name;
+	public TextEffect(TextFX effect, String text, float x, float y, int time) {
+		this.effect = effect;
 		this.text = text;
 		this.x = x;
 		this.y = y;
@@ -15,6 +16,6 @@ public class TextEffect {
 	}
 	
 	public TextFX getTextFX() {
-		return TextFX.valueOf(name);
+		return effect;
 	}
 }

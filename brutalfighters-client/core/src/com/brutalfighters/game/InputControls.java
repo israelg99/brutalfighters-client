@@ -26,7 +26,7 @@ public class InputControls {
 	
 	public static final int TUTORIAL = Keys.O;
 	
-	public static final int showInfo = Keys.P;
+	public static final int DebugInfo = Keys.P;
 	public static final int TEST = Keys.T;
 	
 	public static final int EM_UP = Keys.UP;

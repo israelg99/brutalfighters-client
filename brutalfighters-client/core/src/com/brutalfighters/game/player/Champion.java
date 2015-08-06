@@ -5,11 +5,13 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.brutalfighters.game.basic.Update;
-import com.brutalfighters.game.effects.particles.Particles;
+import com.brutalfighters.game.basic.GameTime;
+import com.brutalfighters.game.effects.particles.ParticleEffects;
+import com.brutalfighters.game.effects.particles.ParticlesCollection;
+import com.brutalfighters.game.effects.text.TextEffects;
+import com.brutalfighters.game.effects.text.TextFX;
 import com.brutalfighters.game.resources.Prefs;
-import com.brutalfighters.game.resources.Resources;
-import com.brutalfighters.game.sound.SFX;
+import com.brutalfighters.game.sound.GameSFXManager;
 import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.GameMath;
 import com.brutalfighters.game.utility.ServerInfo;
@@ -71,22 +73,22 @@ public enum Champion {
 		
 		@Override
 		public TexturesPacker drawBreath(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 		
 		@Override
 		public TexturesPacker drawWalking(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.12f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.12f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 		
 		@Override
 		public TexturesPacker drawRunning(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 		
 		@Override
 		public TexturesPacker drawAAttack(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.1f, Animation.PlayMode.LOOP).getKeyFrame(Update.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.1f, Animation.PlayMode.LOOP).getKeyFrame(GameTime.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 		
 		@Override
@@ -193,22 +195,22 @@ public enum Champion {
 
 		@Override
 		public TexturesPacker drawBreath(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawWalking(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.2f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.2f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawRunning(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawAAttack(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.1f, Animation.PlayMode.LOOP).getKeyFrame(Update.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.1f, Animation.PlayMode.LOOP).getKeyFrame(GameTime.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
@@ -302,22 +304,22 @@ public enum Champion {
 
 		@Override
 		public TexturesPacker drawBreath(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawWalking(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.13f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.13f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawRunning(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawAAttack(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.12f, Animation.PlayMode.LOOP).getKeyFrame(Update.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.12f, Animation.PlayMode.LOOP).getKeyFrame(GameTime.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
@@ -419,22 +421,22 @@ public enum Champion {
 
 		@Override
 		public TexturesPacker drawBreath(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawWalking(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.13f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.13f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawRunning(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawAAttack(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.12f, Animation.PlayMode.LOOP).getKeyFrame(Update.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.12f, Animation.PlayMode.LOOP).getKeyFrame(GameTime.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
@@ -513,7 +515,7 @@ public enum Champion {
 			
 			if(pd.isDead) {
 				return drawDead(p);
-			} else if(pd.isSkilling) { // Skills SFX inside of the skill functions below
+			} else if(pd.isSkilling) { // Skills GameSFXManager inside of the skill functions below
 				p.cameraLockY(true);
 				if(pd.isSkill1) {
 					return drawSkill1(p);
@@ -533,10 +535,10 @@ public enum Champion {
 				} else if(pd.hasControl) {
 					if(p.isWalking()) {
 						if(pd.isRunning) {
-							SFX.moveStepsSFX(p, timeRunSteps);
+							GameSFXManager.moveStepsSFX(p, timeRunSteps);
 							return drawRunning(pd);
 						}
-						SFX.moveStepsSFX(p, timeWalkSteps);
+						GameSFXManager.moveStepsSFX(p, timeWalkSteps);
 						return drawWalking(pd);
 					} else if(pd.isAAttack && !pd.isFlagged) {
 						playAA(p);
@@ -579,17 +581,17 @@ public enum Champion {
 
 		@Override
 		public TexturesPacker drawWalking(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.13f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, walk_frames, 0.13f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawRunning(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, run_frames, 0.16f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
 		public TexturesPacker drawBreath(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.2f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(Update.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, breath_frames, 0.2f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 
 		@Override
@@ -633,7 +635,7 @@ public enum Champion {
 
 		@Override
 		public TexturesPacker drawAAttack(PlayerData p) {
-			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.115f, Animation.PlayMode.LOOP).getKeyFrame(Update.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
+			return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(p.flip, aattack_frames, 0.115f, Animation.PlayMode.LOOP).getKeyFrame(GameTime.getTime(), false), WIDTH, HEIGHT, RenderUtility.CenterX(p.posx, WIDTH), RenderUtility.CenterY(p.posy, HEIGHT)));
 		}
 		
 		@Override
@@ -746,8 +748,8 @@ public enum Champion {
 	
 	public void playJumpStep(Player p) {
 		PlayerData pd = p.getPlayer();
-		if(pd.isJump && pd.onGround && !pd.collidesTop) { // SFX when you hit the surface after the jump and getting ready for the next, good for design!
-			SFX.moveStepsSFX(p, timeWalkSteps);
+		if(pd.isJump && pd.onGround && !pd.collidesTop) { // GameSFXManager when you hit the surface after the jump and getting ready for the next, good for design!
+			GameSFXManager.moveStepsSFX(p, timeWalkSteps);
 			//return drawJump(p); // 	 TO LOOK IF THE JUMP IS SMOOTH ONLY TESTING!@!!!@@@!@!@!@!
 		}
 	}
@@ -762,7 +764,7 @@ public enum Champion {
 		
 		if(pd.isDead) {
 			return drawDead(p);
-		} else if(pd.isSkilling) { // Skills SFX inside of the skill functions below
+		} else if(pd.isSkilling) { // Skills GameSFXManager inside of the skill functions below
 			if(pd.isSkill1) {
 				return drawSkill1(p);
 			} else if(pd.isSkill2) {
@@ -781,10 +783,10 @@ public enum Champion {
 			} else if(pd.hasControl) {
 				if(p.isWalking()) {
 					if(pd.isRunning) {
-						SFX.moveStepsSFX(p, timeRunSteps);
+						GameSFXManager.moveStepsSFX(p, timeRunSteps);
 						return drawRunning(pd);
 					}
-					SFX.moveStepsSFX(p, timeWalkSteps);
+					GameSFXManager.moveStepsSFX(p, timeWalkSteps);
 					return drawWalking(pd);
 				} else if(pd.isAAttack && !pd.isFlagged) {
 					playAA(p);
@@ -829,23 +831,23 @@ public enum Champion {
 	private static void applyHealthParticles(Player p) {
 		PlayerData pd = p.getPlayer();
 		if(p.changedHealth() < 0) {
-			Resources.textEffects.add("BloodEffect", p); //$NON-NLS-1$
+			TextEffects.add(TextFX.BloodEffect, p); 
 			if(p.changedHealth() <= -200) {
-				Particles.add("blood_splat_big", pd.posx, pd.posy-pd.height/6, false); //$NON-NLS-1$
+				ParticleEffects.add(ParticlesCollection.BloodSplat_Big, pd.posx, pd.posy-pd.height/6, false); 
 			} else if(GameMath.nextInt(1, 2) > 1) {
-				Particles.add("blood_splat_left", pd.posx, pd.posy-pd.height/6, false); //$NON-NLS-1$
+				ParticleEffects.add(ParticlesCollection.BloodSplat_Left, pd.posx, pd.posy-pd.height/6, false); 
 			} else {
-				Particles.add("blood_splat_right", pd.posx, pd.posy-pd.height/6, false); //$NON-NLS-1$
+				ParticleEffects.add(ParticlesCollection.BloodSplat_Right, pd.posx, pd.posy-pd.height/6, false); 
 			}
 		} else if(p.changedHealth() > 0) {
-			Resources.textEffects.add("HealEffect", p); //$NON-NLS-1$
-			Particles.add("health_regen", pd.posx, pd.posy-pd.height/6, false); //$NON-NLS-1$
+			TextEffects.add(TextFX.HealEffect, p); 
+			ParticleEffects.add(ParticlesCollection.HealthRegen, pd.posx, pd.posy-pd.height/6, false); 
 		}
 	}
 	
 	private static void applyRunningParticles(PlayerData p, int trailNumber) {
 		if(p.isRunning && !p.isSkilling && p.hasControl && p.velx != 0 && GameMath.nextBoolean(70)) {
-			Particles.add("trail"+trailNumber, p.posx, p.posy, true); //$NON-NLS-1$
+			ParticleEffects.add("Trail"+trailNumber, p.posx, p.posy, true); //$NON-NLS-1$
 		}
 	}
 	

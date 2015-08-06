@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.brutalfighters.game.multiplayer.packets.Packet;
 import com.brutalfighters.game.multiplayer.packets.Packet1Connected;
-import com.brutalfighters.game.resources.Resources;
+import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.screen.GameScreen;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -19,7 +19,7 @@ public class ConnectListener extends Listener {
 	 			   Gdx.app.postRunnable(new Runnable() {
 	 				   @Override
 					public void run() {	
-	 					   Resources.LoadResources(cnct);
+	 					   Assets.LoadResources(cnct);
 	 					   GameClient.isConnected(true);
 	 					   gameScreen();
 	 				   }

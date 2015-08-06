@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.brutalfighters.game.HUD.GameFont;
 import com.brutalfighters.game.multiplayer.GameClient;
 import com.brutalfighters.game.screen.MainMenuScreen;
-import com.brutalfighters.game.sound.BGM;
+import com.brutalfighters.game.sound.BGMManager;
 
 public class MenuUtils {
 	public static float logoPadBot;
@@ -93,7 +93,7 @@ public class MenuUtils {
 	
 	public static void disposeExit() {
 		System.err.println("Disposing MenuUtils, which only happens when game exits!"); //$NON-NLS-1$
-		BGM.disposeAll();
+		BGMManager.disposeAll();
 		skin.dispose();
 	}
 }

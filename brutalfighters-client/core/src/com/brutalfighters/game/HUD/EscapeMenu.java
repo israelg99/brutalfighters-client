@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.brutalfighters.game.math.ScreenPosHandler;
-import com.brutalfighters.game.resources.Resources;
+import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public class EscapeMenu {
@@ -65,11 +65,7 @@ public class EscapeMenu {
 	
 	public static void disableEM() {
 		HUD.showEscapeMenu(false);
-		Resources.client.controlHimself(true);
+		Assets.client.controlHimself(true);
 		setID(1);
-	}
-
-	public static void dispose() {
-		
 	}
 }
