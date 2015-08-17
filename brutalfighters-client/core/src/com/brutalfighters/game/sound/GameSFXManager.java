@@ -6,7 +6,8 @@ import com.brutalfighters.game.utility.GameMath;
 
 public class GameSFXManager {
 	
-	private final static int ftLength = 2, ftGrassLength = 2, ftDirtLength = 2;
+	private final static int ftLength = 2, ftGrassLength = 2, ftDirtLength = 2,
+							ftRockLength = 2, ftIceLength = 2;
 	
 	private final static float DEFAULT_VOLUME = 0.3f;
 
@@ -18,6 +19,12 @@ public class GameSFXManager {
 	}
 	public static int getDirtStepLength() {
 		return ftDirtLength;
+	}
+	public static int getRockStepLength() {
+		return ftRockLength;
+	}
+	public static int getIceStepLength() {
+		return ftIceLength;
 	}
 	public static float getDefaultVolume() {
 		return DEFAULT_VOLUME;

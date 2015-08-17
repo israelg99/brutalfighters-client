@@ -6,7 +6,11 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 
 public enum ParticlesCollection {
 
-	GrassyWalk(loadParticle("grassyWalk.p")), //$NON-NLS-1$
+	Step_Grass(loadParticle("step_grass.p")), //$NON-NLS-1$
+	Step_Dirt(loadParticle("step_dirt.p")), //$NON-NLS-1$
+	Step_Snow(loadParticle("step_snow.p")), //$NON-NLS-1$
+	Step_Rock(loadParticle("step_rock.p")), //$NON-NLS-1$
+	
 	WalkingDust(loadParticle("walking_dust.p")), //$NON-NLS-1$
 	
 	Trail1(loadParticle("trail1.p")), //$NON-NLS-1$

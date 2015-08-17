@@ -65,18 +65,20 @@ public class Player {
 	}
 	public void setPlayer(PlayerData p) {
 
-		float posY = (p.vely == 0 || p.collidesBot || p.collidesTop) ? p.posy : this.p.posy;
-		float posX = (p.velx == 0 || p.collidesLeft || p.collidesRight) ? p.posx : this.p.posx;
-		
 		compareUpdate(p, this);
 		
-		this.p = p;
-		this.p.posy = posY;
-		this.p.posx = posX;
+		float posY = (p.vely == 0 || p.onGround || p.collidesTop) ? p.posy : getPlayer().posy;
+		float posX = (p.velx == 0 || p.collidesLeft || p.collidesRight) ? p.posx : getPlayer().posx;
 		
-		if(this.p.isRight && this.p.isLeft) {
-			this.p.isRight = false;
-			this.p.isLeft = false;
+		this.p = p;
+		if(p.isExtrapolating) {
+			getPlayer().posy = posY;
+			getPlayer().posx = posX;
+		}
+		
+		if(getPlayer().isRight && getPlayer().isLeft) {
+			getPlayer().isRight = false;
+			getPlayer().isLeft = false;
 		}
 	}
 	
@@ -97,10 +99,10 @@ public class Player {
 		return getPlayer().vely;
 	}
 	public float syncedVelX() {
-		return ServerInfo.syncServer(this.p.velx);
+		return ServerInfo.syncServer(getPlayer().velx);
 	}
 	public float syncedVelY() {
-		return ServerInfo.syncServer(this.p.vely);
+		return ServerInfo.syncServer(getPlayer().vely);
 	}
 	
 	public int getWidth() {
@@ -122,40 +124,40 @@ public class Player {
 	}
 
 	public boolean movingX() {
-		return this.p.velx != 0;
+		return getPlayer().velx != 0;
 	}
 	public boolean movingY() {
-		return this.p.vely != 0;
+		return getPlayer().vely != 0;
 	}
 	
 	public void applyVelX() {
-		this.p.posx += velX();
+		getPlayer().posx += velX();
 	}
 	public void applyVelY() {
-		this.p.posy += velY();
+		getPlayer().posy += velY();
 	}
 	public void applySyncedVelX() {
-		this.p.posx += syncedVelX();
+		getPlayer().posx += syncedVelX();
 	}
 	public void applySyncedVelY() {
-		this.p.posy += syncedVelY();
+		getPlayer().posy += syncedVelY();
 	}
 
 	public void applyGravity() {
-		if(this.p.vely <= 0) { // Because we don't want to lower the jump height too, remember, in the server the jump height is not affected by gravitation.
-			this.p.vely = this.p.vely - ServerInfo.syncServer(fallingMomentum) < -gravityForce ? -gravityForce : this.p.vely - ServerInfo.syncServer(fallingMomentum);
+		if(getPlayer().vely <= 0) { // Because we don't want to lower the jump height too, remember, in the server the jump height is not affected by gravitation.
+			getPlayer().vely = getPlayer().vely - ServerInfo.syncServer(fallingMomentum) < -gravityForce ? -gravityForce : getPlayer().vely - ServerInfo.syncServer(fallingMomentum);
 		}
 	}
 	
 	public boolean moveLeft() {
-		return this.p.velx < 0 && !this.p.collidesLeft;
+		return getPlayer().velx < 0 && !getPlayer().collidesLeft;
 	}
 	public boolean moveRight() {
-		return this.p.velx > 0 && !this.p.collidesRight;
+		return getPlayer().velx > 0 && !getPlayer().collidesRight;
 	}
 	
 	public void alignGround() {
-		this.p.posy = (int)(this.p.posy / Assets.map.getTileHeight()) * Assets.map.getTileHeight() + this.p.height/2 - 1;
+		getPlayer().posy = (int)(getPlayer().posy / Assets.map.getTileHeight()) * Assets.map.getTileHeight() + getPlayer().height/2 - 1;
 	}
 
 	public void addDeathTime() {
@@ -196,7 +198,7 @@ public class Player {
 	}
 	
 	public boolean isBum() {
-		return this.p.hasControl && !this.p.isSkilling && this.p.onGround && this.p.velx == 0 && this.p.vely == 0;
+		return getPlayer().hasControl && !getPlayer().isSkilling && getPlayer().onGround && getPlayer().velx == 0 && getPlayer().vely == 0;
 	}
 	
 	public Champion getChamp() {
@@ -260,7 +262,9 @@ public class Player {
 
 	public void update() {
 		if(!getPlayer().isDead) {
-			applyPosition();
+			if(p.isExtrapolating) { // It has to be here, otherwise after you teleport you will have extrapolation issues, because the client will get the full position + extrapolation which will be too much and overflow the actual position.
+				applyPosition();
+			}
 			if(!getPlayer().isSkilling && getPlayer().hasControl) {
 				applyTimers();
 			}
@@ -321,8 +325,8 @@ public class Player {
 	}
 	
 	private void applyBodyGravity() {
-		if(this.p.onGround || collidesBot()) {
-			this.p.vely = 0;
+		if(getPlayer().onGround) {
+			getPlayer().vely = 0;
 			alignGround();
 		} else {
 			applyGravity();
@@ -331,42 +335,52 @@ public class Player {
 	}
 
 	private void applyPosition() {
-		if(this.p.onGround || collidesBot()) {
-			this.p.vely = this.p.vely < 0 ? 0 : this.p.vely;
-			this.p.onGround = true;
+		if((getPlayer().onGround || collidesBot()) && velY() <= 0) {
+			getPlayer().vely = 0;
+			getPlayer().onGround = true;
 			alignGround();
 		} else {
 			applyGravity();
 		}
 		
 		// Y AXIS
-		if(this.p.vely != 0 && ((this.p.vely > 0 && !this.p.collidesTop)
-						|| (this.p.vely < 0 && !this.p.collidesBot))) {
+		if(velY() != 0 && ((velY() > 0 && !getPlayer().collidesTop)
+						|| (velY() < 0 && !getPlayer().collidesBot))) {
 			applySyncedVelY();
 		}
 		
 		// X AXIS
-		if(this.p.velx != 0) {
-			if(moveRight()) {
+		if(velX() != 0) {
+			if((velX() > 0 && !getPlayer().collidesRight)
+					|| velX() < 0 && !getPlayer().collidesLeft) {
 				applySyncedVelX();
-				this.p.isRight = true;
-			} else if(moveLeft()) {
-				applySyncedVelX();
-				this.p.isLeft = true;
 			}
 		}
 	}
 	
 	public void playStepType() {
-		//if(!HUD.isMatchFinished()) {
-			if(GameMap.hasProperty("grass", getCellOn())) { //$NON-NLS-1$
-				applyFootStepType(GameSFXManager.getGrassStepLength(), "GrassStep", ParticlesCollection.GrassyWalk); //$NON-NLS-1$
-			} else if(GameMap.hasProperty("dirt", getCellOn())) { //$NON-NLS-1$
-				applyFootStepType(GameSFXManager.getDirtStepLength(), "DirtStep", ParticlesCollection.GrassyWalk); //$NON-NLS-1$
-			}
-		//}
+		if(checkFootStepType("grass")) { //$NON-NLS-1$
+			applyFootStepType(GameSFXManager.getGrassStepLength(), "GrassStep", ParticlesCollection.Step_Grass); //$NON-NLS-1$
+		} else if(checkFootStepType("dirt")) { //$NON-NLS-1$
+			applyFootStepType(GameSFXManager.getDirtStepLength(), "DirtStep", ParticlesCollection.Step_Dirt); //$NON-NLS-1$
+		} else if(checkFootStepType("rock")) { //$NON-NLS-1$
+			applyFootStepType(GameSFXManager.getRockStepLength(), "RockStep", ParticlesCollection.Step_Rock); //$NON-NLS-1$
+		} else if(checkFootStepType("ice")) { //$NON-NLS-1$
+			applyFootStepType(GameSFXManager.getIceStepLength(), "SnowStep", ParticlesCollection.Step_Snow); //$NON-NLS-1$
+		}
+
 	}
 	
+	private boolean playCheckStepType(String step, int stepLength, String SFX, ParticlesCollection particles) {
+		if(checkFootStepType(step)) {
+			applyFootStepType(stepLength, SFX, particles);
+			return true;
+		}
+		return false;
+	}
+	private boolean checkFootStepType(String step) {
+		return GameMap.hasProperty("step", step, getCellOn()); //$NON-NLS-1$
+	}
 	private void applyFootStepType(int stepLength, String SFX, ParticlesCollection particles) {
 		this.steps = this.steps < stepLength ? this.steps + 1 : 1;
 		GameSFXManager.playStereo(GameSFX.valueOf(SFX + this.steps), getX());
@@ -380,52 +394,52 @@ public class Player {
 	
 	// Boundary Methods
 	public float getLeft() {
-		return -this.p.width/2;
+		return -getPlayer().width/2;
 	}
 	public float getRight() {
-		return this.p.width/2;
+		return getPlayer().width/2;
 	}
 	public float getTop() {
-		return this.p.height/2;
+		return getPlayer().height/2;
 	}
 	public float getBot() {
-		return -this.p.height/2;
+		return -getPlayer().height/2;
 	}
 	
 	public Rectangle getVelocityBounds(boolean velx, boolean vely) {
 		Rectangle bounds = getBounds();
-		bounds.x += velx ? this.p.velx : 0;
-		bounds.y += vely ? this.p.vely : 0;
+		bounds.x += velx ? getPlayer().velx : 0;
+		bounds.y += vely ? getPlayer().vely : 0;
 		return bounds;
 	}
 	
 	public boolean collidesBot() {
 		// BOT!
-		return Assets.map.intersectsSurroundX(this.p.posx, this.p.posy+getBot()+this.p.vely, getVelocityBounds(false, true)) || this.p.posy + this.p.vely + getBot() < Assets.map.getBotBoundary();
+		return Assets.map.intersectsSurroundXBoth("top", getPlayer().posx, getPlayer().posy+getBot()+syncedVelY(), getVelocityBounds(false, true)) || getPlayer().posy + getPlayer().vely + getBot() < Assets.map.getBotBoundary(); //$NON-NLS-1$
 	}
 	public boolean collidesLeft() {
 		// LEFT!
-		return Assets.map.intersectsSurroundY(this.p.posx+getLeft()+this.p.velx, this.p.posy, getVelocityBounds(true, false)) ||this.p.posx + this.p.velx + getLeft() < Assets.map.getLeftBoundary();
+		return Assets.map.intersectsSurroundY(getPlayer().posx+getLeft()+syncedVelX(), getPlayer().posy, getVelocityBounds(true, false)) || getPlayer().posx + getPlayer().velx + getLeft() < Assets.map.getLeftBoundary();
 	}
 	public boolean collidesRight() {
 		// RIGHT!
-		return Assets.map.intersectsSurroundY(this.p.posx+getRight()+this.p.velx, this.p.posy, getVelocityBounds(true, false)) || this.p.posx + this.p.velx + getRight() > Assets.map.getRightBoundary();
+		return Assets.map.intersectsSurroundY(getPlayer().posx+getRight()+syncedVelX(), getPlayer().posy, getVelocityBounds(true, false)) || getPlayer().posx + getPlayer().velx + getRight() > Assets.map.getRightBoundary();
 	}
 	public boolean collidesTop() {
 		// TOP!
-		return Assets.map.intersectsSurroundX(this.p.posx, this.p.posy+getTop(), getVelocityBounds(false, true)) || this.p.posy + this.p.vely + getTop() > Assets.map.getTopBoundary();
+		return Assets.map.intersectsSurroundX(getPlayer().posx, getPlayer().posy+getTop()+syncedVelY(), getVelocityBounds(false, true)) || getPlayer().posy + getPlayer().vely + getTop() > Assets.map.getTopBoundary();
 	}
 	
 	public Cell getCellOn() {
-		return Assets.map.getCell(this.p.posx, this.p.posy + getBot());
+		return Assets.map.getCell(getPlayer().posx, getPlayer().posy + getBot());
 	}
 	
 	public boolean isFacingCollision() {
-		return (this.p.flip.equals("right") && this.p.collidesRight) || (this.p.flip.equals("left") && this.p.collidesLeft); //$NON-NLS-1$ //$NON-NLS-2$
+		return (getPlayer().flip.equals("right") && getPlayer().collidesRight) || (getPlayer().flip.equals("left") && getPlayer().collidesLeft); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
 	public Rectangle getBounds() {
-		this.bounds.setBounds((int)this.p.posx-this.p.width/2, (int)this.p.posy-this.p.height/2, this.p.width, this.p.height);
+		this.bounds.setBounds((int)getPlayer().posx-getPlayer().width/2, (int)getPlayer().posy-getPlayer().height/2, getPlayer().width, getPlayer().height);
 		return this.bounds;
 	}
 	public boolean intersects(Rectangle rect) {

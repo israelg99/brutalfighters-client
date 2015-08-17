@@ -282,18 +282,14 @@ public class ClientPlayer implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {		
+		PlayerData p = Assets.player.getPlayer();
+
 		switch(keycode) {
 			case InputControls.LEFT :
-				/*p.isLeft = false;
-				p.velx = 0;
-				p.posx = p.posx/10*10;*/
 				GameClient.sendPacketUDP(new Packet4ReleaseLeft());
 			return false;
 			
 			case InputControls.RIGHT :
-				/*p.isRight = false;
-				p.velx = 0;
-				p.posx = p.posx/10*10;*/
 				GameClient.sendPacketUDP(new Packet4ReleaseRight());
 			return false;
 			

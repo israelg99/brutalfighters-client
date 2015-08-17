@@ -13,7 +13,7 @@ public class Window {
 		cfg = new LwjglApplicationConfiguration();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		cfg.title = name;
-		cfg.useGL30 = false; // Screen goes black -_- but that's only an early alpha support
+		cfg.useGL30 = false; // If set to true screen goes black -_- but that's only an early alpha support
 		cfg.vSyncEnabled = true;
 //		cfg.width = (int) 3840;
 //		cfg.height = (int) 2160;

@@ -516,9 +516,8 @@ public enum Champion {
 			if(pd.isDead) {
 				return drawDead(p);
 			} else if(pd.isSkilling) { // Skills GameSFXManager inside of the skill functions below
-				p.cameraLockY(true);
 				if(pd.isSkill1) {
-					return drawSkill1(p);
+					return drawSkill1(p); // We cannot lock the camera here, we need it to be unlocked.
 				} else if(pd.isSkill2) {
 					return drawSkill2(p);
 				} else if(pd.isSkill3) {

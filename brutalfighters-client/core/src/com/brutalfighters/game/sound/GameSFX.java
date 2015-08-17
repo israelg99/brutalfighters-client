@@ -7,11 +7,17 @@ public enum GameSFX {
 	FootStep1(SoundUtil.getSound("sfx/champ/footstep1.wav")), //$NON-NLS-1$ 
 	FootStep2(SoundUtil.getSound("sfx/champ/footstep2.wav")), //$NON-NLS-1$ 
 	
-	GrassStep1(SoundUtil.getSound("sfx/champ/ftGrass.wav")), //$NON-NLS-1$ 
-	GrassStep2(SoundUtil.getSound("sfx/champ/ftGrass2.wav")), //$NON-NLS-1$ 
+	GrassStep1(SoundUtil.getSound("sfx/champ/step_grass1.wav")), //$NON-NLS-1$ 
+	GrassStep2(SoundUtil.getSound("sfx/champ/step_grass2.wav")), //$NON-NLS-1$ 
 	
-	DirtStep1(SoundUtil.getSound("sfx/champ/ftDirt.wav")), //$NON-NLS-1$ 
-	DirtStep2(SoundUtil.getSound("sfx/champ/ftDirt2.wav")), //$NON-NLS-1$ 
+	DirtStep1(SoundUtil.getSound("sfx/champ/step_dirt1.wav")), //$NON-NLS-1$ 
+	DirtStep2(SoundUtil.getSound("sfx/champ/step_dirt2.wav")), //$NON-NLS-1$ 
+	
+	RockStep1(SoundUtil.getSound("sfx/champ/step_rock1.wav")), //$NON-NLS-1$ 
+	RockStep2(SoundUtil.getSound("sfx/champ/step_rock2.wav")), //$NON-NLS-1$ 
+	
+	SnowStep1(SoundUtil.getSound("sfx/champ/step_snow1.wav")), //$NON-NLS-1$ 
+	SnowStep2(SoundUtil.getSound("sfx/champ/step_snow2.wav")), //$NON-NLS-1$ 
 
 	Teleport(SoundUtil.getSound("sfx/teleport/woosh.wav")), //$NON-NLS-1$ 
 	Portal(SoundUtil.getSound("sfx/teleport/portal.wav")), //$NON-NLS-1$ 

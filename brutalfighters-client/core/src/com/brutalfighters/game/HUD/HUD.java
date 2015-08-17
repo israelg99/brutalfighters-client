@@ -137,7 +137,7 @@ public class HUD {
 		
 		if (Gdx.input.isKeyPressed(InputControls.TUTORIAL)) {
 			drawTutorial();
-		} else if(Gdx.input.isKeyJustPressed(InputControls.DebugInfo)) {
+		} else if(Gdx.input.isKeyPressed(InputControls.DebugInfo)) {
 			drawDebugInfo();
 		}
 		
