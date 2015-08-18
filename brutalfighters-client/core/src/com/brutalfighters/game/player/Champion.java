@@ -503,51 +503,6 @@ public enum Champion {
 		private TextureRegion[] walk_frames, run_frames, aattack_frames, breath_frames, death_frames,
 								s1_frames, s2_frames;
 		private TextureRegion s4_frame;
-				
-		@Override
-		public TexturesPacker drawChamp(Player p) {
-			
-			PlayerData pd = p.getPlayer();
-			
-			playJumpStep(p);
-			
-			applyParticles(p);
-			
-			if(pd.isDead) {
-				return drawDead(p);
-			} else if(pd.isSkilling) { // Skills GameSFXManager inside of the skill functions below
-				if(pd.isSkill1) {
-					return drawSkill1(p); // We cannot lock the camera here, we need it to be unlocked.
-				} else if(pd.isSkill2) {
-					return drawSkill2(p);
-				} else if(pd.isSkill3) {
-					return drawSkill3(p);
-				} else if(pd.isSkill4) {
-					return drawSkill4(p);
-				}
-			} else {
-				p.resetSkillPlayed();
-				if(!pd.onGround) {
-					p.toNextStep = 0;
-					p.steps = 1;
-					return drawJump(pd);
-				} else if(pd.hasControl) {
-					if(p.isWalking()) {
-						if(pd.isRunning) {
-							GameSFXManager.moveStepsSFX(p, timeRunSteps);
-							return drawRunning(pd);
-						}
-						GameSFXManager.moveStepsSFX(p, timeWalkSteps);
-						return drawWalking(pd);
-					} else if(pd.isAAttack && !pd.isFlagged) {
-						playAA(p);
-						return drawAAttack(pd);
-					}
-				}
-			}
-			
-			return drawBreath(pd);
-		}
 
 		@Override
 		public void loadSprite() {
@@ -765,7 +720,7 @@ public enum Champion {
 			return drawDead(p);
 		} else if(pd.isSkilling) { // Skills GameSFXManager inside of the skill functions below
 			if(pd.isSkill1) {
-				return drawSkill1(p);
+				return drawSkill1(p); // We cannot lock the camera here, we need it to be unlocked.
 			} else if(pd.isSkill2) {
 				return drawSkill2(p);
 			} else if(pd.isSkill3) {
@@ -787,7 +742,7 @@ public enum Champion {
 					}
 					GameSFXManager.moveStepsSFX(p, timeWalkSteps);
 					return drawWalking(pd);
-				} else if(pd.isAAttack && !pd.isFlagged) {
+				} else if(pd.isAAttack) {
 					playAA(p);
 					return drawAAttack(pd);
 				}

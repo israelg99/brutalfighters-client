@@ -2,7 +2,7 @@ package com.brutalfighters.game;
 
 import com.badlogic.gdx.Game;
 import com.brutalfighters.game.resources.Assets;
-import com.brutalfighters.game.screen.CompanySplashScreen;
+import com.brutalfighters.game.screen.MainMenuScreen;
 
 public class BrutalFighters extends Game {
 	
@@ -10,6 +10,6 @@ public class BrutalFighters extends Game {
 	public void create () {
 		Assets.LoadGlobalResources();
 		
-		setScreen(new CompanySplashScreen());
+		setScreen(new MainMenuScreen());
 	}
 }
