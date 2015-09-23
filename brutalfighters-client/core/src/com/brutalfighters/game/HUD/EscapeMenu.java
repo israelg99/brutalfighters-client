@@ -16,8 +16,8 @@ public class EscapeMenu {
 	public static final int WIDTH = 550;
 	public static final int HEIGHT = 400;
 	
-	private static final int CENTER_X = ScreenPosHandler.getCenterScreenX(WIDTH);
-	private static final int CENTER_Y = ScreenPosHandler.getCenterScreenY(HEIGHT);
+	private static final int CENTER_X = (int) ScreenPosHandler.getCenterScreenX(WIDTH);
+	private static final int CENTER_Y = (int) ScreenPosHandler.getCenterScreenY(HEIGHT);
 	
 	private static final int textW = 220;
 	private static final int textH = 70;

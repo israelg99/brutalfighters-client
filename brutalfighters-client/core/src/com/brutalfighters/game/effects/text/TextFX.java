@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.brutalfighters.game.HUD.GameFont;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.basic.Render;
-import com.brutalfighters.game.player.Player;
+import com.brutalfighters.game.player.fighters.Fighter;
 import com.brutalfighters.game.utility.GameMath;
 
 
@@ -44,10 +44,10 @@ public enum TextFX {
 		gameFont.getFont().draw(Render.getSpriteBatch(), te.text, te.x, te.y);
 	}
 
-	public TextEffect getDefault(Player player) {
-		return new TextEffect(this, Integer.toString(player.changedHealth()), 
-				player.getX() + GameMath.nextInt(-player.getWidth() / 3, 0),
-				player.getY() + player.getHeight() / 2 + HUD.barHeight()*2+10,
+	public TextEffect getDefault(Fighter player) {
+		return new TextEffect(this, Float.toString(player.changedHealth()), 
+				player.getPlayer().getPos().getX() + GameMath.nextFloat(-player.getPlayer().getSize().getX() / 3, 0),
+				player.getPlayer().getPos().getY() + player.getPlayer().getSize().getY() / 2 + HUD.barHeight()*2+10,
 				time);
 	}
 	

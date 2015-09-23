@@ -12,6 +12,17 @@ public class Flags {
 		this.flags = flags.clone();
 	}
 	
+	public Flag getFlag(int team) {
+		return flags[team];
+	}
+	public Flag getEnemyFlag(int team) {
+		if(team == BLUE_TEAM) {
+			return flags[RED_TEAM];
+		}
+		
+		return flags[BLUE_TEAM];
+	}
+	
 	public void setNew(Flag[] flags) {
 		this.flags = flags.clone();
 	}

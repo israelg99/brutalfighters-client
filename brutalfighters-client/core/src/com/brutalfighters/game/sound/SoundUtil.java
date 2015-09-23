@@ -3,9 +3,9 @@ package com.brutalfighters.game.sound;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.brutalfighters.game.player.Player;
-import com.brutalfighters.game.resources.Prefs;
+import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.resources.Assets;
+import com.brutalfighters.game.resources.Prefs;
 
 public class SoundUtil {
 	
@@ -44,20 +44,20 @@ public class SoundUtil {
 	
 	public static void playStereo(Music play, float x) {
 		if(toPlay(play)) {
-			Player client = Assets.player;
+			PlayerData client = Assets.player.getPlayer();
 			
-			if(checkSoundRange(x, client.getX())) {
-				play.setPan(getPan(x, client.getX()), play.getVolume());
+			if(checkSoundRange(x, client.getPos().getX())) {
+				play.setPan(getPan(x, client.getPos().getX()), play.getVolume());
 				play.play();
 			}
 		}
 	}
 	public static void playStereo(Sound play, float x, float vol) {
 		if(toPlay(play)) {
-			Player client = Assets.player;
+			PlayerData client = Assets.player.getPlayer();
 			
-			if(checkSoundRange(x, client.getX())) {
-				play.setPan(play.play(), getPan(x, client.getX()), getVolume(vol));
+			if(checkSoundRange(x, client.getPos().getX())) {
+				play.setPan(play.play(), getPan(x, client.getPos().getX()), getVolume(vol));
 			}
 		}
 	}

@@ -1,18 +1,21 @@
 package com.brutalfighters.game.player;
 
+import com.brutalfighters.game.player.fighters.Fighter;
+import com.brutalfighters.game.player.fighters.FighterFactory;
+
 
 
 public class Players {
-	private Player[] players;
+	private Fighter[] players;
 	
 	public Players(PlayerData[] pdata) {
 		newPlayers(pdata);
 	}
 	
-	public Player[] getPlayers() {
+	public Fighter[] getPlayers() {
 		return players;
 	}
-	public Player getPlayer(int i) {
+	public Fighter getPlayer(int i) {
 		return players[i];
 	}
 	public PlayerData getPlayerData(int i) {
@@ -23,18 +26,18 @@ public class Players {
 	}
 	
 	public void newPlayers(PlayerData[] pdata) {
-		players = new Player[pdata.length];
+		players = new Fighter[pdata.length];
 		for(int i = 0; i < players.length; i++) {
-			players[i] = new Player(pdata[i]);
+			players[i] = FighterFactory.valueOf(pdata[i].getName()).getNew(pdata[i]);
 		}
 	}
 	public void setPlayers(PlayerData[] pdata) {
 		if(pdata.length != players.length) {
 			newPlayers(pdata);
-			return;
-		}
-		for(int i = 0; i < players.length; i++) {
-			players[i].setPlayer(pdata[i]);
+		} else {
+			for(int i = 0; i < players.length; i++) {
+				players[i].assignPlayer(pdata[i]);
+			}
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package com.brutalfighters.game.basic;
 
-import com.brutalfighters.game.HUD.EscapeOption;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.multiplayer.packets.Packet2Players;
 import com.brutalfighters.game.resources.Assets;

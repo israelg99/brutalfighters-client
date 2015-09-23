@@ -74,23 +74,23 @@ public class HUD {
 	}
 	
 	private static void drawRespawn() {
-		GameFont.Respawn.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.player.getPlayer().DCD/1000 + 1), Render.getResX()/2-32, Render.getResY()/2+64);
+		GameFont.Respawn.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.player.getPlayer().getDCD()/1000 + 1), Render.getResX()/2-32, Render.getResY()/2+64);
 	}
 	
 	public static void drawTutorial() {
 		GameFont.Tutorial.getFont().draw(Render.getSpriteBatch(), "Arrow keys for movement", 200, Render.getResY()/3+300); //$NON-NLS-1$
 		GameFont.Tutorial.getFont().draw(Render.getSpriteBatch(), "Shift for running", 200, Render.getResY()/3 + 200); //$NON-NLS-1$
 		GameFont.Tutorial.getFont().draw(Render.getSpriteBatch(), "Spacebar for auto basic attacks", 200, Render.getResY()/3+100); //$NON-NLS-1$
-		GameFont.Tutorial.getFont().draw(Render.getSpriteBatch(), "Q,W,E,R for skills", 200, Render.getResY()/3); //$NON-NLS-1$
+		GameFont.Tutorial.getFont().draw(Render.getSpriteBatch(), "Q,W,E,R for SKILLS", 200, Render.getResY()/3); //$NON-NLS-1$
 		GameFont.Tutorial.getFont().draw(Render.getSpriteBatch(), "Z to teleport", 200, Render.getResY()/3 - 100); //$NON-NLS-1$
 	}
 	public static void drawDebugInfo() {
 		PlayerData p = Assets.player.getPlayer();
 		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Version : Alpha || FPS - " + Gdx.graphics.getFramesPerSecond(), 50, Gdx.graphics.getHeight() - 30); //$NON-NLS-1$
 		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Camera Pos X : " + Assets.client.getCamera().position.x + " Pos Y : " + Assets.client.getCamera().position.y, 50, Gdx.graphics.getHeight() - 80); //$NON-NLS-1$ //$NON-NLS-2$
-		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Player Pos X : " + p.posx + " Pos Y : " + p.posy, 50, Gdx.graphics.getHeight() - 130); //$NON-NLS-1$ //$NON-NLS-2$
-		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Player Pos X : " + p.posx + " Pos Y : " + p.posy, 50, Gdx.graphics.getHeight() - 130); //$NON-NLS-1$ //$NON-NLS-2$
-		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Player Vel X : " + p.velx + " Vel Y : " + p.vely, 50, Gdx.graphics.getHeight() - 180); //$NON-NLS-1$ //$NON-NLS-2$
+		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Player Pos X : " + p.getPos().getX() + " Pos Y : " + p.getPos().getY(), 50, Gdx.graphics.getHeight() - 130); //$NON-NLS-1$ //$NON-NLS-2$
+		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Player Pos X : " + p.getPos().getX() + " Pos Y : " + p.getPos().getY(), 50, Gdx.graphics.getHeight() - 130); //$NON-NLS-1$ //$NON-NLS-2$
+		GameFont.DebugInfo.getFont().draw(Render.getSpriteBatch(), "Player Vel X : " + p.getVel().getX() + " Vel Y : " + p.getVel().getY(), 50, Gdx.graphics.getHeight() - 180); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
 	// Not flexible but good enough!
@@ -104,7 +104,7 @@ public class HUD {
 	}
 	
 	private static void drawFinishedMatch() {
-		if(getTeamWon() == Assets.player.getPlayer().team) {
+		if(getTeamWon() == Assets.player.getPlayer().getTeam()) {
 			Render.drawMiddle(victory);
 		} else {
 			Render.drawMiddle(defeat);
@@ -126,7 +126,7 @@ public class HUD {
 			drawFinishedMatch();
 		} else {
 			drawKillsCounter();
-			if(Assets.player.getPlayer().isDead) {
+			if(Assets.player.getPlayer().isDead()) {
 				drawRespawn();
 				drawTutorial();
 			} else if(isWarmup()) {
@@ -166,26 +166,16 @@ public class HUD {
 		return barPad;
 	}
 	
-	public static void drawHPBar(float posx, float posy, int hp, int maxhp, Color color) {
+	public static void drawHPBar(float posx, float posy, float hp, float maxhp, Color color) {
 		Render.drawRectFilled(Color.BLACK, posx - barWidth()/2 - 8, posy + HUD.barPad() + HUD.barHeight(), HUD.barWidth() + 4, HUD.barHeight() + 4);
 		Render.drawRectFilled(new Color(0.2f,0.2f,0.2f,1), posx - barWidth()/2 - 6, posy + HUD.barPad() + HUD.barHeight() + 2, HUD.barWidth(), HUD.barHeight());
-		Render.drawRectFilled(color, posx - barWidth()/2 - 6, posy + HUD.barPad() + HUD.barHeight() + 2, (int)((float)hp/maxhp * HUD.barWidth()), HUD.barHeight());
-	}
-	public static void drawHPBar(PlayerData p) {
-		if(p.team == Assets.player.getPlayer().team) {
-			drawHPBar(p.posx, p.posy, p.hp, p.maxhp, Color.GREEN);
-		} else {
-			drawHPBar(p.posx, p.posy, p.hp, p.maxhp, Color.RED);
-		}
+		Render.drawRectFilled(color, posx - barWidth()/2 - 6, posy + HUD.barPad() + HUD.barHeight() + 2, (int)(hp/maxhp * HUD.barWidth()), HUD.barHeight());
 	}
 	
-	public static void drawMANABar(float posx, float posy, int mana, int maxmana, Color color) {
+	public static void drawMANABar(float posx, float posy, float mana, float maxmana, Color color) {
 		Render.drawRectFilled(Color.BLACK, posx - barWidth()/2 - 8, posy + HUD.barPad() - 2, HUD.barWidth() + 4, HUD.barHeight() + 4);
 		Render.drawRectFilled(new Color(0.2f,0.2f,0.2f,1), posx - barWidth()/2 - 6, posy + HUD.barPad(), HUD.barWidth(), HUD.barHeight());
-		Render.drawRectFilled(color, posx - barWidth()/2 - 6, posy + HUD.barPad(), (int)((float)mana/maxmana * HUD.barWidth()), HUD.barHeight());
-	}
-	public static void drawMANABar(PlayerData p) {
-		drawMANABar(p.posx, p.posy, p.mana, p.maxmana, Color.BLUE);
+		Render.drawRectFilled(color, posx - barWidth()/2 - 6, posy + HUD.barPad(), (int)(mana/maxmana * HUD.barWidth()), HUD.barHeight());
 	}
 
 	public static boolean isWarmup() {
@@ -198,7 +188,7 @@ public class HUD {
 	}
 	
 	public static boolean toBlur() {
-		return isEscapeMenuShown() || isWarmup() || Assets.player.getPlayer().isDead || !GameLoopManager.isUpdating() || getTeamWon() != -1;
+		return isEscapeMenuShown() || isWarmup() || Assets.player.getPlayer().isDead() || !GameLoopManager.isUpdating() || getTeamWon() != -1;
 	}
 	
 	public static boolean isMatchFinished() {

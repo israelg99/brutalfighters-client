@@ -4,10 +4,10 @@ import com.brutalfighters.game.basic.Render;
 
 public class ScreenPosHandler {
 	
-	public static int getCenterScreenX(int w) {
+	public static float getCenterScreenX(float w) {
 		return Render.getResX() / 2 - w / 2;
 	}
-	public static int getCenterScreenY(int h) {
+	public static float getCenterScreenY(float h) {
 		return Render.getResY() / 2 + h / 2;
 	}
 	

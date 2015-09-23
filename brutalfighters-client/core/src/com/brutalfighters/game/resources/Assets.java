@@ -21,10 +21,10 @@ import com.brutalfighters.game.multiplayer.GameClient;
 import com.brutalfighters.game.multiplayer.packets.Packet1Connected;
 import com.brutalfighters.game.objects.projectiles.Projectiles;
 import com.brutalfighters.game.objects.projectiles.ProjectilesEnum;
-import com.brutalfighters.game.player.Champion;
 import com.brutalfighters.game.player.ClientPlayer;
-import com.brutalfighters.game.player.Player;
 import com.brutalfighters.game.player.Players;
+import com.brutalfighters.game.player.fighters.Fighter;
+import com.brutalfighters.game.player.fighters.FighterFactory;
 import com.brutalfighters.game.sound.BGM;
 import com.brutalfighters.game.sound.BGMManager;
 import com.brutalfighters.game.sound.GameSFX;
@@ -36,7 +36,7 @@ public class Assets {
 	public static GameMap map;
 	public static Background bg;
 	public static ClientPlayer client;
-	public static Player player;
+	public static Fighter player;
 	
 	public static Players players;
 	
@@ -53,6 +53,11 @@ public class Assets {
 	public static boolean globalResourcesLoaded;
 	
 	public static void LoadResources(Packet1Connected res) {
+		
+		// Loading the Champion Enum
+		System.err.println("Initialize the FighterFactory Enum!"); //$NON-NLS-1$
+		FighterFactory.init();
+		System.out.println("Finished initializing the FighterFactory Enum!"); //$NON-NLS-1$
 		
 		// Loading the Players
 		System.err.println("Initializing the players!"); //$NON-NLS-1$
@@ -107,7 +112,7 @@ public class Assets {
 		// Load The (Client)Player
 		System.err.println("Initializing the client player!"); //$NON-NLS-1$
 		client = new ClientPlayer();
-		player = new Player(res.theClient);
+		player = FighterFactory.valueOf(res.theClient.getName()).getNew(res.theClient);
 		System.out.println("Finished initializing the client player!"); //$NON-NLS-1$
 		
 		// Load The (Client)Player
@@ -142,11 +147,6 @@ public class Assets {
 		score.flags = new int[] {0,0};
 		score.kills = new int[] {0,0};
 		System.out.println("Finished initializing the Score!"); //$NON-NLS-1$
-		
-		// Loading the Champion Enum
-		System.err.println("Initialize the Champion Enum!"); //$NON-NLS-1$
-		Champion.init();
-		System.out.println("Finished initializing the Champion Enum!"); //$NON-NLS-1$
 		
 		// Loading the Projectile Enum
 		System.err.println("Initialize the Projectile Enum!"); //$NON-NLS-1$

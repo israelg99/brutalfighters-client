@@ -1,7 +1,5 @@
 package com.brutalfighters.game.sound;
 
-import com.badlogic.gdx.Gdx;
-import com.brutalfighters.game.player.Player;
 import com.brutalfighters.game.utility.GameMath;
 
 public class GameSFXManager {
@@ -38,14 +36,6 @@ public class GameSFXManager {
 	}
 	public static void playStereo(GameSFX sfx, float x) {
 		SoundUtil.playStereo(sfx.getSFX(), x);
-	}
-	
-	public static void moveStepsSFX(Player p, float delay) {
-		p.toNextStep -= Gdx.graphics.getDeltaTime();
-		if (p.toNextStep < 0) {
-			p.playStepType();
-			p.toNextStep = delay;
-		}
 	}
 	
 	public static void playRandomCrowd() {

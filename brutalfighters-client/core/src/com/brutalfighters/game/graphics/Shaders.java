@@ -29,7 +29,7 @@ public class Shaders {
 
 		setBlurRadius(8.0f);
 		
-		setFBO_SIZE(Render.getResX() > Render.getResY() ? Render.getResX() : Render.getResY());
+		setFBO_SIZE((int)(Render.getResX() > Render.getResY() ? Render.getResX() : Render.getResY()));
 		
 		setMotionBlur(loadShaders("shaders/pass.vsh", "shaders/motionBlur.fsh")); //$NON-NLS-1$ //$NON-NLS-2$
 		setPPBlur(loadShaders("shaders/pass.vsh", "shaders/ppBlur.fsh")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -41,8 +41,8 @@ public class Shaders {
 		getPPBlur().setUniformf("radius", blurRadius); //radius of blur //$NON-NLS-1$
 		getPPBlur().end();
 		
-		setFBO_A(new FrameBuffer(Pixmap.Format.RGBA8888, Render.getResX(), Render.getResY(), false));
-		setFBO_B(new FrameBuffer(Pixmap.Format.RGBA8888, Render.getResX(), Render.getResY(), false));
+		setFBO_A(new FrameBuffer(Pixmap.Format.RGBA8888, (int)Render.getResX(), (int)Render.getResY(), false));
+		setFBO_B(new FrameBuffer(Pixmap.Format.RGBA8888, (int)Render.getResX(), (int)Render.getResY(), false));
 	}
 
 	private static ShaderProgram loadShaders(String p1, String p2) {

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.basic.Render;
-import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.utility.CollisionDetection;
 import com.brutalfighters.game.utility.ServerInfo;
@@ -46,15 +45,15 @@ public class FlagHandler {
 	}
 	public static void updateFlag(int t, Flag flag) {
 		if(flag.isTaken) {
-			// Check and update flag : players
-			for(int i = 0; i < Assets.players.getPlayers().length; i++) {
-				if(updateFlag(flag, Assets.players.getPlayerData(i), t)) {
-					return;
-				}
-			}
-			
-			// Check and update flag : client
-			updateFlag(flag, Assets.player.getPlayer(), t);
+//			// Check and update flag : players
+//			for(int i = 0; i < Assets.players.getPlayers().length; i++) {
+//				if(updateFlag(flag, Assets.players.getPlayerData(i), t)) {
+//					return;
+//				}
+//			}
+//			
+//			// Check and update flag : client
+//			updateFlag(flag, Assets.player.getPlayer(), t);
 			
 		} else {
 			flag.posx += ServerInfo.syncServer(flag.velx);
@@ -63,25 +62,6 @@ public class FlagHandler {
 				flag.posy += ServerInfo.syncServer(flag.vely);
 			}
 		}
-	}
-	
-	public static boolean updateFlag(Flag flag, PlayerData p, int t) {
-		if(p.team != t && p.isFlagged) {
-			int pad = p.width/3; // IT DEPENDS ON THE PLAYER, THEREFORE STATIC FIELD IS NOT VIABLE!
-			
-			if(p.flip.equals("left")) { //$NON-NLS-1$
-				flag.flip = "right"; //$NON-NLS-1$
-			} else {
-				pad = -pad;
-				flag.flip = "left"; //$NON-NLS-1$
-			}
-			
-			flag.posx = p.posx + pad;
-			flag.posy = p.posy + p.height/3 + 15;
-			
-			return true;
-		}
-		return false;
 	}
 	
 	public static Rectangle getBounds(Flag flag) {

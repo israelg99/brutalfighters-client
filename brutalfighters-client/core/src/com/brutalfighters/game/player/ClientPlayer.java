@@ -29,6 +29,7 @@ import com.brutalfighters.game.multiplayer.packets.Packet4ReleaseJump;
 import com.brutalfighters.game.multiplayer.packets.Packet4ReleaseLeft;
 import com.brutalfighters.game.multiplayer.packets.Packet4ReleaseRight;
 import com.brutalfighters.game.multiplayer.packets.Packet4ReleaseRun;
+import com.brutalfighters.game.player.fighters.Fighter;
 import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.resources.Prefs;
 import com.brutalfighters.game.sound.GameSFX;
@@ -96,15 +97,15 @@ public class ClientPlayer implements InputProcessor {
 	}
 
 	private void updateCamera() {
-		Player client = Assets.player;
+		Fighter client = Assets.player;
 		
 		// CAMERA X MOVER
-		if(!client.cameraLockX()) {
+		if(!client.getCameraLockX()) {
 			getCamera().position.x = getX() < Render.getResX() / 2 ? Render.getResX() / 2 : getX() > Assets.map.getWidthSize() - Render.getResX() / 2 ? Assets.map.getWidthSize() - Render.getResX() / 2 : getX();
 		}
 		
 		// CAMERA Y MOVER
-		if(!client.cameraLockY()) {
+		if(!client.getCameraLockY()) {
 			getCamera().position.y = getY() < Render.getResY() / 2 ? Render.getResY() / 2 : getY() > Assets.map.getHeightSize() - Render.getResY() / 2 ? Assets.map.getHeightSize() - Render.getResY() / 2 : getY();
 		}
 		
@@ -127,17 +128,17 @@ public class ClientPlayer implements InputProcessor {
 	}
 
 	private static float getX() {
-		return Assets.player.getPlayer().posx;
+		return Assets.player.getPlayer().getPos().getX();
 	}
 	private static float getY() {
-		return Assets.player.getPlayer().posy;
+		return Assets.player.getPlayer().getPos().getY();
 	}
 	
 	private static float velX() {
-		return Assets.player.getPlayer().velx;
+		return Assets.player.getPlayer().getVel().getX();
 	}
 	private static float velY() {
-		return Assets.player.getPlayer().vely;
+		return Assets.player.getPlayer().getVel().getY();
 	}
 
 	public void controlHimself(boolean con) {
@@ -166,7 +167,7 @@ public class ClientPlayer implements InputProcessor {
 	}
 	
 	public void applyWalkingDust(float xoffest) {
-		ParticleEffects.add(ParticlesCollection.WalkingDust, getX()+xoffest, getY() + Assets.player.getBot(), false); 
+		ParticleEffects.add(ParticlesCollection.WalkingDust, getX()+xoffest, getY() + Assets.player.getPlayer().getBot(), false); 
 	}
 
 	@Override
@@ -176,40 +177,40 @@ public class ClientPlayer implements InputProcessor {
 		// Inspiring ParticleEffects
 		switch(keycode) {
 			case Keys.NUM_1 :
-				ParticleEffects.add(ParticlesCollection.RightBlueBeat, p.posx+25, p.posy-20, false); 
+				ParticleEffects.add(ParticlesCollection.RightBlueBeat, p.getPos().getX()+25, p.getPos().getY()-20, false); 
 			return false;
 	
 			case Keys.NUM_2 :
-				ParticleEffects.add(ParticlesCollection.CenterBlueRedPump, p.posx, p.posy+20, false); 
+				ParticleEffects.add(ParticlesCollection.CenterBlueRedPump, p.getPos().getX(), p.getPos().getY()+20, false); 
 			return false;
 				
 			case Keys.NUM_3 :
-				ParticleEffects.add(ParticlesCollection.BlueFirework, p.posx, p.posy, false); 
+				ParticleEffects.add(ParticlesCollection.BlueFirework, p.getPos().getX(), p.getPos().getY(), false); 
 			return false;
 			
 			case Keys.NUM_4 :
-				ParticleEffects.add(ParticlesCollection.Fireworks3, p.posx, p.posy, false); 
+				ParticleEffects.add(ParticlesCollection.Fireworks3, p.getPos().getX(), p.getPos().getY(), false); 
 			return false;
 		}
 		
-		if(inControl() && !p.isDead && !HUD.isWarmup()) {
+		if(inControl() && !p.isDead() && !HUD.isWarmup()) {
 			switch(keycode) {
 				case InputControls.LEFT :
-					if(!p.isRight && p.onGround) {
-						applyWalkingDust(Assets.player.getRight());
+					if(!p.isRight() && p.onGround()) {
+						applyWalkingDust(p.getRight());
 					}
 					GameClient.sendPacketUDP(new Packet3InputLeft());
 				return false;
 				
 				case InputControls.RIGHT :
-					if(!p.isLeft && p.onGround) {
-						applyWalkingDust(Assets.player.getLeft());
+					if(!p.isLeft() && p.onGround()) {
+						applyWalkingDust(p.getLeft());
 					}
 					GameClient.sendPacketUDP(new Packet3InputRight());
 				return false;
 				
 				case InputControls.Teleport :
-					if(onPortal() && p.hasControl && !p.isSkilling) {
+					if(onPortal() && p.hasControl() && !p.isSkilling()) {
 						GameClient.sendPacketUDP(new Packet3InputTeleport());
 						GameSFXManager.playStereo(GameSFX.Teleport, getX());
 					}
@@ -217,10 +218,10 @@ public class ClientPlayer implements InputProcessor {
 			}
 			
 			// SKILLS
-			if(p.onGround) {
+			if(p.onGround()) {
 				switch(keycode) {
 					case InputControls.JUMP :
-						if(!p.collidesTop) {
+						if(!p.isCollidingTop()) {
 							GameClient.sendPacketUDP(new Packet3InputJump());
 						}
 					return false;
@@ -282,7 +283,6 @@ public class ClientPlayer implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {		
-		PlayerData p = Assets.player.getPlayer();
 
 		switch(keycode) {
 			case InputControls.LEFT :
@@ -310,7 +310,7 @@ public class ClientPlayer implements InputProcessor {
 	}
 	
 	public static void skillAction(PlayerData p, Packet packet) {
-		if(p.hasControl && !p.isSkilling) {
+		if(p.hasControl() && !p.isSkilling()) {
 			GameClient.sendPacketUDP(packet);
 		} else {
 			//GameSFXManager.play("blockAction");

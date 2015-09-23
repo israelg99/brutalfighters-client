@@ -19,7 +19,7 @@ import com.brutalfighters.game.effects.text.TextEffects;
 import com.brutalfighters.game.graphics.Shaders;
 import com.brutalfighters.game.math.Vec2;
 import com.brutalfighters.game.player.ClientPlayer;
-import com.brutalfighters.game.player.Player;
+import com.brutalfighters.game.player.fighters.Fighter;
 import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.resources.Prefs;
 
@@ -124,7 +124,7 @@ public class Render {
 		fps.log();
 	}
 	
-	private static void renderPlayer(Player p) {
+	private static void renderPlayer(Fighter p) {
 		p.draw();
 	}
 	private static void renderClientPlayer() {
@@ -317,10 +317,10 @@ public class Render {
 		otmr.dispose();
 	}
 	
-	public static int getResX() {
+	public static float getResX() {
 		return res.getX();
 	}
-	public static int getResY() {
+	public static float getResY() {
 		return res.getY();
 	}
 	private static void setPlayerCamera() {

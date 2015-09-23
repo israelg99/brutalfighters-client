@@ -3,7 +3,7 @@ package com.brutalfighters.game.effects.text;
 import java.util.ArrayList;
 
 import com.brutalfighters.game.basic.GameTime;
-import com.brutalfighters.game.player.Player;
+import com.brutalfighters.game.player.fighters.Fighter;
 
 public class TextEffects {
 	private static ArrayList<TextEffect> textEffects;
@@ -18,7 +18,7 @@ public class TextEffects {
 	public static void add(TextFX effect, String text, float x, float y, int time) {
 		textEffects.add(new TextEffect(effect, text, x, y, time));
 	}
-	public static void add(TextFX effect, Player player) {
+	public static void add(TextFX effect, Fighter player) {
 		add(effect.getDefault(player));	
 	}
 	public static void remove(int i) {

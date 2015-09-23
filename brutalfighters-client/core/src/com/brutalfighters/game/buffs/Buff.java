@@ -18,7 +18,7 @@ public enum Buff {
 		@Override
 		public void draw(PlayerData p, BuffData buff) {
 			if(GameMath.nextBoolean(90)) {
-				ParticleEffects.add(ParticlesCollection.RedBats, p.posx, p.posy, false);
+				ParticleEffects.add(ParticlesCollection.RedBats, p.getPos().getX(), p.getPos().getY(), false);
 			}
 		}
 		
@@ -30,7 +30,7 @@ public enum Buff {
 		
 		@Override
 		public void draw(PlayerData p, BuffData buff) {
-			Render.getSpriteBatch().draw(ice, RenderUtility.CenterX(p.posx, p.width+p.width/2), RenderUtility.CenterY(p.posy, p.height+p.height/2), p.width+p.width/2, p.height+p.height/2);
+			Render.getSpriteBatch().draw(ice, RenderUtility.CenterX(p.getPos().getX(), p.getSize().getX()+p.getSize().getX()/2), RenderUtility.CenterY(p.getPos().getY(), p.getSize().getY()+p.getSize().getY()/2), p.getSize().getX()+p.getSize().getX()/2, p.getSize().getY()+p.getSize().getY()/2);
 		}
 		
 	},
@@ -40,7 +40,7 @@ public enum Buff {
 		@Override
 		public void draw(PlayerData p, BuffData buff) {
 			if(GameMath.nextBoolean(90)) {
-				ParticleEffects.add(ParticlesCollection.Burn, p.posx, p.posy, false);
+				ParticleEffects.add(ParticlesCollection.Burn, p.getPos().getX(), p.getPos().getY(), false);
 			}
 		}
 		
