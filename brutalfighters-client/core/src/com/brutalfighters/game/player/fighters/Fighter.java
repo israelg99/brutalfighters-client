@@ -752,7 +752,7 @@ abstract public class Fighter {
 		resetSkillsTimers();
 	}
 	
-	public float CenterFX_X(float width, float fx_width) {
+	public final float CenterFX_X(float width, float fx_width) {
 		return RenderUtility.CenterFX_X(getPlayer().facingRight(), getPlayer().getPos().getX(), width, fx_width);
 	}
 	
