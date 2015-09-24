@@ -27,6 +27,7 @@ import com.brutalfighters.game.sound.GameSFXManager;
 import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.CollisionDetection;
 import com.brutalfighters.game.utility.GameMath;
+import com.brutalfighters.game.utility.NextStep;
 import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
@@ -69,15 +70,17 @@ abstract public class Fighter {
 	protected TextureRegion stand_frame, jump_frame;
 	protected TextureRegion[] walk_frames, run_frames, aattack_frames, breath_frames, death_frames;
 	
-	/* SFX */
+	/* AA */
+	protected NextStep toNextAA;
 	protected int AA_SFX_LENGTH;
 	protected float AA_SFX_DELAY;
 	
+	/* SFX */
 	protected Sound jumpSFX, AA_SFX[], deathSFX, skillSFX[];
 	
 	/* Steps */
 	protected int steps;
-	protected float toNextStep;
+	protected NextStep toNextStep;
 	protected float timeWalkSteps;
 	protected float timeRunSteps;
 	
@@ -88,7 +91,8 @@ abstract public class Fighter {
 		assignPlayer(pdata);
 		
 		resetSteps();
-		resetNextStep();
+		toNextStep = new NextStep();
+		toNextAA = new NextStep();
 		
 		resetDeathTimer();
 		
@@ -319,20 +323,12 @@ abstract public class Fighter {
 		setSteps(1);
 	}
 
-	public final float getNextStep() {
+	public final NextStep getNextStep() {
 		return toNextStep;
 	}
-	public final boolean isNextStep() {
-		return toNextStep < 0;
-	}
-	public final void setNextStep(float toNextStep) {
-		this.toNextStep = toNextStep;
-	}
-	public final void resetNextStep() {
-		setNextStep(0);
-	}
-	public final void subNextStep() {
-		this.toNextStep -= Gdx.graphics.getDeltaTime();
+	
+	public final NextStep getNextAA() {
+		return toNextAA;
 	}
 
 	public final float getTimeWalkSteps() {
@@ -455,7 +451,7 @@ abstract public class Fighter {
 		} else {
 			resetSkillsPlayed();
 			if(!getPlayer().onGround()) {
-				resetNextStep();
+				getNextStep().reset();
 				resetSteps();
 				return drawJump();
 			} else if(getPlayer().hasControl()) {
@@ -477,10 +473,10 @@ abstract public class Fighter {
 	}
 	
 	protected final void moveStepsSFX(float delay) {
-		subNextStep();
-		if(isNextStep()) {
+		getNextStep().sub();
+		if(getNextStep().isTime()) {
 			playStepType();
-			setNextStep(delay);
+			getNextStep().set(delay);
 		}
 	}
 	
@@ -503,11 +499,11 @@ abstract public class Fighter {
 	}
 	
 	protected final void playAA() {
-		subNextStep();
-		if(isNextStep()) {
+		getNextAA().sub();
+		if(getNextAA().isTime()) {
 			setSteps(getSteps() < getAA_SFX_Length() ? getSteps()+1 : 1);
 			playAA(getSteps()-1, getPlayer().getPos().getX()); // Because its an array here, not a string that you put into hashmap
-			setNextStep(getAA_SFX_Delay());
+			getNextAA().set(getAA_SFX_Delay());
 		}
 	}
 	
