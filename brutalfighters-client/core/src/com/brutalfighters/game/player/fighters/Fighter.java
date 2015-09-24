@@ -15,7 +15,8 @@ import com.brutalfighters.game.buffs.Buff;
 import com.brutalfighters.game.effects.particles.ParticleEffects;
 import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.effects.text.TextEffects;
-import com.brutalfighters.game.effects.text.TextFX;
+import com.brutalfighters.game.effects.text.effects.TextBlood;
+import com.brutalfighters.game.effects.text.effects.TextHeal;
 import com.brutalfighters.game.flags.Flag;
 import com.brutalfighters.game.map.GameMap;
 import com.brutalfighters.game.math.Vec2;
@@ -509,7 +510,7 @@ abstract public class Fighter {
 	
 	protected final void applyHealthParticles() {
 		if(changedHealth() < 0) {
-			TextEffects.add(TextFX.BloodEffect, this); 
+			TextEffects.add(new TextBlood(this)); 
 			if(changedHealth() <= -200) {
 				ParticleEffects.add(ParticlesCollection.BloodSplat_Big, getPlayer().getPos().getX(), getPlayer().getPos().getY()-getPlayer().getSize().getY()/6, false); 
 			} else if(GameMath.nextInt(1, 2) > 1) {
@@ -518,7 +519,7 @@ abstract public class Fighter {
 				ParticleEffects.add(ParticlesCollection.BloodSplat_Right, getPlayer().getPos().getX(), getPlayer().getPos().getY()-getPlayer().getSize().getY()/6, false); 
 			}
 		} else if(changedHealth() > 0) {
-			TextEffects.add(TextFX.HealEffect, this); 
+			TextEffects.add(new TextHeal(this)); 
 			ParticleEffects.add(ParticlesCollection.HealthRegen, getPlayer().getPos().getX(), getPlayer().getPos().getY()-getPlayer().getSize().getY()/6, false); 
 		}
 	}

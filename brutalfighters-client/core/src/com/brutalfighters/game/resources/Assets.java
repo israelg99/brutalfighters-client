@@ -9,7 +9,6 @@ import com.brutalfighters.game.buffs.Buff;
 import com.brutalfighters.game.effects.particles.ParticleEffects;
 import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.effects.text.TextEffects;
-import com.brutalfighters.game.effects.text.TextFX;
 import com.brutalfighters.game.flags.FlagHandler;
 import com.brutalfighters.game.flags.Flags;
 import com.brutalfighters.game.graphics.Shaders;
@@ -152,11 +151,6 @@ public class Assets {
 		System.err.println("Initialize the Projectile Enum!"); //$NON-NLS-1$
 		ProjectilesEnum.init();
 		System.out.println("Finished initializing the Projectile Enum!"); //$NON-NLS-1$
-		
-		// Loading the Projectile Enum
-		System.err.println("Initialize the Text FX Enum!"); //$NON-NLS-1$
-		TextFX.init();
-		System.out.println("Finished initializing the Text FX Enum!"); //$NON-NLS-1$
 		
 		// Loading the Projectile Enum
 		System.err.println("Initialize the Kills Counter!"); //$NON-NLS-1$
