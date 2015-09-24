@@ -752,6 +752,10 @@ abstract public class Fighter {
 		resetSkillsTimers();
 	}
 	
+	public float CenterFX_X(float width, float fx_width) {
+		return RenderUtility.CenterFX_X(getPlayer().facingRight(), getPlayer().getPos().getX(), width, fx_width);
+	}
+	
 	protected final Rectangle getVelocityBounds(boolean velx, boolean vely) {
 		Rectangle bounds = getBounds();
 		bounds.x += velx ? getPlayer().getVel().getX() : 0;

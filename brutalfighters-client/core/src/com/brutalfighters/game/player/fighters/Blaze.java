@@ -89,7 +89,7 @@ public class Blaze extends Fighter {
 		if(!skill.isAnimationFinished(getSkillTimer(0))) {
 			return new TexturesPacker(new TexturePacker(skill.getKeyFrame(getSkillTimer(0), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 		}
-		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), s1_fx_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(0) - skillSpeed*s1_frames.length, false), 800, 135, RenderUtility.CenterFX_X(getPlayer(), getSize().getX(), skill1_fx_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
+		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), s1_fx_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(0) - skillSpeed*s1_frames.length, false), 800, 135, CenterFX_X(getSize().getX(), skill1_fx_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
 
 	@Override

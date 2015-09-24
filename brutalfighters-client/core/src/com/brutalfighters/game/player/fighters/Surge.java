@@ -101,7 +101,7 @@ public class Surge extends Fighter {
 		if(!skill.isAnimationFinished(getSkillTimer(1))) {
 			return new TexturesPacker(new TexturePacker(skill.getKeyFrame(getSkillTimer(1), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 		}
-		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), s2_fx_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(1) - skillSpeed*s2_frames.length, false), 400, 135, RenderUtility.CenterFX_X(getPlayer(), getSize().getX(), s2_fx_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
+		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), s2_fx_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(1) - skillSpeed*s2_frames.length, false), 400, 135, CenterFX_X(getSize().getX(), s2_fx_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.brutalfighters.game.multiplayer;
 
 import com.brutalfighters.game.buffs.BuffData;
 import com.brutalfighters.game.flags.Flag;
+import com.brutalfighters.game.math.Vec2;
 import com.brutalfighters.game.multiplayer.packets.ConnectGameMatch;
 import com.brutalfighters.game.multiplayer.packets.GameMatchPacket;
 import com.brutalfighters.game.multiplayer.packets.Packet;
@@ -54,6 +55,8 @@ public class GameClient {
 	
 	private static void registerPackets() {
 		client.getKryo().register(Packet.class);
+		client.getKryo().register(Vec2.class);
+
 		client.getKryo().register(GameMatchPacket.class);
 		client.getKryo().register(ConnectGameMatch.class);
 		

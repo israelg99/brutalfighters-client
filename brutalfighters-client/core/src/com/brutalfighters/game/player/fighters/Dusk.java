@@ -83,7 +83,7 @@ public class Dusk extends Fighter {
 		if(!skill.isAnimationFinished(getSkillTimer(0))) {
 			return new TexturesPacker(new TexturePacker(skill.getKeyFrame(getSkillTimer(0), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 		}
-		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), bats_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(0) - skillSpeed*s1_frames.length, false), 400, 135, RenderUtility.CenterFX_X(getPlayer(), getSize().getX(), bats_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
+		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), bats_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(0) - skillSpeed*s1_frames.length, false), 400, 135, CenterFX_X(getSize().getX(), bats_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class Dusk extends Fighter {
 		if(!skill.isAnimationFinished(getSkillTimer(2))) {
 			return new TexturesPacker(new TexturePacker(skill.getKeyFrame(getSkillTimer(2), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 		}
-		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), laser_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(2) - skillSpeed*s3_frames.length, false), 400, 135, RenderUtility.CenterFX_X(getPlayer(), getSize().getX(), laser_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
+		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), laser_frames, skillSpeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(2) - skillSpeed*s3_frames.length, false), 400, 135, CenterFX_X(getSize().getX(), laser_width), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
 
 	@Override
