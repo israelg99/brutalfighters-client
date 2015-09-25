@@ -1,7 +1,7 @@
 package com.brutalfighters.game.multiplayer;
 
 import com.brutalfighters.game.buffs.BuffData;
-import com.brutalfighters.game.flags.Flag;
+import com.brutalfighters.game.flags.FlagData;
 import com.brutalfighters.game.math.Vec2;
 import com.brutalfighters.game.multiplayer.packets.ConnectGameMatch;
 import com.brutalfighters.game.multiplayer.packets.GameMatchPacket;
@@ -54,23 +54,38 @@ public class GameClient {
 	}
 	
 	private static void registerPackets() {
-		client.getKryo().register(Packet.class);
+		client.getKryo().register(boolean.class);
+		
+		client.getKryo().register(float.class);
+		
+		client.getKryo().register(int.class);
+		client.getKryo().register(int[].class);
+		
+		client.getKryo().register(String.class);
+		
 		client.getKryo().register(Vec2.class);
+		
+		client.getKryo().register(Packet.class);
 
 		client.getKryo().register(GameMatchPacket.class);
 		client.getKryo().register(ConnectGameMatch.class);
 		
 		client.getKryo().register(Packet0ConnectMatch.class);
-		client.getKryo().register(PlayerData.class);
-		client.getKryo().register(PlayerData[].class);
+		
 		client.getKryo().register(BuffData.class);
 		client.getKryo().register(BuffData[].class);
-		client.getKryo().register(int[].class);
+		
+		client.getKryo().register(PlayerData.class);
+		client.getKryo().register(PlayerData[].class);
+		
 		client.getKryo().register(ProjectileData.class);
 		client.getKryo().register(ProjectileData[].class);
-		client.getKryo().register(Flag.class);
-		client.getKryo().register(Flag[].class);
+		
+		client.getKryo().register(FlagData.class);
+		client.getKryo().register(FlagData[].class);
+		
 		client.getKryo().register(Score.class);
+		
 		client.getKryo().register(Packet1Connected.class);
 		client.getKryo().register(Packet2Players.class);
 		client.getKryo().register(Packet2MatchOver.class);

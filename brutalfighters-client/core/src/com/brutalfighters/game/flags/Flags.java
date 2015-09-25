@@ -3,15 +3,29 @@ package com.brutalfighters.game.flags;
 
 public class Flags {
 	
-	public static final int BLUE_TEAM = 0;
-	public static final int RED_TEAM = 1;
+	private static final int BLUE_TEAM = 0;
+	private static final int RED_TEAM = 1;
 	
 	private Flag[] flags;
 	
-	public Flags(Flag[] flags) {
-		this.flags = flags.clone();
+	public Flags(FlagData[] flags) {
+		reset(flags);
+	}
+
+	private Flag[] getFlags() {
+		return flags;
+	}
+	private void setFlags(Flag[] flags) {
+		this.flags = flags;
 	}
 	
+	public static int getBlueTeam() {
+		return BLUE_TEAM;
+	}
+	public static int getRedTeam() {
+		return RED_TEAM;
+	}
+
 	public Flag getFlag(int team) {
 		return flags[team];
 	}
@@ -23,40 +37,51 @@ public class Flags {
 		return flags[BLUE_TEAM];
 	}
 	
-	public void setNew(Flag[] flags) {
-		this.flags = flags.clone();
-	}
-	public void setNew(int i, Flag flag) {
-		this.flags[i] = flag;
+	public void reset(FlagData[] flags) {
+		this.flags = new Flag[flags.length];
+		for(int i = 0; i < getFlags().length; i++) {
+			getFlags()[i] = new Flag(flags[i]);
+		}
 	}
 	
-	public void updateFlags(Flag[] flags) {
-		for(int i = 0; i < flags.length; i++) {
+	public void setNew(FlagData[] flags) {
+		for(int i = 0; i < getFlags().length; i++) {
+			setNew(i, flags[i]);
+		}
+	}
+	public void setNew(int i, FlagData flag) {
+		this.getFlags()[i].setFlag(flag);
+	}
+	
+	public void assignFlags(FlagData[] newFlags) {
+		for(int i = 0; i < newFlags.length; i++) {
 			
-			Flag newFlag = flags[i];
-			Flag original = this.flags[i];
+			// Data Denial - Extrapolation Technique.
+			FlagData newFlag = newFlags[i];
+			FlagData original = getFlag(i).getFlag();
 			
-			float posx = newFlag.velx != 0 ? original.posx : newFlag.posx;
-			float posy = newFlag.vely != 0 ? original.posy : newFlag.posy;
+			float posx = newFlag.getVel().getX() != 0 ? original.getVel().getX() : newFlag.getVel().getX();
+			float posy = newFlag.getVel().getY() != 0 ? original.getVel().getY() : newFlag.getVel().getY();
 			
-			String flip = original.flip;
+			String flip = original.getFlip();
 			
-			this.flags[i] = flags[i];
+			setNew(i, newFlags[i]);
 			
-			if(newFlag.isTaken && flip.equals(newFlag.flip)) {
-				this.flags[i].posx = posx;
-				this.flags[i].posy = posy;
+			if(newFlag.isTaken() && flip.equals(newFlag.getFlip())) {
+				getFlags()[i].getFlag().getPos().set(posx, posy);
 			}
 		}
 	}
 	
 	public void updateFlags() {
-		FlagHandler.updateFlags(flags);
+		for(int i = 0; i < getFlags().length; i++) {
+			getFlag(i).updateFlag();
+		}
 	}
 	
 	public void renderFlags() {
-		for(int i = 0; i < flags.length; i++) {
-			FlagHandler.drawFlag(i, flags[i]);
+		for(int i = 0; i < getFlags().length; i++) {
+			getFlag(i).drawFlag(i);
 		}
 	}
 }

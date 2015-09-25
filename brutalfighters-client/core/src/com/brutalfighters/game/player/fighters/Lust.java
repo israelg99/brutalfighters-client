@@ -1,9 +1,11 @@
 package com.brutalfighters.game.player.fighters;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
+import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
@@ -105,6 +107,14 @@ public class Lust extends Fighter {
 	@Override
 	protected void applyRunningParticles() {
 		applyRunningParticles(2);
+	}
+	
+	@Override
+	public void loadSFX() {			
+		setSkillSFX(new Sound[getSkills()]);
+		getSkillSFX()[0] = SoundUtil.getSound(getPath() + "skill1.wav"); //$NON-NLS-1$
+		getSkillSFX()[1]  = SoundUtil.getSound(getPath() + "skill2.wav"); //$NON-NLS-1$
+		getSkillSFX()[3]  = SoundUtil.getSound(getPath() + "skill4.wav"); //$NON-NLS-1$
 	}
 
 }

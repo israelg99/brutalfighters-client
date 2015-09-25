@@ -23,8 +23,8 @@ public class Projectile {
 	}
 	
 	public void updateVelocities() {
-		getData().x += getData().velx * ServerInfo.getDIVIDE() * Gdx.graphics.getDeltaTime();
-		getData().y += getData().vely * ServerInfo.getDIVIDE() * Gdx.graphics.getDeltaTime();		
+		getData().getPos().addX(getData().getVel().getX() * ServerInfo.getDIVIDE() * Gdx.graphics.getDeltaTime());
+		getData().getPos().addY(getData().getVel().getY() * ServerInfo.getDIVIDE() * Gdx.graphics.getDeltaTime());		
 	}
 	
 	public Animation getAnimation() {
@@ -36,13 +36,13 @@ public class Projectile {
 	public  TexturePacker getSprite() {
 		return new TexturePacker(getFrame(), this);
 	}
-	public int getWidth() {
-		return getProjectile().WIDTH;
+	public float getWidth() {
+		return getProjectile().getSize().getX();
 	}
-	public int getHeight() {
-		return getProjectile().HEIGHT;
+	public float getHeight() {
+		return getProjectile().getSize().getY();
 	}
 	public ProjectilesEnum getProjectile() {
-		return ProjectilesEnum.valueOf(getData().name);
+		return ProjectilesEnum.valueOf(getData().getName());
 	}
 }

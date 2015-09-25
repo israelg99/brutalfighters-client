@@ -33,6 +33,7 @@ public class Players {
 	}
 	public void setPlayers(PlayerData[] pdata) {
 		if(pdata.length != players.length) {
+			System.out.println("Players length is different, resetting all players"); //$NON-NLS-1$
 			newPlayers(pdata);
 		} else {
 			for(int i = 0; i < players.length; i++) {

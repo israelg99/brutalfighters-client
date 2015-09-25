@@ -9,7 +9,7 @@ import com.brutalfighters.game.buffs.Buff;
 import com.brutalfighters.game.effects.particles.ParticleEffects;
 import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.effects.text.TextEffects;
-import com.brutalfighters.game.flags.FlagHandler;
+import com.brutalfighters.game.flags.Flag;
 import com.brutalfighters.game.flags.Flags;
 import com.brutalfighters.game.graphics.Shaders;
 import com.brutalfighters.game.map.Background;
@@ -111,14 +111,14 @@ public class Assets {
 		// Load The (Client)Player
 		System.err.println("Initializing the client player!"); //$NON-NLS-1$
 		client = new ClientPlayer();
-		player = FighterFactory.valueOf(res.theClient.getName()).getNew(res.theClient);
+		player = FighterFactory.valueOf(Character.toUpperCase(res.theClient.getName().charAt(0)) + res.theClient.getName().substring(1)).getNew(res.theClient);
 		System.out.println("Finished initializing the client player!"); //$NON-NLS-1$
 		
 		// Load The (Client)Player
-		System.err.println("Loading the Flags and FlagHandler!"); //$NON-NLS-1$
+		System.err.println("Loading the Flags and Flag!"); //$NON-NLS-1$
 		flags = new Flags(res.flags);
-		FlagHandler.Load();
-		System.out.println("Finished loading the Flags and FlagHandler!"); //$NON-NLS-1$
+		Flag.Load();
+		System.out.println("Finished loading the Flags and Flag!"); //$NON-NLS-1$
 		
 		// Load The Map Background
 		System.err.println("Initializing the background!"); //$NON-NLS-1$
@@ -143,8 +143,6 @@ public class Assets {
 		
 		System.err.println("Initializing the Score!"); //$NON-NLS-1$
 		score = new Score();
-		score.flags = new int[] {0,0};
-		score.kills = new int[] {0,0};
 		System.out.println("Finished initializing the Score!"); //$NON-NLS-1$
 		
 		// Loading the Projectile Enum

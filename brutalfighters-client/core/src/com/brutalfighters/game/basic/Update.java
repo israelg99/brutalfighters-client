@@ -56,7 +56,7 @@ public class Update {
 		
 		Assets.projectiles.setNew(packet.projectiles);
 		
-		Assets.flags.updateFlags(packet.flags);
+		Assets.flags.assignFlags(packet.flags);
 		
 		Assets.score = packet.score;
 	}

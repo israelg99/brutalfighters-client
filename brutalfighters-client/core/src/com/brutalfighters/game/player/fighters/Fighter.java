@@ -17,7 +17,7 @@ import com.brutalfighters.game.effects.particles.ParticlesCollection;
 import com.brutalfighters.game.effects.text.TextEffects;
 import com.brutalfighters.game.effects.text.effects.TextBlood;
 import com.brutalfighters.game.effects.text.effects.TextHeal;
-import com.brutalfighters.game.flags.Flag;
+import com.brutalfighters.game.flags.FlagData;
 import com.brutalfighters.game.map.GameMap;
 import com.brutalfighters.game.math.Vec2;
 import com.brutalfighters.game.player.PlayerData;
@@ -89,7 +89,7 @@ abstract public class Fighter {
 	protected boolean[] skillPlayed;
 	
 	protected Fighter(PlayerData pdata, Vec2 size, int BLOCK_WIDTH, int BLOCK_HEIGHT) {
-		assignPlayer(pdata);
+		setPlayer(pdata);
 		
 		resetSteps();
 		toNextStep = new NextStep();
@@ -102,7 +102,7 @@ abstract public class Fighter {
 		
 		resetCameraLock();
 		
-		resetBleedingCD();
+		setBleedingCD(1000);
 		
 		setBounds(new Rectangle());
 		
@@ -242,13 +242,14 @@ abstract public class Fighter {
 		this.cameraLock[1] = cameraLock;
 	}
 	public final void resetCameraLock() {
+		this.cameraLock = new boolean[2];
 		Arrays.fill(this.cameraLock, false);
 	}
 
 	public final Vec2 getBleedingCD() {
 		return bleedingCD;
 	}
-	public final void setBleedingCD(Vec2 bleedingCD) {
+	public final void setBleedingCD(float bleedingCD) {
 		this.bleedingCD = new Vec2(bleedingCD);
 	}
 	public final void resetBleedingCD() {
@@ -359,6 +360,7 @@ abstract public class Fighter {
 		this.isSkillPlayed(index, false);
 	}
 	public final void resetSkillsPlayed() {
+		this.skillPlayed = new boolean[getSkills()];
 		Arrays.fill(this.skillPlayed, false);
 	}
 
@@ -379,12 +381,12 @@ abstract public class Fighter {
 	
 	protected abstract void applyRunningParticles();
 	
-	protected final void loadSFX() {			
-		skillSFX = new Sound[SKILLS];
-		skillSFX[0] = SoundUtil.getSound(getPath() + "skill1.wav"); //$NON-NLS-1$
-		skillSFX[1] = SoundUtil.getSound(getPath() + "skill2.wav"); //$NON-NLS-1$
-		skillSFX[2] = SoundUtil.getSound(getPath() + "skill3.wav"); //$NON-NLS-1$
-		skillSFX[3] = SoundUtil.getSound(getPath() + "skill4.wav"); //$NON-NLS-1$
+	protected void loadSFX() {			
+		setSkillSFX(new Sound[SKILLS]);
+		getSkillSFX()[0] = SoundUtil.getSound(getPath() + "skill1.wav"); //$NON-NLS-1$
+		getSkillSFX()[1] = SoundUtil.getSound(getPath() + "skill2.wav"); //$NON-NLS-1$
+		getSkillSFX()[2] = SoundUtil.getSound(getPath() + "skill3.wav"); //$NON-NLS-1$
+		getSkillSFX()[3] = SoundUtil.getSound(getPath() + "skill4.wav"); //$NON-NLS-1$
 	}
 	
 	protected final void loadBasicSFX() {			
@@ -530,8 +532,11 @@ abstract public class Fighter {
 		}
 	}
 	
+	public final static String getPATH() {
+		return PATH;
+	}
 	protected final static String getPath(String name) {
-		return "champs/" + name + "/"; //$NON-NLS-1$ //$NON-NLS-2$
+		return getPATH() + name + "/"; //$NON-NLS-1$
 	}
 	protected final String getPath() {
 		return getPath(getPlayer().getName());
@@ -607,19 +612,19 @@ abstract public class Fighter {
 	protected final boolean updateFlag() {
 		if(getPlayer().isHoldingFlag()) {
 			
-			Flag flag = Assets.flags.getEnemyFlag(getPlayer().getTeam());
+			FlagData flag = Assets.flags.getEnemyFlag(getPlayer().getTeam()).getFlag();
 			
 			float pad = getPlayer().getSize().getX()/3; // IT DEPENDS ON THE PLAYER, THEREFORE STATIC FIELD IS NOT VIABLE!
 			
 			if(getPlayer().facingLeft()) {
-				flag.flip = "right"; //$NON-NLS-1$
+				flag.flipRight();
 			} else {
 				pad = -pad;
-				flag.flip = "left"; //$NON-NLS-1$
+				flag.flipLeft();
 			}
 			
-			flag.posx = getPlayer().getPos().getX() + pad;
-			flag.posy = getPlayer().getPos().getY() + getPlayer().getSize().getY()/3 + 15;
+			flag.getPos().setX(getPlayer().getPos().getX() + pad);
+			flag.getPos().setY(getPlayer().getPos().getY() + getPlayer().getSize().getY()/3 + 15);
 			
 			return true;
 		}
@@ -640,7 +645,7 @@ abstract public class Fighter {
 
 	protected final void applyBuffs() {		
 		for(int i = 0; i < getPlayer().getBuffs().length; i++) {
-			Buff.valueOf(getPlayer().getBuffs()[i].name).draw(getPlayer(), getPlayer().getBuffs()[i]);
+			Buff.valueOf(getPlayer().getBuffs()[i].getName()).draw(getPlayer(), getPlayer().getBuffs()[i]);
 		}
 	}
 

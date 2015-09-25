@@ -19,11 +19,11 @@ public class Projectiles {
 		projectiles = new ArrayList<Projectile>();
 		for(int i = 0; i < arr.length; i++) {
 			ProjectileData p = arr[i];
-			if(!p.mode.equals("explode")) { //$NON-NLS-1$
+			if(!p.isExplode()) {
 				projectiles.add(new Projectile(p));
 			} else {
 				expProjectiles.add(new ExplodeProjectile(p));
-				ProjectilesEnum.valueOf(p.name).playExplode(p.x);
+				ProjectilesEnum.valueOf(p.getName()).playExplode(p.getPos().getX());
 			}
 		}
 	}

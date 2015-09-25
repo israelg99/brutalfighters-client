@@ -96,11 +96,11 @@ public class HUD {
 	// Not flexible but good enough!
 	private static void drawScore() {
 		Render.getSpriteBatch().draw(score, Render.getResX()/2-score.getWidth()/2, Render.getResY()-score.getHeight(), score.getWidth(), score.getHeight());
-		GameFont.BlueTeamBig.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.kills[Flags.BLUE_TEAM]), Render.getResX()/2-116-64, Render.getResY()-score.getHeight()/2+20);
-		GameFont.RedTeamBig.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.kills[Flags.RED_TEAM]), Render.getResX()/2+116-32, Render.getResY()-score.getHeight()/2+20);
+		GameFont.BlueTeamBig.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.getKills()[Flags.getBlueTeam()]), Render.getResX()/2-116-64, Render.getResY()-score.getHeight()/2+20);
+		GameFont.RedTeamBig.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.getKills()[Flags.getRedTeam()]), Render.getResX()/2+116-32, Render.getResY()-score.getHeight()/2+20);
 		
-		GameFont.BlueTeam.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.flags[Flags.BLUE_TEAM]), Render.getResX()/2-score.getWidth()/2+60, Render.getResY()-28);
-		GameFont.RedTeam.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.flags[Flags.RED_TEAM]), Render.getResX()/2+score.getWidth()/2-140, Render.getResY()-28);
+		GameFont.BlueTeam.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.getFlags()[Flags.getBlueTeam()]), Render.getResX()/2-score.getWidth()/2+60, Render.getResY()-28);
+		GameFont.RedTeam.getFont().draw(Render.getSpriteBatch(), Integer.toString(Assets.score.getFlags()[Flags.getRedTeam()]), Render.getResX()/2+score.getWidth()/2-140, Render.getResY()-28);
 	}
 	
 	private static void drawFinishedMatch() {

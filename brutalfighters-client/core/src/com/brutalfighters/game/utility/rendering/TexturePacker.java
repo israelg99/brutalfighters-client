@@ -21,10 +21,10 @@ public class TexturePacker {
 		this(tex, p.getSize().getX(), p.getSize().getY(), p.getPlayer().getPos().getX(), p.getPlayer().getPos().getY());
 	}
 	public TexturePacker(TextureRegion tex, Projectile p) {
-		this(tex, p.getWidth(), p.getHeight(), p.getData().x-p.getWidth()/2, p.getData().y-p.getHeight()/2);
+		this(tex, p.getWidth(), p.getHeight(), p.getData().getPos().getX()-p.getWidth()/2, p.getData().getPos().getY()-p.getHeight()/2);
 	}
 	public TexturePacker(TextureRegion tex, ExplodeProjectile p) { // Doesn't really matter because ExplodeProjectile inherit Projectile, and we have a constructor for Projectile already.
-		this(tex, p.getWidth(), p.getHeight(), p.getData().x-p.getWidth()/2, p.getData().y-p.getHeight()/2);
+		this(tex, p.getWidth(), p.getHeight(), p.getData().getPos().getX()-p.getWidth()/2, p.getData().getPos().getY()-p.getHeight()/2);
 	}
 	
 	public TextureRegion getTexture() {
