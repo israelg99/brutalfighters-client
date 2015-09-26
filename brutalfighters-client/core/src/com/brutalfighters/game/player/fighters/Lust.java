@@ -1,48 +1,17 @@
 package com.brutalfighters.game.player.fighters;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
-import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
-import com.brutalfighters.game.utility.rendering.TextureHandle;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
 import com.brutalfighters.game.utility.rendering.TexturesPacker;
 
 public class Lust extends Fighter {
-
-	private TextureRegion[] s1_frames, s2_frames;
-	private TextureRegion s4_frame;
 	
 	protected Lust(PlayerData pdata) {
 		super(pdata);
-	}
-
-	@Override
-	protected void loadSprite() {
-		breath_frames = TextureHandle.ApplyFrames(0, 0, 4, 1, SPRITE);
-		
-		walk_frames = TextureHandle.ApplyFrames(0, 1, 4, 2, SPRITE);
-		
-		run_frames = TextureHandle.ApplyFrames(0, 2, 3, 3, SPRITE);
-		
-		aattack_frames = TextureHandle.ApplyFrames(0, 4, 8, 5, SPRITE);
-
-		death_frames = TextureHandle.ApplyFrames(0, 9, 6, 10, SPRITE);
-		
-		s1_frames = TextureHandle.ApplyFrames(0, 5, 8, 6, SPRITE);
-		
-		s2_frames = TextureHandle.ApplyFrames(0, 6, 6, 7, SPRITE);
-		
-		s4_frame = SPRITE[8][0];
-		
-		stand_frame = SPRITE[0][0];
-		
-		jump_frame = SPRITE[3][0];
-		
 	}
 
 	@Override
@@ -108,13 +77,4 @@ public class Lust extends Fighter {
 	protected void applyRunningParticles() {
 		applyRunningParticles(2);
 	}
-	
-	@Override
-	public void loadSFX() {			
-		setSkillSFX(new Sound[getSkills()]);
-		getSkillSFX()[0] = SoundUtil.getSound(getPath() + "skill1.wav"); //$NON-NLS-1$
-		getSkillSFX()[1]  = SoundUtil.getSound(getPath() + "skill2.wav"); //$NON-NLS-1$
-		getSkillSFX()[3]  = SoundUtil.getSound(getPath() + "skill4.wav"); //$NON-NLS-1$
-	}
-
 }

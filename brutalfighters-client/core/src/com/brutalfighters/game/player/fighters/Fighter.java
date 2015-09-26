@@ -4,9 +4,7 @@ import java.awt.Rectangle;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.basic.GameTime;
@@ -32,21 +30,19 @@ import com.brutalfighters.game.utility.NextStep;
 import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
-import com.brutalfighters.game.utility.rendering.TextureHandle;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
 import com.brutalfighters.game.utility.rendering.TexturesPacker;
 
 abstract public class Fighter {
 	
 	/* Finals */
-	protected static final String PATH = "fighters/"; //$NON-NLS-1$
 	protected static final float VOLUME = 0.5f;
 	
 	protected static final int GRAVITY_FORCE = 27;
 	protected static final int FALLING_MOMENTUM = 9;
 	
 	protected static final int SKILLS = 4;
-
+	
 	/* Player */
 	protected PlayerData player;
 
@@ -65,19 +61,9 @@ abstract public class Fighter {
 	/* Bleeding */
 	protected Vec2 bleedingCD; // max = 1000
 	
-	/* Sprites */
-	protected final TextureRegion[][] SPRITE;
-	protected final Vec2 COLS_ROWS;
-	protected TextureRegion stand_frame, jump_frame;
-	protected TextureRegion[] walk_frames, run_frames, aattack_frames, breath_frames, death_frames;
-	
 	/* AA */
 	protected NextStep toNextAA;
-	protected int AA_SFX_LENGTH;
-	protected float AA_SFX_DELAY;
-	
-	/* SFX */
-	protected Sound jumpSFX, AA_SFX[], deathSFX, skillSFX[];
+	protected static int AA_SFX_LENGTH;
 	
 	/* Steps */
 	protected int steps;
@@ -87,8 +73,8 @@ abstract public class Fighter {
 	
 	/* Skills */
 	protected boolean[] skillPlayed;
-	
-	protected Fighter(PlayerData pdata, Vec2 size, int BLOCK_WIDTH, int BLOCK_HEIGHT) {
+
+	protected Fighter(PlayerData pdata, Vec2 size, Vec2 block_size) {
 		setPlayer(pdata);
 		
 		resetSteps();
@@ -111,19 +97,12 @@ abstract public class Fighter {
 		setTimeWalkSteps(0.5f);
 		setTimeRunSteps(0.3f);
 		
-		this.SPRITE = TextureHandle.TextureSplit(getPath() + getPlayer().getName() + "_right.png", BLOCK_WIDTH, BLOCK_HEIGHT, true, false); //$NON-NLS-1$
-		
-		this.COLS_ROWS = new Vec2(SPRITE[0].length, SPRITE.length);
-		
-		loadSprite();
-		loadBasicSFX();
-		loadSFX();
 	}
 	protected Fighter(PlayerData pdata, Vec2 size) {
-		this(pdata, size, 80, 80);
+		this(pdata, size, new Vec2(80,80));
 	}
 	protected Fighter(PlayerData pdata) {
-		this(pdata, new Vec2(200,135), 80, 80);
+		this(pdata, new Vec2(200,135));
 	}
 	
 	public final static float getVolume() {
@@ -137,17 +116,6 @@ abstract public class Fighter {
 	}
 	public final static int getSkills() {
 		return SKILLS;
-	}
-	
-	public final TextureRegion[][] getSPRITE() {
-		return SPRITE;
-	}
-
-	public final float getCOLS() {
-		return COLS_ROWS.getX();
-	}
-	public final float getROWS() {
-		return COLS_ROWS.getY();
 	}
 
 	public final PlayerData getPlayer() {
@@ -259,60 +227,11 @@ abstract public class Fighter {
 		getBleedingCD().subX(getBleedingCD().getY()*Gdx.graphics.getDeltaTime());
 	}
 
-	public final TextureRegion getStandFrame() {
-		return stand_frame;
-	}
-	public final void setStandFrame(TextureRegion stand_frame) {
-		this.stand_frame = stand_frame;
-	}
-
-	public final TextureRegion getJumpFrame() {
-		return jump_frame;
-	}
-	public final void setJumpFrame(TextureRegion jump_frame) {
-		this.jump_frame = jump_frame;
-	}
-
 	public final int getAA_SFX_Length() {
 		return AA_SFX_LENGTH;
 	}
 	public final void setAA_SFX_Length(int aASFX_LENGTH) {
 		AA_SFX_LENGTH = aASFX_LENGTH;
-	}
-
-	public final float getAA_SFX_Delay() {
-		return AA_SFX_DELAY;
-	}
-	public final void setAA_SFX_Delay(float aASFX_DELAY) {
-		AA_SFX_DELAY = aASFX_DELAY;
-	}
-
-	public final Sound getJumpSFX() {
-		return jumpSFX;
-	}
-	public final void setJumpSFX(Sound jumpSFX) {
-		this.jumpSFX = jumpSFX;
-	}
-
-	public final Sound[] getAA_SFX() {
-		return AA_SFX;
-	}
-	public final void setAA_SFX(Sound[] aASFX) {
-		AA_SFX = aASFX;
-	}
-
-	public final Sound getDeathSFX() {
-		return deathSFX;
-	}
-	public final void setDeathSFX(Sound deathSFX) {
-		this.deathSFX = deathSFX;
-	}
-
-	public final Sound[] getSkillSFX() {
-		return skillSFX;
-	}
-	public final void setSkillSFX(Sound[] skillSFX) {
-		this.skillSFX = skillSFX;
 	}
 
 	public final int getSteps() {
@@ -363,8 +282,6 @@ abstract public class Fighter {
 		this.skillPlayed = new boolean[getSkills()];
 		Arrays.fill(this.skillPlayed, false);
 	}
-
-	protected abstract void loadSprite();
 	
 	protected abstract TexturesPacker drawBreath();
 	protected abstract TexturesPacker drawWalking();
@@ -380,27 +297,6 @@ abstract public class Fighter {
 	protected abstract TexturesPacker drawDead();
 	
 	protected abstract void applyRunningParticles();
-	
-	protected void loadSFX() {			
-		setSkillSFX(new Sound[SKILLS]);
-		getSkillSFX()[0] = SoundUtil.getSound(getPath() + "skill1.wav"); //$NON-NLS-1$
-		getSkillSFX()[1] = SoundUtil.getSound(getPath() + "skill2.wav"); //$NON-NLS-1$
-		getSkillSFX()[2] = SoundUtil.getSound(getPath() + "skill3.wav"); //$NON-NLS-1$
-		getSkillSFX()[3] = SoundUtil.getSound(getPath() + "skill4.wav"); //$NON-NLS-1$
-	}
-	
-	protected final void loadBasicSFX() {			
-		AA_SFX_LENGTH = 2;
-		AA_SFX_DELAY = 0.5f;
-		
-		jumpSFX = SoundUtil.getSound(PATH + "sfx/jump.wav"); //$NON-NLS-1$
-		
-		AA_SFX = new Sound[AA_SFX_LENGTH];
-		AA_SFX[0] = SoundUtil.getSound(PATH + "sfx/AA1.wav"); //$NON-NLS-1$
-		AA_SFX[1] = SoundUtil.getSound(PATH + "sfx/AA2.wav"); //$NON-NLS-1$
-		
-		deathSFX = SoundUtil.getSound(PATH + "sfx/death1.wav"); //$NON-NLS-1$
-	}
 
 	protected final void playSkill(int i, float x) {
 		SoundUtil.playStereo(skillSFX[i], x);
@@ -530,16 +426,6 @@ abstract public class Fighter {
 		if(getPlayer().isRunning() && !getPlayer().isSkilling() && getPlayer().hasControl() && getPlayer().getVel().getX() != 0 && GameMath.nextBoolean(70)) {
 			ParticleEffects.add("Trail"+trailNumber, getPlayer().getPos().getX(), getPlayer().getPos().getY(), true); //$NON-NLS-1$
 		}
-	}
-	
-	public final static String getPATH() {
-		return PATH;
-	}
-	protected final static String getPath(String name) {
-		return getPATH() + name + "/"; //$NON-NLS-1$
-	}
-	protected final String getPath() {
-		return getPath(getPlayer().getName());
 	}
 	
 	protected final float syncedVelX() {

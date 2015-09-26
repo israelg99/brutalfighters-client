@@ -1,55 +1,19 @@
 package com.brutalfighters.game.player.fighters;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
-import com.brutalfighters.game.utility.rendering.TextureHandle;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
 import com.brutalfighters.game.utility.rendering.TexturesPacker;
 
 public class Dusk extends Fighter {
 
-	private TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, bats_frames, laser_frames;
-	
 	private float bats_width = getSize().getX(), laser_width = getSize().getY();
 	
 	protected Dusk(PlayerData pdata) {
 		super(pdata);
-	}
-
-	@Override
-	protected void loadSprite() {
-		breath_frames = TextureHandle.ApplyFrames(0, 0, 4, 1, SPRITE);
-		
-		walk_frames = TextureHandle.ApplyFrames(0, 1, 3, 2, SPRITE);
-		
-		run_frames = TextureHandle.ApplyFrames(0, 2, 3, 3, SPRITE);
-		
-		aattack_frames = TextureHandle.ApplyFrames(0, 4, 8, 5, SPRITE);
-
-		death_frames = TextureHandle.ApplyFrames(0, 9, 6, 10, SPRITE);
-		
-		s1_frames = TextureHandle.ApplyFrames(0, 5, 5, 6, SPRITE);
-		
-		s2_frames = TextureHandle.ApplyFrames(0, 6, 10, 7, SPRITE);
-		
-		s3_frames = TextureHandle.ApplyFrames(0, 7, 4, 8, SPRITE);
-		
-		s4_frames = TextureHandle.ApplyFrames(0, 8, 6, 9, SPRITE);
-		
-		TextureRegion[][] bats_fx = TextureHandle.TextureSplit(getPath() + getPlayer().getName() + "_bats_right.png", 160, 80, true, false); //$NON-NLS-1$
-		bats_frames = TextureHandle.ApplyFrames(0, 0, 4, 1, bats_fx);
-		
-		TextureRegion[][] laser_fx = TextureHandle.TextureSplit(getPath() + getPlayer().getName() + "_laser_right.png", 160, 80, true, false); //$NON-NLS-1$
-		laser_frames = TextureHandle.ApplyFrames(0, 0, 3, 1, laser_fx);
-		
-		stand_frame = SPRITE[0][0];
-		
-		jump_frame = SPRITE[3][0];
-		
 	}
 
 	@Override

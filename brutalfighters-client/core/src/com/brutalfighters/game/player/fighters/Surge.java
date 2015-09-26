@@ -1,64 +1,20 @@
 package com.brutalfighters.game.player.fighters;
 
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
-import com.brutalfighters.game.utility.rendering.TextureHandle;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
 import com.brutalfighters.game.utility.rendering.TexturesPacker;
 
 public class Surge extends Fighter {
 
-	private TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, s2_fx_frames, s4_fx_frames;
-	
 	private float s2_fx_width = getSize().getX(); // 2*getSize().getX() total, but this variable stores only the FX width, fighter not included.
-	
-	private Music lightning_sfx; // Music because Sound will run like 1000x times and Music has isPlaying() to stop it.
 	
 	protected Surge(PlayerData pdata) {
 		super(pdata);
-	}
-
-	@Override
-	protected void loadSprite() {
-		breath_frames = TextureHandle.ApplyFrames(0, 0, 4, 1, SPRITE);
-		
-		walk_frames = TextureHandle.ApplyFrames(0, 1, 4, 2, SPRITE);
-		
-		run_frames = TextureHandle.ApplyFrames(0, 2, 3, 3, SPRITE);
-		
-		aattack_frames = TextureHandle.ApplyFrames(0, 4, 12, 5, SPRITE);
-
-		death_frames = TextureHandle.ApplyFrames(0, 9, 6, 10, SPRITE);
-		
-		s1_frames = TextureHandle.ApplyFrames(0, 5, 6, 6, SPRITE);
-		
-		s2_frames = TextureHandle.ApplyFrames(0, 6, 8, 7, SPRITE);
-		
-		s3_frames = TextureHandle.ApplyFrames(0, 7, 8, 8, SPRITE);
-		
-		s4_frames = TextureHandle.ApplyFrames(0, 8, 13, 9, SPRITE);
-		
-		TextureRegion[][] s2_fx = TextureHandle.TextureSplit(getPath() + getPlayer().getName() + "_fx_right.png", 160, 80, true, false); //$NON-NLS-1$
-		s2_fx_frames = TextureHandle.ApplyFrames(0, 0, 3, 1, s2_fx);
-
-		TextureRegion[][] s4_fx = TextureHandle.TextureSplit(getPath() + "lightning_right.png", 170, 415, true, false); //$NON-NLS-1$
-		s4_fx_frames = TextureHandle.ApplyFrames(0, 0, 4, 1, s4_fx);
-		
-		stand_frame = SPRITE[0][0];
-		
-		jump_frame = SPRITE[3][0];
-		
-		loadExtraSFX();
-	}
-	
-	public void loadExtraSFX() {
-		lightning_sfx = SoundUtil.getMusic(getPath() + "lightning.wav", SoundUtil.getVolume(0.3f)); //$NON-NLS-1$
 	}
 
 	@Override

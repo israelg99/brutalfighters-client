@@ -1,63 +1,22 @@
 package com.brutalfighters.game.player.fighters;
 
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
-import com.brutalfighters.game.utility.rendering.TextureHandle;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
 import com.brutalfighters.game.utility.rendering.TexturesPacker;
 
 public class Blaze extends Fighter {
 
-	private TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, s1_fx_frames;
-	
-	private Music phoenix_sfx; // Sound will run like 1000x times! in Music you have the isPlaying Method!
 	private float skill1_fx_width = getSize().getX() * 3; // It should be getSize().getX() * 4 in total, one getSize().getX() is the fighter itself.
 	
 	protected Blaze(PlayerData pdata) {
 		super(pdata);
 	}
-
-	@Override
-	protected void loadSprite() {
-		breath_frames = TextureHandle.ApplyFrames(0, 0, 4, 1, SPRITE);
-		
-		walk_frames = TextureHandle.ApplyFrames(0, 1, 4, 2, SPRITE);
-		
-		run_frames = TextureHandle.ApplyFrames(0, 2, 3, 3, SPRITE);
-		
-		aattack_frames = TextureHandle.ApplyFrames(0, 4, 13, 5, SPRITE);
-	
-		death_frames = TextureHandle.ApplyFrames(0, 9, 6, 10, SPRITE);
-		
-		s1_frames = TextureHandle.ApplyFrames(0, 5, 8, 6, SPRITE);
-		
-		s2_frames = TextureHandle.ApplyFrames(0, 6, 7, 7, SPRITE);
-		
-		s3_frames = TextureHandle.ApplyFrames(0, 7, 10, 8, SPRITE);
-		
-		s4_frames = TextureHandle.ApplyFrames(0, 8, 10, 9, SPRITE);
-		
-		TextureRegion[][] s1_fx = TextureHandle.TextureSplit(getPath() + getPlayer().getName() + "_fx_right.png", 380, 80, true, false); //$NON-NLS-1$
-		s1_fx_frames = TextureHandle.ApplyFrames(0, 0, 1, 4, s1_fx);
-		
-		stand_frame = SPRITE[0][0];
-		
-		jump_frame = SPRITE[3][0];
-		
-		loadExtraSFX();
-	}
-	
-	public void loadExtraSFX() {
-		phoenix_sfx = SoundUtil.getMusic(getPath() + "phoenix.wav", SoundUtil.getVolume(0.3f)); //$NON-NLS-1$
-	}
-
 	@Override
 	protected TexturesPacker drawBreath() {
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), breath_frames, 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));

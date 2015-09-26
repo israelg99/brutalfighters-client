@@ -20,7 +20,7 @@ public class Window {
 		cfg.width = (int) screenSize.getWidth();
 		cfg.height = (int) screenSize.getHeight();
 		cfg.resizable = false;
-		cfg.fullscreen = false;
+		cfg.fullscreen = true;
 	}
 	
 	public static LwjglApplicationConfiguration getCFG() {
