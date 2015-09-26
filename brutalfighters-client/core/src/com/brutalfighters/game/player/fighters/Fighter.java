@@ -74,7 +74,7 @@ abstract public class Fighter {
 	/* Skills */
 	protected boolean[] skillPlayed;
 
-	protected Fighter(PlayerData pdata, Vec2 size, Vec2 block_size) {
+	protected Fighter(PlayerData pdata, Vec2 size) {
 		setPlayer(pdata);
 		
 		resetSteps();
@@ -97,9 +97,6 @@ abstract public class Fighter {
 		setTimeWalkSteps(0.5f);
 		setTimeRunSteps(0.3f);
 		
-	}
-	protected Fighter(PlayerData pdata, Vec2 size) {
-		this(pdata, size, new Vec2(80,80));
 	}
 	protected Fighter(PlayerData pdata) {
 		this(pdata, new Vec2(200,135));
