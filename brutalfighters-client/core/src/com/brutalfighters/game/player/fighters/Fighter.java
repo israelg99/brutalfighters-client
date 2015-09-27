@@ -23,7 +23,6 @@ import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.resources.Prefs;
 import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.sound.GameSFXManager;
-import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.CollisionDetection;
 import com.brutalfighters.game.utility.GameMath;
 import com.brutalfighters.game.utility.NextStep;
@@ -63,7 +62,9 @@ abstract public class Fighter {
 	
 	/* AA */
 	protected NextStep toNextAA;
-	protected static int AA_SFX_LENGTH;
+	protected float AA_delay;
+	protected int AA_steps;
+	protected int AA_length;
 	
 	/* Steps */
 	protected int steps;
@@ -78,8 +79,12 @@ abstract public class Fighter {
 		setPlayer(pdata);
 		
 		resetSteps();
-		toNextStep = new NextStep();
-		toNextAA = new NextStep();
+		setNextStep(new NextStep());
+		
+		resetAA_Steps();
+		setAA_Length(2);
+		setAA_Delay(0.5f);
+		setNextAA(new NextStep());
 		
 		resetDeathTimer();
 		
@@ -161,7 +166,31 @@ abstract public class Fighter {
 	public final void setBounds(Rectangle bounds) {
 		this.bounds = new Rectangle(bounds);
 	}
-
+	
+	public int getAA_Steps() {
+		return AA_steps;
+	}
+	public void setAA_Steps(int aA_steps) {
+		this.AA_steps = aA_steps;
+	}
+	public void resetAA_Steps() {
+		setAA_Steps(1);
+	}
+	
+	public int getAA_Length() {
+		return AA_length;
+	}
+	public void setAA_Length(int aA_length) {
+		this.AA_length = aA_length;
+	}
+	
+	public float getAA_Delay() {
+		return AA_delay;
+	}
+	public void setAA_Delay(float aA_delay) {
+		this.AA_delay = aA_delay;
+	}
+	
 	public final float getDeathTimer() {
 		return deathTimer;
 	}
@@ -224,13 +253,6 @@ abstract public class Fighter {
 		getBleedingCD().subX(getBleedingCD().getY()*Gdx.graphics.getDeltaTime());
 	}
 
-	public final int getAA_SFX_Length() {
-		return AA_SFX_LENGTH;
-	}
-	public final void setAA_SFX_Length(int aASFX_LENGTH) {
-		AA_SFX_LENGTH = aASFX_LENGTH;
-	}
-
 	public final int getSteps() {
 		return steps;
 	}
@@ -244,9 +266,15 @@ abstract public class Fighter {
 	public final NextStep getNextStep() {
 		return toNextStep;
 	}
+	private final void setNextStep(NextStep next) {
+		this.toNextStep = next;
+	}
 	
 	public final NextStep getNextAA() {
 		return toNextAA;
+	}
+	private final void setNextAA(NextStep next) {
+		this.toNextAA = next;
 	}
 
 	public final float getTimeWalkSteps() {
@@ -294,29 +322,24 @@ abstract public class Fighter {
 	protected abstract TexturesPacker drawDead();
 	
 	protected abstract void applyRunningParticles();
-
-	protected final void playSkill(int i, float x) {
-		SoundUtil.playStereo(skillSFX[i], x);
+	
+	protected final void playJump() {
+		GameSFX.Jump.playSFX(getPlayer().getPos().getX());
+		
+	}
+	protected final void playAA() {
+		GameSFX.valueOf("Punch" + steps).playSFX(getPlayer().getPos().getX()); //$NON-NLS-1$
+		
+	}
+	protected final void playDeath() {
+		GameSFX.valueOf("LongGrowl" + GameMath.nextInt(1, 2)).playSFX(getPlayer().getPos().getX()); //$NON-NLS-1$
 	}
 	
-	protected final void playJump(float x) {
-		SoundUtil.playStereo(jumpSFX, x);
-		
+	protected TexturesPacker drawJump() {
+		return new TexturesPacker(new TexturePacker(AnimationHandler.returnAfterCheck(getPlayer().getFlip(), FighterFactory.valueOf(getPlayer().getName()).getJumpFrame()), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
-	protected final void playAA(int i, float x) {
-		SoundUtil.playStereo(AA_SFX[i], x);
-		
-	}
-	protected final void playDeath(float x) {
-		SoundUtil.playStereo(deathSFX, x);
-		
-	}
-	
-	protected final TexturesPacker drawJump() {
-		return new TexturesPacker(new TexturePacker(AnimationHandler.returnAfterCheck(getPlayer().getFlip(), jump_frame), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
-	}
-	protected final TexturesPacker drawStand() {
-		return new TexturesPacker(new TexturePacker(AnimationHandler.returnAfterCheck(getPlayer().getFlip(), stand_frame), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
+	protected TexturesPacker drawStand() {
+		return new TexturesPacker(new TexturePacker(AnimationHandler.returnAfterCheck(getPlayer().getFlip(), FighterFactory.valueOf(getPlayer().getName()).getStandFrame()), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
 	
 	protected final void playJumpStep() {
@@ -359,7 +382,7 @@ abstract public class Fighter {
 					moveStepsSFX(timeWalkSteps);
 					return drawWalking();
 				} else if(getPlayer().isAAttack()) {
-					playAA();
+					applyAA();
 					return drawAAttack();
 				}
 			}
@@ -381,11 +404,11 @@ abstract public class Fighter {
 		applyHealthParticles();
 	}
 	
-	protected final void playSkill(int i, int ms) {
+	protected final void playSkill(GameSFX sfx, int i, int ms) {
 		if(Prefs.isVolume()) {
 			if(getSkillTimer(i) >= (float)ms/1000) {
 				if(!isSkillPlayed(i)) {
-					playSkill(i, getPlayer().getPos().getX());
+					sfx.playSFX(getPlayer().getPos().getX());
 					isSkillPlayed(i, true);
 				}
 			} else {
@@ -394,12 +417,12 @@ abstract public class Fighter {
 		}
 	}
 	
-	protected final void playAA() {
+	protected final void applyAA() {
 		getNextAA().sub();
 		if(getNextAA().isTime()) {
-			setSteps(getSteps() < getAA_SFX_Length() ? getSteps()+1 : 1);
-			playAA(getSteps()-1, getPlayer().getPos().getX()); // Because its an array here, not a string that you put into hashmap
-			getNextAA().set(getAA_SFX_Delay());
+			setSteps(getSteps() < getAA_Length() ? getSteps()+1 : 1);
+			playAA();
+			getNextAA().set(getAA_Delay());
 		}
 	}
 	
@@ -550,11 +573,11 @@ abstract public class Fighter {
 	protected final void compareUpdate(PlayerData newP) {
 		changeHealth(newP.getHP().getX() - getPlayer().getHP().getX());
 		if(newP.isJump() && !getPlayer().isJump()) {
-			playJump(newP.getPos().getX());
+			playJump();
 		}
 		
 		if(newP.isDead() && !getPlayer().isDead()) {
-			playDeath(newP.getPos().getX());
+			playDeath();
 			if(newP.getTeam() != Assets.player.getPlayer().getTeam()) {
 				Assets.killsCounter.enemyKilled();
 			}

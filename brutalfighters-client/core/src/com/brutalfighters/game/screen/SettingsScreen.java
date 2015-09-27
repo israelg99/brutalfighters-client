@@ -28,7 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.brutalfighters.game.menu.MenuUtils;
 import com.brutalfighters.game.resources.Prefs;
 import com.brutalfighters.game.sound.BGMManager;
-import com.brutalfighters.game.sound.menu.MainMenuSFX;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.tween.ActorAccessor;
 
 public class SettingsScreen implements Screen {
@@ -139,7 +139,7 @@ public class SettingsScreen implements Screen {
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				MainMenuSFX.playClick();
+				GameSFX.Click.playSFX();
 				Prefs.flush();
 				
 				Timeline.createParallel().beginParallel()

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
@@ -70,7 +71,7 @@ public class Lust extends Fighter {
 	protected TexturesPacker drawSkill1() {
 		addSkillTimer(0);
 		
-		playSkill(0, 0);
+		playSkill(GameSFX.MagicThrust, 0, 0);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill1Frames(), 0.062f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(0), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
@@ -79,7 +80,7 @@ public class Lust extends Fighter {
 	protected TexturesPacker drawSkill2() {
 		addSkillTimer(1);
 		
-		playSkill(1, 200);
+		playSkill(GameSFX.Project1, 1, 200);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill2Frames(), 0.062f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(1), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
@@ -94,7 +95,7 @@ public class Lust extends Fighter {
 	protected TexturesPacker drawSkill4() {
 		addSkillTimer(3);
 		
-		playSkill(3, 100);
+		playSkill(GameSFX.StrongBlock, 3, 100);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.returnAfterCheck(getPlayer().getFlip(), getSkill4Frame()), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}

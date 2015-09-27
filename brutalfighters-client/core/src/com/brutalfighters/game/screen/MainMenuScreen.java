@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.brutalfighters.game.menu.MenuUtils;
 import com.brutalfighters.game.multiplayer.GameClient;
 import com.brutalfighters.game.sound.BGMManager;
-import com.brutalfighters.game.sound.menu.MainMenuSFX;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.tween.ActorAccessor;
 
 public class MainMenuScreen implements Screen {
@@ -106,7 +106,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(GameClient.isLoaded()) {
-					MainMenuSFX.playClick();
+					GameSFX.Click.playSFX();
 					
 					Timeline.createParallel().beginParallel()
 					.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
@@ -127,7 +127,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				MainMenuSFX.playClick();
+				GameSFX.Click.playSFX();
 				
 				Timeline.createParallel().beginParallel()
 						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
@@ -147,7 +147,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				MainMenuSFX.playClick();
+				GameSFX.Click.playSFX();
 				
 				Timeline.createParallel().beginParallel()
 						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))

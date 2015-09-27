@@ -22,12 +22,16 @@ import com.brutalfighters.game.objects.projectiles.Projectiles;
 import com.brutalfighters.game.objects.projectiles.ProjectilesEnum;
 import com.brutalfighters.game.player.ClientPlayer;
 import com.brutalfighters.game.player.Players;
+import com.brutalfighters.game.player.fighters.Blaze;
+import com.brutalfighters.game.player.fighters.Chip;
+import com.brutalfighters.game.player.fighters.Dusk;
 import com.brutalfighters.game.player.fighters.Fighter;
 import com.brutalfighters.game.player.fighters.FighterFactory;
+import com.brutalfighters.game.player.fighters.Lust;
+import com.brutalfighters.game.player.fighters.Surge;
 import com.brutalfighters.game.sound.BGM;
 import com.brutalfighters.game.sound.BGMManager;
 import com.brutalfighters.game.sound.GameSFX;
-import com.brutalfighters.game.sound.menu.MainMenuSFX;
 import com.brutalfighters.game.utility.Score;
 
 public class Assets {
@@ -56,6 +60,11 @@ public class Assets {
 		// Loading the Champion Enum
 		System.err.println("Initialize the FighterFactory Enum!"); //$NON-NLS-1$
 		FighterFactory.init();
+		Lust.load();
+		Surge.load();
+		Chip.load();
+		Dusk.load();
+		Blaze.load();
 		System.out.println("Finished initializing the FighterFactory Enum!"); //$NON-NLS-1$
 		
 		// Loading the Players
@@ -165,10 +174,6 @@ public class Assets {
 		System.err.println("Loading the Main Menu Utils!"); //$NON-NLS-1$
 		MenuUtils.Load();
 		System.out.println("Finished loading the Main Menu Utils!"); //$NON-NLS-1$
-		
-		System.err.println("Loading the Main Menu Main Menu SFX!"); //$NON-NLS-1$
-		MainMenuSFX.Load();
-		System.out.println("Finished loading the Main Menu Main Menu SFX!"); //$NON-NLS-1$
 		
 		System.err.println("Initializing the BGM!"); //$NON-NLS-1$
 		BGM.init();

@@ -1,11 +1,10 @@
 package com.brutalfighters.game.player.fighters;
 
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
-import com.brutalfighters.game.sound.SoundUtil;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.utility.ServerInfo;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
@@ -17,11 +16,10 @@ public class Blaze extends Fighter {
 
 	private static TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, s1_fx_frames;
 	
-	private static Music phoenix_sfx; // Sound will run like 1000x times! in Music you have the isPlaying Method!
-	
 	private float skill1_fx_width = getSize().getX() * 3; // It should be getSize().getX() * 4 in total, one getSize().getX() is the fighter itself.
+	private boolean isPhoenixPlayed;
 	
-	private static void load() {
+	public static void load() {
 		setSkill1Frames(FighterFactory.Blaze.getSprites(0,5,8,6));
 		setSkill2Frames(FighterFactory.Blaze.getSprites(0,6,7,7));
 		setSkill3Frames(FighterFactory.Blaze.getSprites(0,7,10,8));
@@ -29,12 +27,6 @@ public class Blaze extends Fighter {
 		
 		TextureRegion[][] s1_fx = TextureHandle.TextureSplit(FighterFactory.Blaze.getFighterPath() + FighterFactory.Blaze.name().toLowerCase() + "_fx_right.png", 380, 80, true, false); //$NON-NLS-1$
 		setSkill1FX(TextureHandle.ApplyFrames(0, 0, 1, 4, s1_fx));
-		
-		loadExtraSFX();
-	}
-	
-	private static void loadExtraSFX() {
-		setPhoenixSFX(SoundUtil.getMusic(FighterFactory.Blaze.getFighterPath() + "phoenix.wav", SoundUtil.getVolume(0.3f))); //$NON-NLS-1$
 	}
 	
 	private static TextureRegion[] getSkill1Frames() {
@@ -72,17 +64,18 @@ public class Blaze extends Fighter {
 		Blaze.s1_fx_frames = frames;
 	}
 	
-	private static Music getPhoenixSFX() {
-		return phoenix_sfx;
-	}
-	private static void setPhoenixSFX(Music frames) {
-		Blaze.phoenix_sfx = frames;
-	}
-	
 	protected Blaze(PlayerData pdata) {
 		super(pdata);
+		setPhoenixPlayed(false);
 	}
 	
+	public boolean isPhoenixPlayed() {
+		return isPhoenixPlayed;
+	}
+	public void setPhoenixPlayed(boolean isPhoenixPlayed) {
+		this.isPhoenixPlayed = isPhoenixPlayed;
+	}
+
 	public float getSkill1FXWidth() {
 		return skill1_fx_width;
 	}
@@ -114,7 +107,7 @@ public class Blaze extends Fighter {
 	protected TexturesPacker drawSkill1() {
 		addSkillTimer(0);
 		
-		playSkill(0, 100);
+		playSkill(GameSFX.BloodSkulls, 0, 100);
 		
 		float skillSpeed = 0.08f;
 		Animation skill = AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill1Frames(), skillSpeed, Animation.PlayMode.NORMAL);
@@ -128,7 +121,7 @@ public class Blaze extends Fighter {
 	protected TexturesPacker drawSkill2() {
 		addSkillTimer(1);
 		
-		playSkill(1, 0);
+		playSkill(GameSFX.Fireball, 1, 0);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill2Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(1), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
@@ -137,11 +130,15 @@ public class Blaze extends Fighter {
 	protected TexturesPacker drawSkill3() {
 		addSkillTimer(2);
 		
-		playSkill(2, 100);
+		playSkill(GameSFX.BigFireball, 2, 100);
 		
-		if(getPlayer().getSkillCD()[2] <= ServerInfo.getFPS() * 8 && 
-				!phoenix_sfx.isPlaying()) {
-			SoundUtil.playStereo(phoenix_sfx, getPlayer().getPos().getX());
+		if(getPlayer().getSkillCD()[2] <= ServerInfo.getFPS() * 8) {
+			if(!isPhoenixPlayed()) {
+				GameSFX.Phoenix.playSFX(getPlayer().getPos().getX());
+				setPhoenixPlayed(true);
+			}
+		} else {
+			setPhoenixPlayed(false);
 		}
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill3Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(2), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
@@ -152,7 +149,7 @@ public class Blaze extends Fighter {
 		addSkillTimer(3);
 		
 		if(getPlayer().getSkillCD()[3] / ServerInfo.getFPS() % 3 == 0) {
-			SoundUtil.playStereo(getSkillSFX()[3], getPlayer().getPos().getX());
+			GameSFX.Project2.playSFX(getPlayer().getPos().getX());
 			isSkillPlayed(3, true);
 		} else {
 			isSkillPlayed(3, false);

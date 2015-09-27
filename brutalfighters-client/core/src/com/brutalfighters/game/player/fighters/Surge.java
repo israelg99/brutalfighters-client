@@ -1,11 +1,10 @@
 package com.brutalfighters.game.player.fighters;
 
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
-import com.brutalfighters.game.sound.SoundUtil;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
@@ -16,12 +15,10 @@ public class Surge extends Fighter {
 
 	private static TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, s2_fx_frames, s4_fx_frames;
 	
-	private static Music lightning_sfx; // Music because Sound will run like 1000x times and Music has isPlaying() to stop it.
-	
 	private float s2_fx_width;
+	private boolean isLightningPlayed;
 	
 	public static void load() {
-		
 		setSkill1Frames(FighterFactory.Surge.getSprites(0,5,6,6));
 		setSkill2Frames(FighterFactory.Surge.getSprites(0,6,8,7));
 		setSkill3Frames(FighterFactory.Surge.getSprites(0,7,8,8));
@@ -32,14 +29,8 @@ public class Surge extends Fighter {
 
 		TextureRegion[][] s4_fx = TextureHandle.TextureSplit(FighterFactory.Surge.getFighterPath() + "lightning_right.png", 170, 415, true, false); //$NON-NLS-1$
 		setSkill4FX(TextureHandle.ApplyFrames(0, 0, 4, 1, s4_fx));
-		
-		loadExtraSFX();
 	}
-	
-	private static void loadExtraSFX() {
-		setLightningSFX(SoundUtil.getMusic(FighterFactory.Surge.getFighterPath() + "lightning.wav", SoundUtil.getVolume(0.3f))); //$NON-NLS-1$
-	}
-	
+
 	private static TextureRegion[] getSkill1Frames() {
 		return s1_frames;
 	}
@@ -81,19 +72,20 @@ public class Surge extends Fighter {
 	private static void setSkill4FX(TextureRegion[] frames) {
 		Surge.s4_fx_frames = frames;
 	}
-	
-	private static Music getLightningSFX() {
-		return lightning_sfx;
-	}
-	private static void setLightningSFX(Music frames) {
-		Surge.lightning_sfx = frames;
-	}
-	
+
 	protected Surge(PlayerData pdata) {
 		super(pdata);
 		s2_fx_width = getSize().getX(); // 2*getSize().getX() total, but this variable stores only the FX width, fighter not included.
+		setLightningPlayed(false);
 	}
 	
+	public boolean isLightningPlayed() {
+		return isLightningPlayed;
+	}
+	public void setLightningPlayed(boolean isLightiningPlayed) {
+		this.isLightningPlayed = isLightiningPlayed;
+	}
+
 	public float getSkill2FXWidth() {
 		return s2_fx_width;
 	}
@@ -125,7 +117,7 @@ public class Surge extends Fighter {
 	protected TexturesPacker drawSkill1() {
 		addSkillTimer(0);
 		
-		playSkill(0, 0);
+		playSkill(GameSFX.Electricity, 0, 0);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill1Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(0), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
@@ -134,7 +126,7 @@ public class Surge extends Fighter {
 	protected TexturesPacker drawSkill2() {
 		addSkillTimer(1);
 		
-		playSkill(1, 400);
+		playSkill(GameSFX.MagicSwarm, 1, 400);
 		
 		float skillSpeed = 0.08f;
 		Animation skill = AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill2Frames(), skillSpeed, Animation.PlayMode.NORMAL);
@@ -148,7 +140,7 @@ public class Surge extends Fighter {
 	protected TexturesPacker drawSkill3() {
 		addSkillTimer(2);
 		
-		playSkill(2, 300);
+		playSkill(GameSFX.FastBlock, 2, 300);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill3Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(2), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
@@ -157,7 +149,7 @@ public class Surge extends Fighter {
 	protected TexturesPacker drawSkill4() {
 		addSkillTimer(3);
 		
-		playSkill(3, 0);
+		playSkill(GameSFX.StrongCharge, 3, 0);
 		
 		float skillspeed = 0.08f;
 		TexturesPacker textures = new TexturesPacker();
@@ -165,9 +157,12 @@ public class Surge extends Fighter {
 		if(getSkillTimer(3) >= 9*skillspeed && getSkillTimer(3) <= 13*skillspeed) {
 			textures.add(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill4FX(), skillspeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(3) - 9*skillspeed, false), 410, 705, RenderUtility.CenterX(getPlayer().getPos().getX()-getSize().getX()-125, 410), RenderUtility.CenterY(getPlayer().getPos().getY(), 235)));
 			textures.add(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill4FX(), skillspeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(3) - 9*skillspeed, false), 410, 705, RenderUtility.CenterX(getPlayer().getPos().getX()+getSize().getX()+125, 410), RenderUtility.CenterY(getPlayer().getPos().getY(), 235)));
-			if(!lightning_sfx.isPlaying()) {
-				SoundUtil.playStereo(getLightningSFX(), getPlayer().getPos().getX());
+			if(!isLightningPlayed()) {
+				GameSFX.Lightning.playSFX(getPlayer().getPos().getX());
+				setLightningPlayed(true);
 			}
+		} else {
+			setLightningPlayed(false);
 		}
 		return textures;
 	}

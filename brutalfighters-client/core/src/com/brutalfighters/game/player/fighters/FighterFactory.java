@@ -1,11 +1,9 @@
 package com.brutalfighters.game.player.fighters;
 
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.math.Vec2;
 import com.brutalfighters.game.player.PlayerData;
-import com.brutalfighters.game.sound.SoundUtil;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public enum FighterFactory {
@@ -127,10 +125,6 @@ public enum FighterFactory {
 	protected TextureRegion stand_frame, jump_frame;
 	protected TextureRegion[] walk_frames, run_frames, aattack_frames, breath_frames, death_frames;
 	
-	/* SFX */
-	protected Sound jumpSFX, AA_SFX[], deathSFX, skillSFX[];
-	protected int AA_SFX_Length;
-	
 	private FighterFactory(Vec2 BlockSize) {
 		setBlockSize(BlockSize);
 		
@@ -143,8 +137,6 @@ public enum FighterFactory {
 	protected void load() {
 		initialLoad();
 		loadSprite();
-		loadSFX();
-		loadSkillsSFX();
 	}
 	
 	protected void initialLoad() {
@@ -153,34 +145,8 @@ public enum FighterFactory {
 		setColsRows(new Vec2(sprite[0].length, sprite.length));
 	}
 	
-	protected void loadSkillsSFX() { // MAKE IT ABSTRACT, BECAUSE SOUNDS WILL BE GENERALIZED	
-		setSkillSFX(new Sound[Fighter.getSkills()]);
-		getSkillSFX()[0] = getSFX("skill1.wav"); //$NON-NLS-1$
-		getSkillSFX()[1]  = getSFX("skill2.wav"); //$NON-NLS-1$
-		getSkillSFX()[2]  = getSFX("skill3.wav"); //$NON-NLS-1$
-		getSkillSFX()[3]  = getSFX("skill4.wav"); //$NON-NLS-1$
-	}
-	
-	protected void loadSFX() {			
-		setAA_SFX_Length(2);
-		
-		setJumpSFX(getSFX("jump.wav")); //$NON-NLS-1$
-		
-		setAA_SFX(new Sound[AA_SFX_Length]);
-		getAA_SFX()[0] = getSFX("AA1.wav"); //$NON-NLS-1$
-		getAA_SFX()[1] = getSFX("AA2.wav"); //$NON-NLS-1$
-		
-		setDeathSFX(getSFX("death1.wav")); //$NON-NLS-1$
-	}
-	
 	public static String getPath() {
 		return "fighters/"; //$NON-NLS-1$
-	}
-	public static String getSFXPath() {
-		return "fighters/sfx/"; //$NON-NLS-1$
-	}
-	public static Sound getSFX(String sfx) {
-		return SoundUtil.getSound(getSFXPath() + sfx);
 	}
 	public final String getFighterPath() {
 		return getPath() + name().toLowerCase() + "/"; //$NON-NLS-1$
@@ -203,34 +169,6 @@ public enum FighterFactory {
 		this.blockSize = new Vec2(blockSize);
 	}
 
-	public final Sound getJumpSFX() {
-		return jumpSFX;
-	}
-	protected final void setJumpSFX(Sound jumpsfx) {
-		this.jumpSFX = jumpsfx;
-	}
-
-	public final Sound[] getAA_SFX() {
-		return AA_SFX;
-	}
-	protected final void setAA_SFX(Sound[] aASFX) {
-		this.AA_SFX = aASFX;
-	}
-
-	public final Sound getDeathSFX() {
-		return deathSFX;
-	}
-	protected final void setDeathSFX(Sound deathsfx) {
-		this.deathSFX = deathsfx;
-	}
-
-	public final Sound[] getSkillSFX() {
-		return skillSFX;
-	}
-	protected final void setSkillSFX(Sound[] skillsfx) {
-		this.skillSFX = skillsfx;
-	}
-	
 	public final TextureRegion getStandFrame() {
 		return stand_frame;
 	}
@@ -269,13 +207,6 @@ public enum FighterFactory {
 	}
 	protected final void setROWS(float rows) {
 		getColsRows().setY(rows);
-	}
-	
-	public final int getAA_SFX_Length() {
-		return AA_SFX_Length;
-	}
-	protected final void setAA_SFX_Length(int aA_SFX_LENGTH) {
-		this.AA_SFX_Length = aA_SFX_LENGTH;
 	}
 	
 	public final TextureRegion[] getWalkFrames() {

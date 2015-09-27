@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.brutalfighters.game.InputControls;
@@ -14,7 +13,7 @@ import com.brutalfighters.game.flags.Flags;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchFinished;
 import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.resources.Assets;
-import com.brutalfighters.game.sound.SoundUtil;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public class HUD {
@@ -29,8 +28,6 @@ public class HUD {
 	private static Timer warmupTimer;
 	private static float WARMUP;
 	
-	private static Sound tick;
-	
 	private static Sprite victory, defeat;
 	private static int teamWon = -1;
 	
@@ -38,8 +35,6 @@ public class HUD {
 		isEscapeMenuShown = false;
 		
 		score = TextureHandle.getSprite("hud/score/score.png", true, false, false); //$NON-NLS-1$
-		
-		tick = SoundUtil.getSound("sfx/tick/tick.wav"); //$NON-NLS-1$
 		
 		victory = TextureHandle.getSprite("hud/finish/victory.png", true, false, false); //$NON-NLS-1$
 		defeat = TextureHandle.getSprite("hud/finish/defeat.png", true, false, false); //$NON-NLS-1$
@@ -61,7 +56,7 @@ public class HUD {
 				@Override
 				public void run() {
 					if(isWarmup()) {
-						SoundUtil.playSound(tick);
+						GameSFX.Click.playSFX();
 						WARMUP-=1000;
 					}
 				}

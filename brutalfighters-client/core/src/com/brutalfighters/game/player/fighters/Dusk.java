@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
 import com.brutalfighters.game.utility.rendering.TextureHandle;
@@ -16,7 +17,7 @@ public class Dusk extends Fighter {
 	
 	private float bats_width = getSize().getX(), laser_width = getSize().getY();
 	
-	private static void load() {
+	public static void load() {
 		setSkill1Frames(FighterFactory.Dusk.getSprites(0,5,5,6));
 		setSkill2Frames(FighterFactory.Dusk.getSprites(0,6,10,7));
 		setSkill3Frames(FighterFactory.Dusk.getSprites(0,7,4,8));
@@ -82,7 +83,7 @@ public class Dusk extends Fighter {
 	private float getLaserWidth() {
 		return laser_width;
 	}
-
+	
 	@Override
 	protected TexturesPacker drawBreath() {
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), FighterFactory.Dusk.getBreathFrames(), 0.27f, Animation.PlayMode.LOOP_PINGPONG).getKeyFrame(GameTime.getTime(), true), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
@@ -107,7 +108,7 @@ public class Dusk extends Fighter {
 	protected TexturesPacker drawSkill1() {
 		addSkillTimer(0);
 		
-		playSkill(0, 300);
+		playSkill(GameSFX.Bats, 0, 300);
 		
 		float skillSpeed = 0.08f;
 		Animation skill = AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill1Frames(), skillSpeed, Animation.PlayMode.NORMAL);
@@ -121,7 +122,7 @@ public class Dusk extends Fighter {
 	protected TexturesPacker drawSkill2() {
 		addSkillTimer(1);
 		
-		playSkill(1, 0);
+		playSkill(GameSFX.DarkTeleport, 1, 0);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill2Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(1), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}
@@ -130,7 +131,7 @@ public class Dusk extends Fighter {
 	protected TexturesPacker drawSkill3() {
 		addSkillTimer(2);
 		
-		playSkill(2, 0);
+		playSkill(GameSFX.LaserCharge, 2, 0);
 		
 		float skillSpeed = 0.08f;
 		Animation skill = AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill3Frames(), skillSpeed, Animation.PlayMode.NORMAL);
@@ -144,7 +145,7 @@ public class Dusk extends Fighter {
 	protected TexturesPacker drawSkill4() {
 		addSkillTimer(3);
 		
-		playSkill(3, 0);
+		playSkill(GameSFX.MagicSwarm, 3, 0);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill4Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(3), false), getSize().getX(), getSize().getY(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getY())));
 	}

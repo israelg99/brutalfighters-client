@@ -212,7 +212,7 @@ public class ClientPlayer implements InputProcessor {
 				case InputControls.Teleport :
 					if(onPortal() && p.hasControl() && !p.isSkilling()) {
 						GameClient.sendPacketUDP(new Packet3InputTeleport());
-						GameSFXManager.playStereo(GameSFX.Teleport, getX());
+						GameSFX.Woosh.playSFX(getX());
 					}
 				return false;
 			}

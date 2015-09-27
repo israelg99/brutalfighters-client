@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.player.PlayerData;
+import com.brutalfighters.game.sound.GameSFX;
 import com.brutalfighters.game.utility.rendering.AnimationHandler;
 import com.brutalfighters.game.utility.rendering.RenderUtility;
 import com.brutalfighters.game.utility.rendering.TexturePacker;
@@ -13,7 +14,7 @@ public class Chip extends Fighter {
 	
 	private static TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames;
 	
-	private static void load() {
+	public static void load() {
 		setSkill1Frames(FighterFactory.Chip.getSprites(0,5,11,6));
 		setSkill2Frames(FighterFactory.Chip.getSprites(0,6,8,7));
 		setSkill3Frames(FighterFactory.Chip.getSprites(0,7,6,8));
@@ -76,7 +77,7 @@ public class Chip extends Fighter {
 	protected TexturesPacker drawSkill1() {
 		addSkillTimer(0);
 		
-		playSkill(0, 450);
+		playSkill(GameSFX.Shotgun, 0, 450);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill1Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(0), false), getSize().getX(), getSize().getX(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getX())));
 	}
@@ -85,7 +86,7 @@ public class Chip extends Fighter {
 	protected TexturesPacker drawSkill2() {
 		addSkillTimer(1);
 		
-		playSkill(1, 0);
+		playSkill(GameSFX.Thrust, 1, 0);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill2Frames(), 0.1f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(1), false), getSize().getX(), getSize().getX(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getX())));
 	}
@@ -94,7 +95,7 @@ public class Chip extends Fighter {
 	protected TexturesPacker drawSkill3() {
 		addSkillTimer(2);
 		
-		playSkill(2, 180);
+		playSkill(GameSFX.Throw, 2, 180);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill3Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(2), false), getSize().getX(), getSize().getX(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getX())));
 	}
@@ -103,7 +104,7 @@ public class Chip extends Fighter {
 	protected TexturesPacker drawSkill4() {
 		addSkillTimer(3);
 		
-		playSkill(3, 250);
+		playSkill(GameSFX.Plant, 3, 250);
 		
 		return new TexturesPacker(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill4Frames(), 0.08f, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(3), false), getSize().getX(), getSize().getX(), RenderUtility.CenterX(getPlayer().getPos().getX(), getSize().getX()), RenderUtility.CenterY(getPlayer().getPos().getY(), getSize().getX())));
 	}

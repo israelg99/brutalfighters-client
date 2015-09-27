@@ -39,7 +39,7 @@ public class SoundUtil {
 		return temp;
 	}
 	public static Sound getSound(String path) {
-		return Gdx.audio.newSound(Gdx.files.internal(path));
+		return Gdx.audio.newSound(Gdx.files.internal("sfx/" + path)); //$NON-NLS-1$
 	}
 	
 	public static void playStereo(Music play, float x) {
