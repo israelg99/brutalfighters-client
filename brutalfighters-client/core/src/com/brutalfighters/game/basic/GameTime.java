@@ -3,7 +3,6 @@ package com.brutalfighters.game.basic;
 import com.badlogic.gdx.Gdx;
 
 public class GameTime {
-	private static final float stateTime = 1/60f;
 	private static float gameTime = 0;
 	
 	public static void update() {
@@ -22,6 +21,6 @@ public class GameTime {
 	}
 	
 	public static float getStateTime() {
-		return stateTime;
+		return 1/Gdx.graphics.getFramesPerSecond();
 	}
 }

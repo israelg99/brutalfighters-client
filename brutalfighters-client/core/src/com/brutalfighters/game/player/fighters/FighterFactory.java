@@ -29,71 +29,13 @@ public enum FighterFactory {
 			setAAttackFrames(getSprites(0,4,13,5));
 			setDeathFrames(getSprites(0,9,6,10));
 			
-			setSkill1Frames(getSprites(0,5,8,6));
-			setSkill2Frames(getSprites(0,6,7,7));
-			setSkill3Frames(getSprites(0,7,10,8));
-			setSkill4Frames(getSprites(0,8,10,9));
-			
 			setStandFrame(getSprite(0,0));
 			setJumpFrame(getSprite(3,0));
-			
-			TextureRegion[][] s1_fx = TextureHandle.TextureSplit(getFighterPath() + name().toLowerCase() + "_fx_right.png", 380, 80, true, false); //$NON-NLS-1$
-			setSkill1FX(TextureHandle.ApplyFrames(0, 0, 1, 4, s1_fx));
-			
-			loadExtraSFX();
-		}
-		
-		public void loadExtraSFX() {
-			setPhoenixSFX(SoundUtil.getMusic(getPath() + "phoenix.wav", SoundUtil.getVolume(0.3f))); //$NON-NLS-1$
-		}
-		
-		public TextureRegion[] getSkill1Frames() {
-			return s1_frames;
-		}
-		private void setSkill1Frames(TextureRegion[] frames) {
-			this.s1_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill2Frames() {
-			return s1_frames;
-		}
-		private void setSkill2Frames(TextureRegion[] frames) {
-			this.s2_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill3Frames() {
-			return s3_frames;
-		}
-		private void setSkill3Frames(TextureRegion[] frames) {
-			this.s3_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill4Frames() {
-			return s4_frames;
-		}
-		private void setSkill4Frames(TextureRegion[] frames) {
-			this.s4_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill1FX() {
-			return s1_fx_frames;
-		}
-		private void setSkill1FX(TextureRegion[] frames) {
-			this.s1_fx_frames = frames;
-		}
-		
-		public Music getPhoenixSFX() {
-			return phoenix_sfx;
-		}
-		private void setPhoenixSFX(Music frames) {
-			this.phoenix_sfx = frames;
 		}
 		
 	},
 	
 	Dusk() {
-		
-		private TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, bats_frames, laser_frames;
 		
 		@Override
 		public Fighter getNew(PlayerData pdata) {
@@ -108,68 +50,13 @@ public enum FighterFactory {
 			setAAttackFrames(getSprites(0,4,8,5));
 			setDeathFrames(getSprites(0,9,6,10));
 			
-			setSkill1Frames(getSprites(0,5,5,6));
-			setSkill2Frames(getSprites(0,6,10,7));
-			setSkill3Frames(getSprites(0,7,4,8));
-			setSkill4Frames(getSprites(0,8,6,9));
-			
 			setStandFrame(getSprite(0,0));
 			setJumpFrame(getSprite(3,0));
-			
-			TextureRegion[][] bats_fx = TextureHandle.TextureSplit(getFighterPath() + name().toLowerCase() + "_bats_right.png", 160, 80, true, false); //$NON-NLS-1$
-			setBatsFrames(TextureHandle.ApplyFrames(0, 0, 4, 1, bats_fx));
-
-			TextureRegion[][] laser_fx = TextureHandle.TextureSplit(getFighterPath() + name().toLowerCase() + "_laser_right.png", 160, 80, true, false); //$NON-NLS-1$
-			setLaserFrames(TextureHandle.ApplyFrames(0, 0, 3, 1, laser_fx));
-		}
-		
-		public TextureRegion[] getSkill1Frames() {
-			return s1_frames;
-		}
-		private void setSkill1Frames(TextureRegion[] frames) {
-			this.s1_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill2Frames() {
-			return s1_frames;
-		}
-		private void setSkill2Frames(TextureRegion[] frames) {
-			this.s2_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill3Frames() {
-			return s3_frames;
-		}
-		private void setSkill3Frames(TextureRegion[] frames) {
-			this.s3_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill4Frames() {
-			return s4_frames;
-		}
-		private void setSkill4Frames(TextureRegion[] frames) {
-			this.s4_frames = frames;
-		}
-		
-		public TextureRegion[] getBatsFrames() {
-			return bats_frames;
-		}
-		private void setBatsFrames(TextureRegion[] frames) {
-			this.bats_frames = frames;
-		}
-		
-		public TextureRegion[] getLaserFrames() {
-			return laser_frames;
-		}
-		private void setLaserFrames(TextureRegion[] frames) {
-			this.laser_frames = frames;
 		}
 		
 	},
 	
 	Chip() {
-		
-		private TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames;
 		
 		@Override
 		public Fighter getNew(PlayerData pdata) {
@@ -184,50 +71,15 @@ public enum FighterFactory {
 			setAAttackFrames(getSprites(0,4,7,5));
 			setDeathFrames(getSprites(0,9,6,10));
 			
-			setSkill1Frames(getSprites(0,5,11,6));
-			setSkill2Frames(getSprites(0,6,8,7));
-			setSkill3Frames(getSprites(0,7,6,8));
-			setSkill4Frames(getSprites(0,8,5,9));
-			
 			setStandFrame(getSprite(0,0));
 			setJumpFrame(getSprite(3,0));
 		}
 		
-		public TextureRegion[] getSkill1Frames() {
-			return s1_frames;
-		}
-		private void setSkill1Frames(TextureRegion[] frames) {
-			this.s1_frames = frames;
-		}
 		
-		public TextureRegion[] getSkill2Frames() {
-			return s1_frames;
-		}
-		private void setSkill2Frames(TextureRegion[] frames) {
-			this.s2_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill3Frames() {
-			return s3_frames;
-		}
-		private void setSkill3Frames(TextureRegion[] frames) {
-			this.s3_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill4Frames() {
-			return s4_frames;
-		}
-		private void setSkill4Frames(TextureRegion[] frames) {
-			this.s4_frames = frames;
-		}
 		
 	},
 	
 	Surge() {
-		
-		private TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, s2_fx_frames, s4_fx_frames;
-		
-		private Music lightning_sfx; // Music because Sound will run like 1000x times and Music has isPlaying() to stop it.
 		
 		@Override
 		public Fighter getNew(PlayerData pdata) {
@@ -242,83 +94,13 @@ public enum FighterFactory {
 			setAAttackFrames(getSprites(0,4,12,5));
 			setDeathFrames(getSprites(0,9,6,10));
 			
-			setSkill1Frames(getSprites(0,5,6,6));
-			setSkill2Frames(getSprites(0,6,8,7));
-			setSkill3Frames(getSprites(0,7,8,8));
-			setSkill4Frames(getSprites(0,8,13,9));
-			
 			setStandFrame(getSprite(0,0));
 			setJumpFrame(getSprite(3,0));
-			
-			TextureRegion[][] s2_fx = TextureHandle.TextureSplit(getFighterPath() + name().toLowerCase() + "_fx_right.png", 160, 80, true, false); //$NON-NLS-1$
-			setSkill2FX(TextureHandle.ApplyFrames(0, 0, 3, 1, s2_fx));
-
-			TextureRegion[][] s4_fx = TextureHandle.TextureSplit(getFighterPath() + "lightning_right.png", 170, 415, true, false); //$NON-NLS-1$
-			setSkill4FX(TextureHandle.ApplyFrames(0, 0, 4, 1, s4_fx));
-			
-			loadExtraSFX();
-		}
-		
-		public void loadExtraSFX() {
-			setLightningSFX(SoundUtil.getMusic(getPath() + "lightning.wav", SoundUtil.getVolume(0.3f))); //$NON-NLS-1$
-		}
-		
-		public TextureRegion[] getSkill1Frames() {
-			return s1_frames;
-		}
-		private void setSkill1Frames(TextureRegion[] frames) {
-			this.s1_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill2Frames() {
-			return s1_frames;
-		}
-		private void setSkill2Frames(TextureRegion[] frames) {
-			this.s2_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill3Frames() {
-			return s3_frames;
-		}
-		private void setSkill3Frames(TextureRegion[] frames) {
-			this.s3_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill4Frames() {
-			return s4_frames;
-		}
-		private void setSkill4Frames(TextureRegion[] frames) {
-			this.s4_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill2FX() {
-			return s2_fx_frames;
-		}
-		private void setSkill2FX(TextureRegion[] frames) {
-			this.s2_fx_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill4FX() {
-			return s4_fx_frames;
-		}
-		private void setSkill4FX(TextureRegion[] frames) {
-			this.s4_fx_frames = frames;
-		}
-		
-		public Music getLightningSFX() {
-			return lightning_sfx;
-		}
-		private void setLightningSFX(Music frames) {
-			this.lightning_sfx = frames;
 		}
 		
 	},
 	
 	Lust() {
-		
-		/* Sprites */
-		private TextureRegion[] s1_frames, s2_frames;
-		private TextureRegion s4_frame;
 		
 		@Override
 		public Fighter getNew(PlayerData pdata) {
@@ -333,33 +115,8 @@ public enum FighterFactory {
 			setAAttackFrames(getSprites(0,4,8,5));
 			setDeathFrames(getSprites(0,9,6,10));
 			
-			setSkill1Frames(getSprites(0,5,8,6));
-			setSkill2Frames(getSprites(0,6,6,7));
-			setSkill4Frame(getSprite(8,0));
-			
 			setStandFrame(getSprite(0,0));
 			setJumpFrame(getSprite(3,0));
-		}
-		
-		public TextureRegion[] getSkill1Frames() {
-			return s1_frames;
-		}
-		private void setSkill1Frames(TextureRegion[] frames) {
-			this.s1_frames = frames;
-		}
-		
-		public TextureRegion[] getSkill2Frames() {
-			return s1_frames;
-		}
-		private void setSkill2Frames(TextureRegion[] frames) {
-			this.s2_frames = frames;
-		}
-		
-		public TextureRegion getSkill4Frame() {
-			return s4_frame;
-		}
-		private void setSkill4Frame(TextureRegion frame) {
-			this.s4_frame = frame;
 		}
 	};
 	
