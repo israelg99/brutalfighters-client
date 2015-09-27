@@ -56,7 +56,7 @@ public class HUD {
 				@Override
 				public void run() {
 					if(isWarmup()) {
-						GameSFX.Click.playSFX();
+						GameSFX.Click.play();
 						WARMUP-=1000;
 					}
 				}

@@ -19,24 +19,56 @@ public enum BGM {
 	FunOne(getBGM("bgmfun1.mp3")), //$NON-NLS-1$
 	FunTwo(getBGM("funbgm2.mp3")); //$NON-NLS-1$
 	
-	private Music BGM;
+	private static final float DEFAULT_VOLUME = 0.15f;
 	
-	BGM(Music BGM) {
+	private Music BGM;
+	private float volume;
+	
+	private static float getDefaultVolume() {
+		return DEFAULT_VOLUME;
+	}
+	
+	private BGM(Music BGM, float volume) {
 		this.BGM = BGM;
+		this.volume = volume;
+	}
+	private BGM(Music BGM) {
+		this(BGM, getDefaultVolume());
 	}
 	
 	public Music getBGM() {
 		return BGM;
 	}
+	public void play() {
+		getBGM().play();
+	}
+	
+	public float getVolume() {
+		return volume;
+	}
+	public void setVolume(float volume) {
+		getBGM().setVolume(SoundUtil.getVolume(volume));
+	}
+	public void setVolume() {
+		getBGM().setVolume(SoundUtil.getVolume(getVolume()));
+	}
+
 	
 	private final static String path = "bgm"; //$NON-NLS-1$
 	
 	private static Music getBGM(String name) {
-		return SoundUtil.getMusic("bgm/" + name); // WE use SoundUtil static VOLUME //$NON-NLS-1$
+		return SoundUtil.getMusic("bgm/" + name); //$NON-NLS-1$
 	}
 	
 	public static void init() {
 		values();
+	}
+	
+	public static void disposeAll() {
+		for (BGM bgm : values()) {
+			bgm.getBGM().stop();
+		    bgm.getBGM().dispose();
+		}
 	}
 
 }

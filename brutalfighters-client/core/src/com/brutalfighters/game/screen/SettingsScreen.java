@@ -139,7 +139,7 @@ public class SettingsScreen implements Screen {
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				GameSFX.Click.playSFX();
+				GameSFX.Click.play();
 				Prefs.flush();
 				
 				Timeline.createParallel().beginParallel()

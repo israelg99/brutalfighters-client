@@ -22,7 +22,6 @@ import com.brutalfighters.game.player.PlayerData;
 import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.resources.Prefs;
 import com.brutalfighters.game.sound.GameSFX;
-import com.brutalfighters.game.sound.GameSFXManager;
 import com.brutalfighters.game.utility.CollisionDetection;
 import com.brutalfighters.game.utility.GameMath;
 import com.brutalfighters.game.utility.NextStep;
@@ -35,8 +34,6 @@ import com.brutalfighters.game.utility.rendering.TexturesPacker;
 abstract public class Fighter {
 	
 	/* Finals */
-	protected static final float VOLUME = 0.5f;
-	
 	protected static final int GRAVITY_FORCE = 27;
 	protected static final int FALLING_MOMENTUM = 9;
 	
@@ -107,9 +104,6 @@ abstract public class Fighter {
 		this(pdata, new Vec2(200,135));
 	}
 	
-	public final static float getVolume() {
-		return VOLUME;
-	}
 	public final static int getGravityForce() {
 		return GRAVITY_FORCE;
 	}
@@ -324,15 +318,15 @@ abstract public class Fighter {
 	protected abstract void applyRunningParticles();
 	
 	protected final void playJump() {
-		GameSFX.Jump.playSFX(getPlayer().getPos().getX());
+		GameSFX.Jump.playStereo(getPlayer().getPos().getX());
 		
 	}
 	protected final void playAA() {
-		GameSFX.valueOf("Punch" + steps).playSFX(getPlayer().getPos().getX()); //$NON-NLS-1$
+		GameSFX.valueOf("Punch" + steps).playStereo(getPlayer().getPos().getX()); //$NON-NLS-1$
 		
 	}
 	protected final void playDeath() {
-		GameSFX.valueOf("LongGrowl" + GameMath.nextInt(1, 2)).playSFX(getPlayer().getPos().getX()); //$NON-NLS-1$
+		GameSFX.valueOf("LongGrowl" + GameMath.nextInt(1, 2)).playStereo(getPlayer().getPos().getX()); //$NON-NLS-1$
 	}
 	
 	protected TexturesPacker drawJump() {
@@ -343,7 +337,7 @@ abstract public class Fighter {
 	}
 	
 	protected final void playJumpStep() {
-		if(getPlayer().isJump() && getPlayer().onGround() && !getPlayer().isCollidingTop()) { // GameSFXManager when you hit the surface after the jump and getting ready for the next, good for design!
+		if(getPlayer().isJump() && getPlayer().onGround() && !getPlayer().isCollidingTop()) { // GameSFX when you hit the surface after the jump and getting ready for the next, good for design!
 			moveStepsSFX(timeWalkSteps);
 			//return drawJump(); // 	 TO LOOK IF THE JUMP IS SMOOTH ONLY TESTING!@!!!@@@!@!@!@!
 		}
@@ -357,7 +351,7 @@ abstract public class Fighter {
 		
 		if(getPlayer().isDead()) {
 			return drawDead();
-		} else if(getPlayer().isSkilling()) { // Skills GameSFXManager inside of the skill functions below
+		} else if(getPlayer().isSkilling()) { // Skills GameSFX inside of the skill functions below
 			if(getPlayer().isSkill1()) {
 				return drawSkill1(); // We cannot lock the camera here, we need it to be unlocked.
 			} else if(getPlayer().isSkill2()) {
@@ -408,7 +402,7 @@ abstract public class Fighter {
 		if(Prefs.isVolume()) {
 			if(getSkillTimer(i) >= (float)ms/1000) {
 				if(!isSkillPlayed(i)) {
-					sfx.playSFX(getPlayer().getPos().getX());
+					sfx.playStereo(getPlayer().getPos().getX());
 					isSkillPlayed(i, true);
 				}
 			} else {
@@ -628,13 +622,13 @@ abstract public class Fighter {
 	
 	protected final void playStepType() {
 		if(checkFootStepType("grass")) { //$NON-NLS-1$
-			applyFootStepType(GameSFXManager.getGrassStepLength(), "GrassStep", ParticlesCollection.Step_Grass); //$NON-NLS-1$
+			applyFootStepType(GameSFX.getGrassStepLength(), "GrassStep", ParticlesCollection.Step_Grass); //$NON-NLS-1$
 		} else if(checkFootStepType("dirt")) { //$NON-NLS-1$
-			applyFootStepType(GameSFXManager.getDirtStepLength(), "DirtStep", ParticlesCollection.Step_Dirt); //$NON-NLS-1$
+			applyFootStepType(GameSFX.getDirtStepLength(), "DirtStep", ParticlesCollection.Step_Dirt); //$NON-NLS-1$
 		} else if(checkFootStepType("rock")) { //$NON-NLS-1$
-			applyFootStepType(GameSFXManager.getRockStepLength(), "RockStep", ParticlesCollection.Step_Rock); //$NON-NLS-1$
+			applyFootStepType(GameSFX.getRockStepLength(), "RockStep", ParticlesCollection.Step_Rock); //$NON-NLS-1$
 		} else if(checkFootStepType("ice")) { //$NON-NLS-1$
-			applyFootStepType(GameSFXManager.getIceStepLength(), "SnowStep", ParticlesCollection.Step_Snow); //$NON-NLS-1$
+			applyFootStepType(GameSFX.getIceStepLength(), "SnowStep", ParticlesCollection.Step_Snow); //$NON-NLS-1$
 		}
 
 	}
@@ -651,7 +645,7 @@ abstract public class Fighter {
 	}
 	protected final void applyFootStepType(int stepLength, String SFX, ParticlesCollection particles) {
 		this.steps = this.steps < stepLength ? this.steps + 1 : 1;
-		GameSFXManager.playStereo(GameSFX.valueOf(SFX + this.steps), getPlayer().getPos().getX());
+		GameSFX.valueOf(SFX + this.steps).playStereo(getPlayer().getPos().getX());
 		ParticleEffects.add(particles, getPlayer().getPos().getX(), getPlayer().getPos().getY() + getPlayer().getBot(), true); 
 	}
 	

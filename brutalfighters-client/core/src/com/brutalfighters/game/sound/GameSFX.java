@@ -5,85 +5,150 @@ import com.badlogic.gdx.audio.Sound;
 public enum GameSFX {
 	
 	/* Footsteps */
-	FootStep1(SoundUtil.getSound("footstep/footstep1.wav")), //$NON-NLS-1$ 
-	FootStep2(SoundUtil.getSound("footstep/footstep2.wav")), //$NON-NLS-1$ 
+	FootStep1(getSFX("footstep/footstep1.wav"), getStepsVolume()), //$NON-NLS-1$ 
+	FootStep2(getSFX("footstep/footstep2.wav"), getStepsVolume()), //$NON-NLS-1$ 
 	
-	GrassStep1(SoundUtil.getSound("footstep/step_grass1.wav")), //$NON-NLS-1$ 
-	GrassStep2(SoundUtil.getSound("footstep/step_grass2.wav")), //$NON-NLS-1$ 
+	GrassStep1(getSFX("footstep/step_grass1.wav"), getStepsVolume()), //$NON-NLS-1$ 
+	GrassStep2(getSFX("footstep/step_grass2.wav"), getStepsVolume()), //$NON-NLS-1$ 
 	
-	DirtStep1(SoundUtil.getSound("footstep/step_dirt1.wav")), //$NON-NLS-1$ 
-	DirtStep2(SoundUtil.getSound("footstep/step_dirt2.wav")), //$NON-NLS-1$ 
+	DirtStep1(getSFX("footstep/step_dirt1.wav"), getStepsVolume()), //$NON-NLS-1$ 
+	DirtStep2(getSFX("footstep/step_dirt2.wav"), getStepsVolume()), //$NON-NLS-1$ 
 	
-	RockStep1(SoundUtil.getSound("footstep/step_rock1.wav")), //$NON-NLS-1$ 
-	RockStep2(SoundUtil.getSound("footstep/step_rock2.wav")), //$NON-NLS-1$ 
+	RockStep1(getSFX("footstep/step_rock1.wav"), getStepsVolume()), //$NON-NLS-1$ 
+	RockStep2(getSFX("footstep/step_rock2.wav"), getStepsVolume()), //$NON-NLS-1$ 
 	
-	SnowStep1(SoundUtil.getSound("footstep/step_snow1.wav")), //$NON-NLS-1$ 
-	SnowStep2(SoundUtil.getSound("footstep/step_snow2.wav")), //$NON-NLS-1$ 
+	SnowStep1(getSFX("footstep/step_snow1.wav"), getStepsVolume()), //$NON-NLS-1$ 
+	SnowStep2(getSFX("footstep/step_snow2.wav"), getStepsVolume()), //$NON-NLS-1$ 
 
 	/* Basic */
-	BlockAction(SoundUtil.getSound("basic/block_action.wav")), //$NON-NLS-1$ 
-	Click(SoundUtil.getSound("basic/click.wav")), //$NON-NLS-1$ 
-	Tick(SoundUtil.getSound("basic/tick.wav")), //$NON-NLS-1$ 
-	Woosh(SoundUtil.getSound("basic/woosh.wav")), //$NON-NLS-1$ 
+	BlockAction(getSFX("basic/block_action.wav")), //$NON-NLS-1$ 
+	Click(getSFX("basic/click.wav")), //$NON-NLS-1$ 
+	Tick(getSFX("basic/tick.wav")), //$NON-NLS-1$ 
+	Woosh(getSFX("basic/woosh.wav")), //$NON-NLS-1$ 
 	
 	/* Special */
-	Bats(SoundUtil.getSound("special/bats.wav")), //$NON-NLS-1$ 
-	BigFireball(SoundUtil.getSound("special/big_fireball.wav")), //$NON-NLS-1$ 
-	BloodSkulls(SoundUtil.getSound("special/bloodskulls.wav")), //$NON-NLS-1$ 
-	DarkTeleport(SoundUtil.getSound("special/dark_teleport.wav")), //$NON-NLS-1$ 
-	Electricity(SoundUtil.getSound("special/electricity.wav")), //$NON-NLS-1$ 
-	FastBlock(SoundUtil.getSound("special/fast_block.wav")), //$NON-NLS-1$ 
-	Fireball(SoundUtil.getSound("special/fireball.wav")), //$NON-NLS-1$ 
-	LaserCharge(SoundUtil.getSound("special/laser_charge.wav")), //$NON-NLS-1$ 
-	Lightning(SoundUtil.getSound("special/lightning.wav")), //$NON-NLS-1$ 
-	MagicSwarm(SoundUtil.getSound("special/magic_swarm.wav")), //$NON-NLS-1$ 
-	MagicThrust(SoundUtil.getSound("special/magic_thrust.wav")), //$NON-NLS-1$ 
-	Phoenix(SoundUtil.getSound("special/phoenix.wav")), //$NON-NLS-1$ 
-	Plant(SoundUtil.getSound("special/plant.wav")), //$NON-NLS-1$ 
-	Portal(SoundUtil.getSound("special/portal.wav")), //$NON-NLS-1$ 
-	Project1(SoundUtil.getSound("special/project1.wav")), //$NON-NLS-1$ 
-	Project2(SoundUtil.getSound("special/project2.wav")), //$NON-NLS-1$ 
-	Shotgun(SoundUtil.getSound("special/shotgun.wav")), //$NON-NLS-1$ 
-	StrongBlock(SoundUtil.getSound("special/strong_block.wav")), //$NON-NLS-1$ 
-	StrongCharge(SoundUtil.getSound("special/strong_charge.wav")), //$NON-NLS-1$ 
-	Throw(SoundUtil.getSound("special/throw.wav")), //$NON-NLS-1$ 
-	Thrust(SoundUtil.getSound("special/thrust.wav")), //$NON-NLS-1$ 
+	Bats(getSFX("special/bats.wav")), //$NON-NLS-1$ 
+	BigFireball(getSFX("special/big_fireball.wav")), //$NON-NLS-1$ 
+	BloodSkulls(getSFX("special/bloodskulls.wav")), //$NON-NLS-1$ 
+	DarkTeleport(getSFX("special/dark_teleport.wav")), //$NON-NLS-1$ 
+	Electricity(getSFX("special/electricity.wav")), //$NON-NLS-1$ 
+	FastBlock(getSFX("special/fast_block.wav")), //$NON-NLS-1$ 
+	Fireball(getSFX("special/fireball.wav")), //$NON-NLS-1$ 
+	LaserCharge(getSFX("special/laser_charge.wav")), //$NON-NLS-1$ 
+	Lightning(getSFX("special/lightning.wav")), //$NON-NLS-1$ 
+	MagicSwarm(getSFX("special/magic_swarm.wav")), //$NON-NLS-1$ 
+	MagicThrust(getSFX("special/magic_thrust.wav")), //$NON-NLS-1$ 
+	Phoenix(getSFX("special/phoenix.wav")), //$NON-NLS-1$ 
+	Plant(getSFX("special/plant.wav")), //$NON-NLS-1$ 
+	Portal(getSFX("special/portal.wav")), //$NON-NLS-1$ 
+	Project1(getSFX("special/project1.wav")), //$NON-NLS-1$ 
+	Project2(getSFX("special/project2.wav")), //$NON-NLS-1$ 
+	Shotgun(getSFX("special/shotgun.wav")), //$NON-NLS-1$ 
+	StrongBlock(getSFX("special/strong_block.wav")), //$NON-NLS-1$ 
+	StrongCharge(getSFX("special/strong_charge.wav")), //$NON-NLS-1$ 
+	Throw(getSFX("special/throw.wav")), //$NON-NLS-1$ 
+	Thrust(getSFX("special/thrust.wav")), //$NON-NLS-1$ 
 	
 	/* Explosion */
-	Explode1(SoundUtil.getSound("explosion/explode1.wav")), //$NON-NLS-1$
-	Explode2(SoundUtil.getSound("explosion/explode2.wav")), //$NON-NLS-1$
-	Explode3(SoundUtil.getSound("explosion/explode3.wav")), //$NON-NLS-1$
+	Explode1(getSFX("explosion/explode1.wav")), //$NON-NLS-1$
+	Explode2(getSFX("explosion/explode2.wav")), //$NON-NLS-1$
+	Explode3(getSFX("explosion/explode3.wav")), //$NON-NLS-1$
 	
 	/* Growl */
-	FastGrowl(SoundUtil.getSound("growl/fast_growl.wav")), //$NON-NLS-1$
-	LongGrowl1(SoundUtil.getSound("growl/long_growl1.wav")), //$NON-NLS-1$
-	LongGrowl2(SoundUtil.getSound("growl/long_growl2.wav")), //$NON-NLS-1$
+	FastGrowl(getSFX("growl/fast_growl.wav")), //$NON-NLS-1$
+	LongGrowl1(getSFX("growl/long_growl1.wav")), //$NON-NLS-1$
+	LongGrowl2(getSFX("growl/long_growl2.wav")), //$NON-NLS-1$
 	
 	/* Punch */
-	Punch1(SoundUtil.getSound("punch/punch1.wav")), //$NON-NLS-1$
-	Punch2(SoundUtil.getSound("punch/punch2.wav")), //$NON-NLS-1$
+	Punch1(getSFX("punch/punch1.wav")), //$NON-NLS-1$
+	Punch2(getSFX("punch/punch2.wav")), //$NON-NLS-1$
 	
 	/* Action */
-	Jump(SoundUtil.getSound("action/jump.wav")), //$NON-NLS-1$ 
+	Jump(getSFX("action/jump.wav")), //$NON-NLS-1$ 
 	
 	/* Crowd */
-	Crowd1(SoundUtil.getSound("crowd/crowd.wav")), //$NON-NLS-1$ 
-	Crowd2(SoundUtil.getSound("crowd/crowd1.wav")); //$NON-NLS-1$ 
+	Crowd1(getSFX("crowd/crowd.wav"), getCrowdVolume()), //$NON-NLS-1$ 
+	Crowd2(getSFX("crowd/crowd1.wav"), getCrowdVolume()); //$NON-NLS-1$ 
+	
+	private final static String PATH = "sfx/"; //$NON-NLS-1$
+	
+	private final static float DEFAULT_VOLUME = 0.5f;
+	private final static float DEFAULT_STEPS_VOLUME = 0.3f;
+	private final static float DEFAULT_CROWD_VOLUME = 0.7f;
+	
+	private final static int ftLength = 2, ftGrassLength = 2, ftDirtLength = 2,
+							 ftRockLength = 2, ftIceLength = 2;
 	
 	private Sound SFX;
+	private float volume;
 	
-	GameSFX(Sound SFX) {
-		this.SFX = SFX;
+	public static String getPath() {
+		return PATH;
+	}
+
+	public static float getDefaultVolume() {
+		return DEFAULT_VOLUME;
+	}
+	public static float getStepsVolume() {
+		return DEFAULT_STEPS_VOLUME;
+	}
+	public static float getCrowdVolume() {
+		return DEFAULT_CROWD_VOLUME;
 	}
 	
-	public Sound getSFX() {
+	public static int getStepLength() {
+		return ftLength;
+	}
+	public static int getGrassStepLength() {
+		return ftGrassLength;
+	}
+	public static int getDirtStepLength() {
+		return ftDirtLength;
+	}
+	public static int getRockStepLength() {
+		return ftRockLength;
+	}
+	public static int getIceStepLength() {
+		return ftIceLength;
+	}
+	
+	public static Sound getSFX(String path) {
+		return SoundUtil.getSound(getPath() + path);
+	}
+	
+	private GameSFX(Sound SFX, float volume) {
+		this.SFX = SFX;
+		this.volume = volume;
+	}
+	private GameSFX(Sound SFX) {
+		this(SFX, getDefaultVolume());
+	}
+	
+	public Sound get() {
 		return SFX;
 	}
-	public void playSFX() {
-		SoundUtil.playSound(getSFX());
+	public float getVolume() {
+		return volume;
 	}
-	public void playSFX(float x) {
-		SoundUtil.playStereo(getSFX(), x);
+	
+	public void play(float x) {
+		SoundUtil.playSound(get(), x);
+	}
+	public void play() {
+		play(getVolume());
+	}
+	
+	public void playStereo(float x, float vol) {
+		SoundUtil.playStereo(get(), x, vol);
+	}
+	public void playStereo(float x) {
+		playStereo(x, getVolume());
+	}
+	
+	public static void disposeAll() {
+		for (GameSFX sfx : values()) {
+			sfx.get().dispose();
+		}
 	}
 	
 	public static void init() {

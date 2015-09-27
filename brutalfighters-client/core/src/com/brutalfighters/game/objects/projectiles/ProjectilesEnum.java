@@ -79,7 +79,7 @@ public enum ProjectilesEnum {
 			setAnimationExplodeSpeed(0.1f);
 			setIdle(TextureHandle.ApplyFrames(0, 0, 4, 1, getSprite()));
 			setExplosion(TextureHandle.ApplyFrames(0, 1, 4, 2, getSprite()));
-			setExplodeSFX(GameSFX.Explode2.getSFX());
+			setExplodeSFX(GameSFX.Explode2.get());
 		}
 
 	},
@@ -90,7 +90,7 @@ public enum ProjectilesEnum {
 		public void load() {
 			setIdle(TextureHandle.ApplyFrames(0, 0, 4, 1, getSprite()));
 			setExplosion(TextureHandle.ApplyFrames(0, 1, 5, 2, getSprite()));
-			setExplodeSFX(GameSFX.Explode2.getSFX());
+			setExplodeSFX(GameSFX.Explode2.get());
 		}
 
 	},
@@ -101,7 +101,7 @@ public enum ProjectilesEnum {
 		public void load() {
 			setIdle(TextureHandle.ApplyFrames(0, 0, 7, 1, getSprite()));
 			setExplosion(TextureHandle.ApplyFrames(0, 1, 6, 2, getSprite()));
-			setExplodeSFX(GameSFX.Explode1.getSFX());
+			setExplodeSFX(GameSFX.Explode1.get());
 		}
 
 	},
@@ -112,7 +112,7 @@ public enum ProjectilesEnum {
 		public void load() {
 			setIdle(TextureHandle.ApplyFrames(0, 0, 4, 1, getSprite()));
 			setExplosion(TextureHandle.ApplyFrames(0, 1, 6, 2, getSprite()));
-			setExplodeSFX(GameSFX.Explode1.getSFX());
+			setExplodeSFX(GameSFX.Explode1.get());
 		}
 
 	},
@@ -168,7 +168,7 @@ public enum ProjectilesEnum {
 		
 		setAnimationSpeed(0.08f);
 		setAnimationExplodeSpeed(0.08f);
-		setExplodeSFX(GameSFX.Explode3.getSFX());
+		setExplodeSFX(GameSFX.Explode3.get());
 		
 		load();
 	}

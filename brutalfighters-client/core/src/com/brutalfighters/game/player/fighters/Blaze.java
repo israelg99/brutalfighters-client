@@ -134,7 +134,7 @@ public class Blaze extends Fighter {
 		
 		if(getPlayer().getSkillCD()[2] <= ServerInfo.getFPS() * 8) {
 			if(!isPhoenixPlayed()) {
-				GameSFX.Phoenix.playSFX(getPlayer().getPos().getX());
+				GameSFX.Phoenix.playStereo(getPlayer().getPos().getX());
 				setPhoenixPlayed(true);
 			}
 		} else {
@@ -149,7 +149,7 @@ public class Blaze extends Fighter {
 		addSkillTimer(3);
 		
 		if(getPlayer().getSkillCD()[3] / ServerInfo.getFPS() % 3 == 0) {
-			GameSFX.Project2.playSFX(getPlayer().getPos().getX());
+			GameSFX.Project2.playStereo(getPlayer().getPos().getX());
 			isSkillPlayed(3, true);
 		} else {
 			isSkillPlayed(3, false);

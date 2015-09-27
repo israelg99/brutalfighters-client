@@ -106,7 +106,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(GameClient.isLoaded()) {
-					GameSFX.Click.playSFX();
+					GameSFX.Click.play();
 					
 					Timeline.createParallel().beginParallel()
 					.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
@@ -127,7 +127,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				GameSFX.Click.playSFX();
+				GameSFX.Click.play();
 				
 				Timeline.createParallel().beginParallel()
 						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))
@@ -147,7 +147,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				GameSFX.Click.playSFX();
+				GameSFX.Click.play();
 				
 				Timeline.createParallel().beginParallel()
 						.push(Tween.to(table, ActorAccessor.ALPHA, MenuUtils.GLIDE_DURATION).target(0))

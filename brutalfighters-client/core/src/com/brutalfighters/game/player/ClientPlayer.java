@@ -33,7 +33,6 @@ import com.brutalfighters.game.player.fighters.Fighter;
 import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.resources.Prefs;
 import com.brutalfighters.game.sound.GameSFX;
-import com.brutalfighters.game.sound.GameSFXManager;
 
 public class ClientPlayer implements InputProcessor {
 	
@@ -82,7 +81,7 @@ public class ClientPlayer implements InputProcessor {
 		if(Assets.map.hasProperty(GameMap.TELEPORT(), getX(), getY())) {
 			if(!onPortal()) {
 				ParticleEffects.add(ParticlesCollection.TP_Dust, Assets.map.toPixelX(Assets.map.toCellX(getX())), Assets.map.toPixelY(Assets.map.toCellY(getY())) + Assets.map.getTileHeight()/2, true); 
-				GameSFXManager.play(GameSFX.Portal);
+				GameSFX.Portal.play();
 			}
 			onPortal(true);
 		} else {
@@ -212,7 +211,7 @@ public class ClientPlayer implements InputProcessor {
 				case InputControls.Teleport :
 					if(onPortal() && p.hasControl() && !p.isSkilling()) {
 						GameClient.sendPacketUDP(new Packet3InputTeleport());
-						GameSFX.Woosh.playSFX(getX());
+						GameSFX.Woosh.playStereo(getX());
 					}
 				return false;
 			}

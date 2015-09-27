@@ -10,7 +10,7 @@ import com.brutalfighters.game.graphics.Shaders;
 import com.brutalfighters.game.multiplayer.GameClient;
 import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.sound.BGMManager;
-import com.brutalfighters.game.sound.GameSFXManager;
+import com.brutalfighters.game.sound.GameSFX;
 
 public class GameScreen implements Screen {
 	
@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
 		System.err.println("Disposing Everything GAME RELATED!"); //$NON-NLS-1$
 		Assets.dispose();
 		Render.dispose();
-		GameSFXManager.disposeAll();
+		GameSFX.disposeAll();
 		HUD.dispose();
 		Shaders.dispose();
 		

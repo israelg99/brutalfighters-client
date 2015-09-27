@@ -3,7 +3,8 @@ package com.brutalfighters.game.basic;
 import com.brutalfighters.game.HUD.EscapeOption;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.multiplayer.packets.Packet2MatchFinished;
-import com.brutalfighters.game.sound.GameSFXManager;
+import com.brutalfighters.game.sound.GameSFX;
+import com.brutalfighters.game.utility.GameMath;
 
 public class GameLoopManager {
 	
@@ -55,7 +56,7 @@ public class GameLoopManager {
 		setUpdating(false);
 		HUD.setTeamWon(packet);
 		
-		GameSFXManager.playRandomCrowd();
+		GameSFX.valueOf("Crowd" + GameMath.nextInt(1, 2)).play(); //$NON-NLS-1$
 	}
 	
 	public static void matchOver() {

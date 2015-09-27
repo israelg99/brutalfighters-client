@@ -158,7 +158,7 @@ public class Surge extends Fighter {
 			textures.add(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill4FX(), skillspeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(3) - 9*skillspeed, false), 410, 705, RenderUtility.CenterX(getPlayer().getPos().getX()-getSize().getX()-125, 410), RenderUtility.CenterY(getPlayer().getPos().getY(), 235)));
 			textures.add(new TexturePacker(AnimationHandler.getAnimation(getPlayer().getFlip(), getSkill4FX(), skillspeed, Animation.PlayMode.NORMAL).getKeyFrame(getSkillTimer(3) - 9*skillspeed, false), 410, 705, RenderUtility.CenterX(getPlayer().getPos().getX()+getSize().getX()+125, 410), RenderUtility.CenterY(getPlayer().getPos().getY(), 235)));
 			if(!isLightningPlayed()) {
-				GameSFX.Lightning.playSFX(getPlayer().getPos().getX());
+				GameSFX.Lightning.playStereo(getPlayer().getPos().getX());
 				setLightningPlayed(true);
 			}
 		} else {
