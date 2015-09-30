@@ -1,9 +1,10 @@
 package com.brutalfighters.game.math;
 
 
+
 public class Vec2 {
 	
-	private float x, y;
+private float x, y;
 	
 	public Vec2(float xa, float ya) {
 		setX(xa);
@@ -52,6 +53,13 @@ public class Vec2 {
 	}
 	public void resetY() {
 		setY(0);
+	}
+	
+	public void XtoY() {
+		setY(getX());
+	}
+	public void YtoX() {
+		setX(getY());
 	}
 	
 	public void add(float num) {
