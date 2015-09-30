@@ -170,27 +170,27 @@ public class Assets {
 	}
 	
 	public static void LoadGlobalResources() { // Assets needed for not only the game, but for other parts like the MainMenu.
+	
+		// Loading the Prefs
+		System.err.println("Loading the BGMManager!"); //$NON-NLS-1$
+		BGMManager.Load();
+		System.out.println("Finished loading the BGMManager!"); //$NON-NLS-1$
 		
-		System.err.println("Loading the Main Menu Utils!"); //$NON-NLS-1$
-		MenuUtils.Load();
-		System.out.println("Finished loading the Main Menu Utils!"); //$NON-NLS-1$
+		System.err.println("Loading the Prefs!"); //$NON-NLS-1$
+		Prefs.Load();
+		System.out.println("Finished loading the Prefs!"); //$NON-NLS-1$
 		
 		System.err.println("Initializing the BGM!"); //$NON-NLS-1$
 		BGM.init();
 		System.out.println("Finished initializing the BGM!"); //$NON-NLS-1$
 		
-		System.err.println("Loading the BGMManager!"); //$NON-NLS-1$
-		BGMManager.Load();
-		System.out.println("Finished loading the BGMManager!"); //$NON-NLS-1$
-		
 		System.err.println("Initializing the Fonts!"); //$NON-NLS-1$
 		GameFont.init();
 		System.out.println("Finished initializing the Fonts!"); //$NON-NLS-1$
 		
-		// Loading the Prefs
-		System.err.println("Loading the Prefs!"); //$NON-NLS-1$
-		Prefs.Load();
-		System.out.println("Finished loading the Prefs!"); //$NON-NLS-1$
+		System.err.println("Loading the Main Menu Utils!"); //$NON-NLS-1$
+		MenuUtils.Load();
+		System.out.println("Finished loading the Main Menu Utils!"); //$NON-NLS-1$
 		
 		System.err.println("Initializing the Game Client in another THREAD!"); //$NON-NLS-1$
 		(new Thread() {

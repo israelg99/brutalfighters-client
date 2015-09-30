@@ -50,9 +50,9 @@ public class Update {
 	}
 
 	public static void updateGameData(Packet2Players packet) {
-		Assets.players.setPlayers(packet.players);
+		Assets.players.assignPlayers(packet.players);
 		
-		Assets.player.setPlayer(packet.theClient);
+		Assets.player.assignPlayer(packet.theClient);
 		
 		Assets.projectiles.setNew(packet.projectiles);
 		

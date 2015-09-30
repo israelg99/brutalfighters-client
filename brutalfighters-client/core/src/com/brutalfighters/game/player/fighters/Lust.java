@@ -30,7 +30,7 @@ public class Lust extends Fighter {
 	}
 	
 	private static TextureRegion[] getSkill2Frames() {
-		return s1_frames;
+		return s2_frames;
 	}
 	private static void setSkill2Frames(TextureRegion[] frames) {
 		Lust.s2_frames = frames;

@@ -9,16 +9,16 @@ import com.brutalfighters.game.utility.GameMath;
 
 public class BGMManager {
 
-	public static float DIVISOR = 3;
-	public static final float GAME_DIVISOR = 3;
-	public static final float MENU_DIVISOR = 1;
+	private static final float GAME_DIVISOR = 3;
+	private static final float MENU_DIVISOR = 1;
+	private static float DIVISOR;
 	
 	private static List<BGM> game;
 	private static List<BGM> menu;
 
 	private static BGM currentBGM;
 	
-	public static BGM MAINMENU_THEME;
+	private static BGM MAINMENU_THEME;
 	
 	private static boolean DISPOSE;
 
@@ -31,14 +31,15 @@ public class BGMManager {
 		game = Arrays.asList(BGM.values()); // No need for setters it's like final
 		menu = Arrays.asList(BGM.values()); // No need for setters it's like final
 
-		currentBGM = MAINMENU_THEME; // Set current doesn't apply here.
+		currentBGM = MAINMENU_THEME; // Set current doesn't apply here and we MUST set it to something, maybe add a BGM parameter to the constructor?
+		DIVISOR = MENU_DIVISOR;
 	}
 	
 	private static float getDivisor() {
-		return GAME_DIVISOR;
+		return DIVISOR;
 	}
 	private static void setDivisor(float divisor) {
-		BGMManager.DIVISOR = divisor;
+		DIVISOR = divisor;
 	}
 	
 	private static float getGameDivisor() {
@@ -49,23 +50,23 @@ public class BGMManager {
 	}
 	
 	private static float getMenuDivisor() {
-		return GAME_DIVISOR;
+		return MENU_DIVISOR;
 	}
 	private static void setMenuDivisor() {
 		setDivisor(getMenuDivisor());
 	}
 	
-	public static List<BGM> getGame() {
+	public static List<BGM> getGameList() {
 		return game;
 	}
-	public static void setGame(List<BGM> game) {
+	private static void setGame(List<BGM> game) {
 		BGMManager.game = game;
 	}
 
-	public static List<BGM> getMenu() {
+	public static List<BGM> getMenuList() {
 		return menu;
 	}
-	public static void setMenu(List<BGM> menu) {
+	private static void setMenu(List<BGM> menu) {
 		BGMManager.menu = menu;
 	}
 
@@ -121,9 +122,9 @@ public class BGMManager {
 
 	private static void playRandomBGM() {
 		if(ScreenManager.getScreen().equals(ScreenManager.Screen.MENU)) {
-			setRandomBGM(menu);
+			setRandomBGM(getMenuList());
 		} else {
-			setRandomBGM(game);
+			setRandomBGM(getGameList());
 		}
 		
 		playCurrent();

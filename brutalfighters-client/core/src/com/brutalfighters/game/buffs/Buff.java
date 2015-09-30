@@ -11,9 +11,9 @@ import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public enum Buff {
 	
-	HALF_SLOW(), BIT_SLOW(), SLOW_HEALING(),
+	Slow(), Heal(),
 	
-	RED_BATS() {
+	RedBats() {
 		
 		@Override
 		public void draw(PlayerData p, BuffData buff) {
@@ -24,7 +24,7 @@ public enum Buff {
 		
 	},
 	
-	ICE_STUN() {
+	IceStun() {
 		
 		private Sprite ice = TextureHandle.getSprite("buffs/ice.png", true, false, false); //$NON-NLS-1$
 		
@@ -35,7 +35,7 @@ public enum Buff {
 		
 	},
 	
-	BURN() {
+	Burn() {
 
 		@Override
 		public void draw(PlayerData p, BuffData buff) {

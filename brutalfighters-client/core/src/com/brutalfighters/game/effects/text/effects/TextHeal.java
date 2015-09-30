@@ -19,7 +19,7 @@ public class TextHeal extends TextEffect {
 		this(text, pos, 300);
 	}
 	public TextHeal(Fighter fighter) {
-		this(Float.toString(fighter.changedHealth()), 
+		this(Integer.toString((int)fighter.changedHealth()), 
 				new Vec2(fighter.getPlayer().getPos().getX() + GameMath.nextFloat(-fighter.getPlayer().getSize().getX() / 3, 0),
 				fighter.getPlayer().getPos().getY() + fighter.getPlayer().getSize().getY() / 2 + HUD.barHeight()*2+10));
 	}

@@ -31,7 +31,7 @@ public class Players {
 			players[i] = FighterFactory.valueOf(pdata[i].getName()).getNew(pdata[i]);
 		}
 	}
-	public void setPlayers(PlayerData[] pdata) {
+	public void assignPlayers(PlayerData[] pdata) {
 		if(pdata.length != players.length) {
 			System.out.println("Players length is different, resetting all players"); //$NON-NLS-1$
 			newPlayers(pdata);

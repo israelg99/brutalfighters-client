@@ -37,7 +37,7 @@ public class Blaze extends Fighter {
 	}
 	
 	private static TextureRegion[] getSkill2Frames() {
-		return s1_frames;
+		return s2_frames;
 	}
 	private static void setSkill2Frames(TextureRegion[] frames) {
 		Blaze.s2_frames = frames;

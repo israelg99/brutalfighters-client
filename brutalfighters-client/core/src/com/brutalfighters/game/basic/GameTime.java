@@ -21,6 +21,6 @@ public class GameTime {
 	}
 	
 	public static float getStateTime() {
-		return 1/Gdx.graphics.getFramesPerSecond();
+		return 1f/Gdx.graphics.getFramesPerSecond();
 	}
 }

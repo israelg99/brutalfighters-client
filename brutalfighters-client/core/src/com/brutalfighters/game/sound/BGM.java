@@ -19,7 +19,7 @@ public enum BGM {
 	FunOne(getBGM("bgmfun1.mp3")), //$NON-NLS-1$
 	FunTwo(getBGM("funbgm2.mp3")); //$NON-NLS-1$
 	
-	private static final float DEFAULT_VOLUME = 0.15f;
+	private static final float DEFAULT_VOLUME = 0.25f;
 	
 	private Music BGM;
 	private float volume;
@@ -54,10 +54,14 @@ public enum BGM {
 	}
 
 	
-	private final static String path = "bgm"; //$NON-NLS-1$
+	private final static String path = "bgm/"; //$NON-NLS-1$
+	
+	private static String getPath() {
+		return path;
+	}
 	
 	private static Music getBGM(String name) {
-		return SoundUtil.getMusic("bgm/" + name); //$NON-NLS-1$
+		return SoundUtil.getMusic(getPath() + name);
 	}
 	
 	public static void init() {

@@ -85,7 +85,6 @@ public class GameScreen implements Screen {
 		System.err.println("Disposing Everything GAME RELATED!"); //$NON-NLS-1$
 		Assets.dispose();
 		Render.dispose();
-		GameSFX.disposeAll();
 		HUD.dispose();
 		Shaders.dispose();
 		

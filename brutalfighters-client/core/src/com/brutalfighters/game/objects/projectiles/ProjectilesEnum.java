@@ -79,7 +79,6 @@ public enum ProjectilesEnum {
 			setAnimationExplodeSpeed(0.1f);
 			setIdle(TextureHandle.ApplyFrames(0, 0, 4, 1, getSprite()));
 			setExplosion(TextureHandle.ApplyFrames(0, 1, 4, 2, getSprite()));
-			setExplodeSFX(GameSFX.Explode2.get());
 		}
 
 	},
