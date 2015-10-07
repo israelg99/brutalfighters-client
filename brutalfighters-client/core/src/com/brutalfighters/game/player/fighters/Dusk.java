@@ -15,7 +15,7 @@ public class Dusk extends Fighter {
 
 	private static TextureRegion[] s1_frames, s2_frames, s3_frames, s4_frames, bats_frames, laser_frames;
 	
-	private float bats_width = getSize().getX(), laser_width = getSize().getY();
+	private float bats_width = getSize().getX(), laser_width = getSize().getX();
 	
 	public static void load() {
 		setSkill1Frames(FighterFactory.Dusk.getSprites(0,5,5,6));

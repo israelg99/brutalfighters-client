@@ -19,6 +19,7 @@ import com.brutalfighters.game.flags.FlagData;
 import com.brutalfighters.game.map.GameMap;
 import com.brutalfighters.game.math.Vec2;
 import com.brutalfighters.game.player.PlayerData;
+import com.brutalfighters.game.player.Players;
 import com.brutalfighters.game.resources.Assets;
 import com.brutalfighters.game.resources.Prefs;
 import com.brutalfighters.game.sound.GameSFX;
@@ -368,16 +369,16 @@ abstract public class Fighter {
 				resetSteps();
 				return drawJump();
 			} else if(getPlayer().hasControl()) {
-				if(getPlayer().isWalking()) {
+				 if(getPlayer().canAAttack() && getPlayer().isAAttack()) {
+						applyAA();
+						return drawAAttack();
+				} else if(getPlayer().isWalking()) {
 					if(getPlayer().isRunning()) {
 						moveStepsSFX(timeRunSteps);
 						return drawRunning();
 					}
 					moveStepsSFX(timeWalkSteps);
 					return drawWalking();
-				} else if(getPlayer().isAAttack()) {
-					applyAA();
-					return drawAAttack();
 				}
 			}
 		}
@@ -465,6 +466,9 @@ abstract public class Fighter {
 	protected final void alignGround() {
 		getPlayer().getPos().setY((int)(getPlayer().getPos().getY() / Assets.map.getTileHeight()) * Assets.map.getTileHeight() + getPlayer().getSize().getY()/2 - 1);
 	}
+	protected final void alignFighter(Fighter fighter) {
+		getPlayer().getPos().setY(fighter.getPlayer().getPos().getY() + fighter.getPlayer().getSize().getY());
+	}
 	
 	protected final TexturesPacker getSprites() {
 		return drawChamp();
@@ -497,6 +501,8 @@ abstract public class Fighter {
 	public final void update() {
 		if(!getPlayer().isDead()) {
 			if(getPlayer().isExtrapolating()) { // It has to be here, otherwise after you teleport you will have extrapolation issues, because the client will get the full position + extrapolation which will be too much and overflow the actual position.
+				applyVelocity();
+				checkCollision();
 				applyPosition();
 			}
 			if(!getPlayer().isSkilling() && getPlayer().hasControl()) {
@@ -587,7 +593,7 @@ abstract public class Fighter {
 	}
 	
 	protected final void applyBodyGravity() {
-		if(getPlayer().onGround()) {
+		if(collidesBot()) {
 			getPlayer().getVel().resetY();
 			alignGround();
 		} else {
@@ -595,15 +601,16 @@ abstract public class Fighter {
 			applySyncedVelY();
 		}
 	}
-
-	protected final void applyPosition() {
-		if((getPlayer().onGround() || collidesBot()) && getPlayer().getVel().getY() <= 0) {
+	
+	protected final void applyVelocity() {
+		if((getPlayer().onGround() || getPlayer().isCollidingBot()) && getPlayer().getVel().getY() <= 0) {
 			getPlayer().getVel().resetY();
-			getPlayer().isOnGround(true);
-			alignGround();
 		} else {
 			applyGravity();
 		}
+	}
+
+	protected final void applyPosition() {
 		
 		// Y AXIS
 		if(getPlayer().getVel().getY() != 0 && ((getPlayer().getVel().getY() > 0 && !getPlayer().isCollidingTop())
@@ -616,6 +623,37 @@ abstract public class Fighter {
 			if((getPlayer().getVel().getX() > 0 && !getPlayer().isCollidingRight())
 					|| getPlayer().getVel().getX() < 0 && !getPlayer().isCollidingLeft()) {
 				applySyncedVelX();
+			}
+		}
+	}
+	
+	protected final void checkCollision() {
+		collidesMap();
+		collidesPlayer();
+	}
+	
+	// ONLY MAP COLLISIONS, DO NOT CHECK FOR onGround() nor isCollidingBot()
+	protected final void collidesMap() {
+		if(collidesBot() && getPlayer().getVel().getY() <= 0) {
+			getPlayer().isCollidingBot(true);
+			if(getPlayer().getVel().getY() <= 0) {
+				getPlayer().isOnGround(true);
+				alignGround();
+			}
+		}
+	}
+	
+	protected final void collidesPlayer() {
+		Players players = Assets.players;
+		for(int i = 0; i < players.getPlayers().length; i++) {
+			if(getPlayer().getTeam() != players.getPlayer(i).getPlayer().getTeam() && !players.getPlayer(i).getPlayer().isDead()) {
+				if(getVelocityBounds(false, true).intersects(players.getPlayers()[i].getBounds())) {
+					if(getPlayer().getVel().getY() < 0) {
+						getPlayer().isCollidingBot(true);
+						getPlayer().isOnGround(true);
+						alignFighter(players.getPlayer(i));
+					}
+				}
 			}
 		}
 	}
@@ -661,7 +699,14 @@ abstract public class Fighter {
 	protected final Rectangle getVelocityBounds(boolean velx, boolean vely) {
 		Rectangle bounds = getBounds();
 		bounds.x += velx ? getPlayer().getVel().getX() : 0;
-		bounds.y += vely ? getPlayer().getVel().getY() : 0;
+		
+		/* If vely is true, then we either add the velocityY to the Y coordinate of the bounds, otherwise if velocityY equals zero we add -1
+		 * The reason we add -1, is simply becasue gravity has a constant force downwards, so that -1 represents that gravity, otherwise we would experience gravity and collision problems.
+		 * For example, if we would remove that -1, then when the player will collide bot, and we will RESET the velocityY it will not collide bot, then it will collide bot again until we reset, and it will continue every tick.
+		 * That's why we add -1 if vely is true and velocityY is empty. */
+		bounds.y += vely ? getPlayer().getVel().getY() != 0 ? getPlayer().getVel().getY() : -1 : 0;
+		
+		
 		return bounds;
 	}
 	

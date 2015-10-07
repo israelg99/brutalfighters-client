@@ -60,8 +60,8 @@ public class Flags {
 			FlagData newFlag = newFlags[i];
 			FlagData original = getFlag(i).getFlag();
 			
-			float posx = newFlag.getVel().getX() != 0 ? original.getVel().getX() : newFlag.getVel().getX();
-			float posy = newFlag.getVel().getY() != 0 ? original.getVel().getY() : newFlag.getVel().getY();
+			float posx = newFlag.getVel().getX() != 0 ? original.getPos().getX() : newFlag.getPos().getX();
+			float posy = newFlag.getVel().getY() != 0 ? original.getPos().getY() : newFlag.getPos().getY();
 			
 			String flip = original.getFlip();
 			
