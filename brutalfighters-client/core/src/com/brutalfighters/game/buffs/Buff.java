@@ -11,7 +11,7 @@ import com.brutalfighters.game.utility.rendering.TextureHandle;
 
 public enum Buff {
 	
-	Slow(), Heal(),
+	Slow(), Heal(), AirJump(),
 	
 	RedBats() {
 		
