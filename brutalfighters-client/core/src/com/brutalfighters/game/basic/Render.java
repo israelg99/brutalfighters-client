@@ -1,6 +1,5 @@
 package com.brutalfighters.game.basic;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.brutalfighters.game.InputControls;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.effects.particles.ParticleEffects;
@@ -72,19 +72,18 @@ public class Render {
 		setCamera(pl.getCamera());
 	}
 	
-	public static void drawRect(Color color, float x, float y, int width, int height) {
+	public static void drawRect(Color color, Rectangle rectangle) {
 		shapeRenderer.begin(ShapeType.Line);
-		drawRectAfterBegin(color, x, y, width, height);
+		drawRectAfterBegin(color, rectangle);
         
 	}
-	public static void drawRectFilled(Color color, float x, float y, int width, int height) {
+	public static void drawRectFilled(Color color, Rectangle rectangle) {
 		shapeRenderer.begin(ShapeType.Filled);
-		drawRectAfterBegin(color, x, y, width, height);
-		
+		drawRectAfterBegin(color, rectangle);
 	}
-	private static void drawRectAfterBegin(Color color, float x, float y, int width, int height) {
+	private static void drawRectAfterBegin(Color color, Rectangle rectangle) {
 		shapeRenderer.setColor(color);
-		shapeRenderer.rect(x, y, width, height);
+		shapeRenderer.rect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
 		shapeRenderer.end();
 	}
 

@@ -1,9 +1,9 @@
 package com.brutalfighters.game.flags;
 
-import java.awt.Rectangle;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.basic.Render;
 import com.brutalfighters.game.resources.Assets;

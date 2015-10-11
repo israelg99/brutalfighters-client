@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.brutalfighters.game.InputControls;
 import com.brutalfighters.game.basic.GameLoopManager;
 import com.brutalfighters.game.basic.Render;
@@ -162,15 +163,15 @@ public class HUD {
 	}
 	
 	public static void drawHPBar(float posx, float posy, float hp, float maxhp, Color color) {
-		Render.drawRectFilled(Color.BLACK, posx - barWidth()/2 - 8, posy + HUD.barPad() + HUD.barHeight(), HUD.barWidth() + 4, HUD.barHeight() + 4);
-		Render.drawRectFilled(new Color(0.2f,0.2f,0.2f,1), posx - barWidth()/2 - 6, posy + HUD.barPad() + HUD.barHeight() + 2, HUD.barWidth(), HUD.barHeight());
-		Render.drawRectFilled(color, posx - barWidth()/2 - 6, posy + HUD.barPad() + HUD.barHeight() + 2, (int)(hp/maxhp * HUD.barWidth()), HUD.barHeight());
+		Render.drawRectFilled(Color.BLACK, new Rectangle(posx - barWidth()/2 - 8, posy + HUD.barPad() + HUD.barHeight(), HUD.barWidth() + 4, HUD.barHeight() + 4));
+		Render.drawRectFilled(new Color(0.2f,0.2f,0.2f,1), new Rectangle(posx - barWidth()/2 - 6, posy + HUD.barPad() + HUD.barHeight() + 2, HUD.barWidth(), HUD.barHeight()));
+		Render.drawRectFilled(color, new Rectangle(posx - barWidth()/2 - 6, posy + HUD.barPad() + HUD.barHeight() + 2, (int)(hp/maxhp * HUD.barWidth()), HUD.barHeight()));
 	}
 	
 	public static void drawMANABar(float posx, float posy, float mana, float maxmana, Color color) {
-		Render.drawRectFilled(Color.BLACK, posx - barWidth()/2 - 8, posy + HUD.barPad() - 2, HUD.barWidth() + 4, HUD.barHeight() + 4);
-		Render.drawRectFilled(new Color(0.2f,0.2f,0.2f,1), posx - barWidth()/2 - 6, posy + HUD.barPad(), HUD.barWidth(), HUD.barHeight());
-		Render.drawRectFilled(color, posx - barWidth()/2 - 6, posy + HUD.barPad(), (int)(mana/maxmana * HUD.barWidth()), HUD.barHeight());
+		Render.drawRectFilled(Color.BLACK, new Rectangle(posx - barWidth()/2 - 8, posy + HUD.barPad() - 2, HUD.barWidth() + 4, HUD.barHeight() + 4));
+		Render.drawRectFilled(new Color(0.2f,0.2f,0.2f,1), new Rectangle(posx - barWidth()/2 - 6, posy + HUD.barPad(), HUD.barWidth(), HUD.barHeight()));
+		Render.drawRectFilled(color, new Rectangle(posx - barWidth()/2 - 6, posy + HUD.barPad(), (int)(mana/maxmana * HUD.barWidth()), HUD.barHeight()));
 	}
 
 	public static boolean isWarmup() {

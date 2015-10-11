@@ -1,11 +1,11 @@
 package com.brutalfighters.game.player.fighters;
 
-import java.awt.Rectangle;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.math.Rectangle;
 import com.brutalfighters.game.HUD.HUD;
 import com.brutalfighters.game.basic.GameTime;
 import com.brutalfighters.game.basic.Render;
@@ -490,6 +490,9 @@ abstract public class Fighter {
 		
 		drawHPBar();
 		drawMANABar();
+		
+		//Render.drawRect(Color.RED, getVelocityBounds(false, true));
+		//Render.drawRect(Color.BLUE, getVelocityBounds(false, false));
 				
 		Render.getSpriteBatch().begin();
 		
@@ -502,7 +505,6 @@ abstract public class Fighter {
 		if(!getPlayer().isDead()) {
 			if(getPlayer().isExtrapolating()) { // It has to be here, otherwise after you teleport you will have extrapolation issues, because the client will get the full position + extrapolation which will be too much and overflow the actual position.
 				applyVelocity();
-				checkCollision();
 				applyPosition();
 			}
 			if(!getPlayer().isSkilling() && getPlayer().hasControl()) {
@@ -613,6 +615,8 @@ abstract public class Fighter {
 	protected final void applyPosition() {
 		
 		// Y AXIS
+		checkCollision();
+		
 		if(getPlayer().getVel().getY() != 0 && ((getPlayer().getVel().getY() > 0 && !getPlayer().isCollidingTop())
 						|| (getPlayer().getVel().getY() < 0 && !getPlayer().isCollidingBot()))) {
 			applySyncedVelY();
@@ -647,7 +651,7 @@ abstract public class Fighter {
 		Players players = Assets.players;
 		for(int i = 0; i < players.getPlayers().length; i++) {
 			if(getPlayer().getTeam() != players.getPlayer(i).getPlayer().getTeam() && !players.getPlayer(i).getPlayer().isDead()) {
-				if(getVelocityBounds(false, true).intersects(players.getPlayers()[i].getBounds())) {
+				if(getVelocityBounds(false, true).overlaps(players.getPlayers()[i].getBounds())) {
 					if(getPlayer().getVel().getY() < 0) {
 						getPlayer().isCollidingBot(true);
 						getPlayer().isOnGround(true);
@@ -732,9 +736,9 @@ abstract public class Fighter {
 	}
 	
 	protected final boolean intersects(Rectangle rect) {
-		return getBounds().intersects(rect);
+		return getBounds().overlaps(rect);
 	}
 	protected final boolean intersects(Fighter p) {
-		return getBounds().intersects(p.getBounds());
+		return getBounds().overlaps(p.getBounds());
 	}
 }

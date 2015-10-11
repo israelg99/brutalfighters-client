@@ -1,6 +1,5 @@
 package com.brutalfighters.game.map;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
 
 public class GameMap {
 	
@@ -209,7 +209,7 @@ public class GameMap {
 		return bounds;
 	}
 	public boolean intersect(float x, float y, Rectangle bounds) {
-		return getBounds(x,y).intersects(bounds);
+		return getBounds(x,y).overlaps(bounds);
 	}
 	
 	// Collision Detection
