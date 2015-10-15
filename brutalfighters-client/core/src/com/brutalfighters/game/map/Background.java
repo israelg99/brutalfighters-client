@@ -30,7 +30,7 @@ public class Background {
 	}
 	
 	public static Sprite getProPallax(String name) {
-		Texture temp = TextureHandle.getTexture("maps/" + name + "/bg.png", true); //$NON-NLS-1$ //$NON-NLS-2$
+		Texture temp = TextureHandle.getTexture("maps/" + name + "/bg12.png", true); //$NON-NLS-1$ //$NON-NLS-2$
 		temp.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Sprite sTemp = new Sprite(temp);
 		sTemp.setSize(Render.getResX(), Render.getResY());
