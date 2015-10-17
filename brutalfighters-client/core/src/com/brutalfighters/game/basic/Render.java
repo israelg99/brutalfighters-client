@@ -75,7 +75,6 @@ public class Render {
 	public static void drawRect(Color color, Rectangle rectangle) {
 		shapeRenderer.begin(ShapeType.Line);
 		drawRectAfterBegin(color, rectangle);
-        
 	}
 	public static void drawRectFilled(Color color, Rectangle rectangle) {
 		shapeRenderer.begin(ShapeType.Filled);
